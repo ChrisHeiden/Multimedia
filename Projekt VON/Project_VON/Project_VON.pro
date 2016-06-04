@@ -13,9 +13,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    MainWindow.cpp
+    fenster.cpp
 
 HEADERS  += \
-    MainWindow.h
+    fenster.h
 
-FORMS    += mainwindow.ui
+FORMS    +=
