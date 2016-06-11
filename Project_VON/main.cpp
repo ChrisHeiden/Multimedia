@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "fenster.h"
+#include "datenbank.h"
 
 int main(int argc, char *argv[])
 {

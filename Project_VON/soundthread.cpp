@@ -12,7 +12,7 @@ void Soundthread::run(){
 
 void Soundthread::soundabspielen(){
     QMediaPlayer sound;
-    sound.setMedia(QUrl("C:/Users/Christopher/Documents/Privat/Studium/Semester 4/Entwicklung von Multimediasysteme/Projekt VON/Project_VON/Zankyou no Terror OST - geschnitten.mp3")); //Angabe des Pfades in dem sich der Sound befindet
+    sound.setMedia(QUrl("C:/Users/Delia/Documents/Studium/Sommersemester 2016/Entwicklung Multimediasysteme/Projekt/Multimedia-Git/Multimedia/Project_VON/Zankyou no Terror OST - geschnitten.mp3")); //Angabe des Pfades in dem sich der Sound befindet
     sound.play();  //Startet abspielen des Sounds
     sleep(7);
 }

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui \
+QT       += core gui sql \
          multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -18,13 +18,15 @@ SOURCES += main.cpp \
            fenster.cpp \
     soundthread.cpp \
     bilderSucheThread.cpp \
-    bilderausordnertherad.cpp
+    bilderausordnertherad.cpp \
+    datenbank.cpp
 
 HEADERS  += \
     fenster.h \
     soundthread.h \
     bilderSucheThread.h \
-    bilderausordnertherad.h
+    bilderausordnertherad.h \
+    datenbank.h
 
 FORMS    +=
 
@@ -38,3 +40,4 @@ sourcedirs = kernel \
              tools \
              widgets
 
+CONFIG += c++11

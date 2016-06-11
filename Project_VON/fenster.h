@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 #include "bilderSucheThread.h"
 #include "soundthread.h"
-#include "bilderdarstellenThread.h"
 #include "bilderausordnertherad.h"
 
 

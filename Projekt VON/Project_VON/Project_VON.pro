@@ -19,3 +19,5 @@ HEADERS  += \
     fenster.h
 
 FORMS    +=
+
+CONFIG += c++11

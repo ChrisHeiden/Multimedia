@@ -1,4 +1,5 @@
 #include "bilderSucheThread.h"
+#include "datenbank.h"
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QPushButton>
@@ -32,10 +33,13 @@ vector<string> AlleBilderSuchThread::alleGefundenenBilder(){
     QDirIterator it( m_string, QDirIterator::Subdirectories ); // Iterator für Verzeichnis erstellen
     smatch e;
     regex exp(".*.jpg$");
+    Datenbank bilderdatenbank;
 
     while(it.next() != NULL){
          if((it.fileInfo().isFile() == true)  && (regex_match(it.fileInfo().absoluteFilePath().toStdString(),e,exp))){
              for(auto a:e){
+//                 QString qstr = QString::fromStdString(a);
+                 bilderdatenbank.neuesBild(a);
                  bilder.push_back(a);
               }
          }
@@ -45,13 +49,15 @@ vector<string> AlleBilderSuchThread::alleGefundenenBilder(){
 
 vector<QImage*> AlleBilderSuchThread::umwandeln(vector<string> *images){
     vector<QImage*> qimages;
+    cout << "5" <<endl;
 
     for(unsigned int i= 0; i < images->size(); i++){
          QString qstring(images->at(i).c_str());
          QImage *image = new QImage(qstring);
 
-            (*image) = image->scaledToWidth(150, Qt::SmoothTransformation);
-            qimages.push_back(image);
+         qDebug() << qstring;
+         (*image) = image->scaledToWidth(150, Qt::SmoothTransformation);
+         qimages.push_back(image);
 
     }
     cout << "Ende" << endl;
