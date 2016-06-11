@@ -54,8 +54,8 @@ bool Datenbank::neuesBild(QString Bildpfad){
     if(query.exec())
     {
         erfolgreich = true;
-        qDebug() << "Bild hinzugefuegt! ID: " << IDZaehler;
-        IDZaehler++;
+        qDebug() << "Bild hinzugefuegt!"; //" ID: " <<  IDZaehler
+        //IDZaehler++;
     }
     else
     {

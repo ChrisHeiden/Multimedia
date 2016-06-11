@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "datenbank.h"
+#include "iostream"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -9,18 +10,26 @@ int main(int argc, char *argv[])
     w.show();*/
 
     Datenbank test;
-    test.Bildloeschen(1);
-    test.Bildloeschen(2);
-    test.Bildloeschen(3);
-    test.Bildloeschen(4);
-    test.Bildloeschen(5);
+    /*test.BildLoeschen(1);
+    test.BildLoeschen(2);
+    test.BildLoeschen(3);
+    test.BildLoeschen(4);
+    test.BildLoeschen(5);*/
 
-    /*test.neuesBild(1, "./Testpilder/Testbild.jpg");
-    test.neuesBild(2, "./Testbilder/Panorama.jpg");
-    test.neuesBild(3, "./Testbilder/Esel.jpg");
-    test.neuesBild(4, "./Testbilder/Affe.jpg");
-    test.neuesBild(5, "./Testbilder/Blume.jpg");*/
+    test.neuesBild("./Testpilder/Testbild.jpg");
+    test.neuesBild("./Testbilder/Panorama.jpg");
+    test.neuesBild("./Testbilder/Esel.jpg");
+    test.neuesBild("./Testbilder/Affe.jpg");
+    test.neuesBild("./Testbilder/Blume.jpg");
+
     test.alleBilderAusgeben();
+    test.alleIDsAusgeben();
+    //test.DatenbankEmpty();
+    //cout << test.BewertungAnzeigen(4) << endl;
+    //test.BildtagsAendern(3, "Tiere");
+    //test.TagsAnzeigen(3);
+    //test.BildBewerten(4, 5);
+    //cout << test.BewertungAnzeigen(4) << endl;
 
     //return a.exec();
     return 0;
