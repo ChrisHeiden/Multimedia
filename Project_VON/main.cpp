@@ -1,11 +1,14 @@
+#include "WindowManager.h"
 #include <QApplication>
-#include "fenster.h"
-#include "datenbank.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    MainWindow mainWindow;
-    mainWindow.show();
-    return app.exec();
+    QApplication a(argc, argv);
+
+    QTranslator *translator = new QTranslator();
+    a.installTranslator(translator);
+    WindowManager w(translator);
+    w.show();
+
+    return a.exec();
 }

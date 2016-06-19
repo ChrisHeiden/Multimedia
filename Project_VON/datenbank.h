@@ -10,9 +10,12 @@
 #include <string>
 
 using namespace std;
+/**
+ * @brief The Datenbank class stellt eine Datenbank dar, mit der innerhalbd er Applikation
+ *        gearbeitet wird, um Bilder zu speichern, diese zu Bewerten oder zu Filtern
+ */
+class Datenbank{
 
-class Datenbank
-{
 public:
     /**
      * @brief Datenbank
@@ -86,6 +89,12 @@ public:
      * @brief alleIDsAusgeben gibt in qDebug alle IDs aus, die in der Datenbank gespeichert sind
      */
     void alleIDsAusgeben();
+
+    /**
+     * @brief liefert den IDZaehler zurück
+     * @return int: IDZaehler
+     */
+    int getID();
 
 private:
     QSqlDatabase mydb;

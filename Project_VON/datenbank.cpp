@@ -1,7 +1,5 @@
 #include "datenbank.h"
 
-using namespace std;
-
 unsigned int Datenbank::IDZaehler = 1;
 
 Datenbank::Datenbank(){
@@ -48,27 +46,21 @@ Datenbank::Datenbank(){
 
 bool Datenbank::neuesBild(string Bildpfad){
 
-    cout << "1" <<endl;
     bool erfolgreich = false;
     QString Pfad = QString::fromStdString(Bildpfad);
     QSqlQuery query;
     //query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bildwertung, Tags) values ((:BildID), (:Bildpfad), 3, 'TestTag')");
     query.prepare("INSERT INTO Bilder(BildID, Bildpfad) values (null,(:Bildpfad))");
     query.bindValue(":Bildpfad", Pfad);
-    cout << "2" <<endl;
 
     if(query.exec())
     {
         erfolgreich = true;
-        cout << "3" <<endl;
-
         //qDebug() << "Bild hinzugefuegt!"; //" ID: " <<  IDZaehler
         //IDZaehler++;
     }
     else
     {
-        cout << "-1" <<endl;
-
         //qDebug() << "neuesBild error:  "
                   //<< query.lastError();
     }
@@ -224,3 +216,6 @@ QString Datenbank::TagsAnzeigen(int ID){
     return Tags;
 }
 
+int Datenbank::getID(){
+    return IDZaehler;
+}

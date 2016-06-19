@@ -1,0 +1,217 @@
+\hypertarget{class_datenbank}{}\section{Datenbank Class Reference}
+\label{class_datenbank}\index{Datenbank@{Datenbank}}
+
+
+The \hyperlink{class_datenbank}{Datenbank} class stellt eine \hyperlink{class_datenbank}{Datenbank} dar, mit der innerhalbd er Applikation gearbeitet wird, um Bilder zu speichern, diese zu Bewerten oder zu Filtern.  
+
+
+
+
+{\ttfamily \#include $<$datenbank.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_datenbank_a7d3ea0956998a887370d07e989ce91e0}{Datenbank} ()\hypertarget{class_datenbank_a7d3ea0956998a887370d07e989ce91e0}{}\label{class_datenbank_a7d3ea0956998a887370d07e989ce91e0}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_datenbank}{Datenbank} legt eine neue \hyperlink{class_datenbank}{Datenbank} an, falls noch keine existiert. \end{DoxyCompactList}\item 
+bool \hyperlink{class_datenbank_a7f4b8a305791e06232a6e5e618c05ed4}{neues\+Bild} (string Bildpfad)
+\begin{DoxyCompactList}\small\item\em neues\+Bild speichert ein neues Bild in der \hyperlink{class_datenbank}{Datenbank} \end{DoxyCompactList}\item 
+bool \hyperlink{class_datenbank_a82a097cc2818f0ebcce4c8d6c287ad2d}{Bild\+Exists} (int ID)
+\begin{DoxyCompactList}\small\item\em Bild\+Exists ueberprueft, ob das Bild in der \hyperlink{class_datenbank}{Datenbank} existiert oder nicht. \end{DoxyCompactList}\item 
+bool \hyperlink{class_datenbank_a994d146f7d2e61d76e8c9aa7341b82e2}{Bild\+Loeschen} (int ID)
+\begin{DoxyCompactList}\small\item\em Bild\+Loeschen loescht ein Bild aus der \hyperlink{class_datenbank}{Datenbank}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_datenbank_a00b0d926e5e36212fef92285c8d572d8}{Bild\+Bewerten} (int ID, int Bewertung)
+\begin{DoxyCompactList}\small\item\em Bild\+Bewerten bewertet ein Bild in der \hyperlink{class_datenbank}{Datenbank}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_datenbank_aa49f50a80d0453410ce15a88c8e2654b}{Bildtags\+Aendern} (int ID, Q\+String Tag)
+\begin{DoxyCompactList}\small\item\em Bildtags\+Aendern fuegt Tags zu einem Bild hinzu. \end{DoxyCompactList}\item 
+void \hyperlink{class_datenbank_a3c19e7a257dc6527cc9492578e04458d}{alle\+Bilder\+Ausgeben} ()
+\begin{DoxyCompactList}\small\item\em Datenbank\+Empty ueberprueft, ob die \hyperlink{class_datenbank}{Datenbank} leer ist. \end{DoxyCompactList}\item 
+int \hyperlink{class_datenbank_afa15c63d30ec754b12621a35acc9bc48}{Bewertung\+Anzeigen} (int ID)
+\begin{DoxyCompactList}\small\item\em Bewertung\+Anzeigen zeigt die Bewertung eines Bildes an. \end{DoxyCompactList}\item 
+Q\+String \hyperlink{class_datenbank_a1fa37141427e410e36b87636e12c68ba}{Tags\+Anzeigen} (int ID)
+\begin{DoxyCompactList}\small\item\em Tags\+Anzeigen zeigt die Tags von einem Bild an. \end{DoxyCompactList}\item 
+void \hyperlink{class_datenbank_a3f5897a282e10debb02dbab8ccd2641a}{alle\+I\+Ds\+Ausgeben} ()\hypertarget{class_datenbank_a3f5897a282e10debb02dbab8ccd2641a}{}\label{class_datenbank_a3f5897a282e10debb02dbab8ccd2641a}
+
+\begin{DoxyCompactList}\small\item\em alle\+I\+Ds\+Ausgeben gibt in q\+Debug alle I\+Ds aus, die in der \hyperlink{class_datenbank}{Datenbank} gespeichert sind \end{DoxyCompactList}\item 
+int \hyperlink{class_datenbank_abc0b108d061a5700b9d305bc2c29cc8d}{get\+ID} ()
+\begin{DoxyCompactList}\small\item\em liefert den I\+D\+Zaehler zurück \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_datenbank}{Datenbank} class stellt eine \hyperlink{class_datenbank}{Datenbank} dar, mit der innerhalbd er Applikation gearbeitet wird, um Bilder zu speichern, diese zu Bewerten oder zu Filtern. 
+
+\subsection{Member Function Documentation}
+\index{Datenbank@{Datenbank}!alle\+Bilder\+Ausgeben@{alle\+Bilder\+Ausgeben}}
+\index{alle\+Bilder\+Ausgeben@{alle\+Bilder\+Ausgeben}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{alle\+Bilder\+Ausgeben()}{alleBilderAusgeben()}}]{\setlength{\rightskip}{0pt plus 5cm}void Datenbank\+::alle\+Bilder\+Ausgeben (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a3c19e7a257dc6527cc9492578e04458d}{}\label{class_datenbank_a3c19e7a257dc6527cc9492578e04458d}
+
+
+Datenbank\+Empty ueberprueft, ob die \hyperlink{class_datenbank}{Datenbank} leer ist. 
+
+\begin{DoxyReturn}{Returns}
+bool empty, ob die \hyperlink{class_datenbank}{Datenbank} leer ist (true) oder nicht (false) alle\+Bilder\+Ausgeben gibt alle Bildpfade aus der \hyperlink{class_datenbank}{Datenbank} in q\+Debug aus 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Bewertung\+Anzeigen@{Bewertung\+Anzeigen}}
+\index{Bewertung\+Anzeigen@{Bewertung\+Anzeigen}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Bewertung\+Anzeigen(int I\+D)}{BewertungAnzeigen(int ID)}}]{\setlength{\rightskip}{0pt plus 5cm}int Datenbank\+::\+Bewertung\+Anzeigen (
+\begin{DoxyParamCaption}
+\item[{int}]{ID}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_afa15c63d30ec754b12621a35acc9bc48}{}\label{class_datenbank_afa15c63d30ec754b12621a35acc9bc48}
+
+
+Bewertung\+Anzeigen zeigt die Bewertung eines Bildes an. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bildes, dessen Bewertung angezeigt werden soll \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int wertung die Bewertung des Bildes 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Bild\+Bewerten@{Bild\+Bewerten}}
+\index{Bild\+Bewerten@{Bild\+Bewerten}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Bild\+Bewerten(int I\+D, int Bewertung)}{BildBewerten(int ID, int Bewertung)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Datenbank\+::\+Bild\+Bewerten (
+\begin{DoxyParamCaption}
+\item[{int}]{ID, }
+\item[{int}]{Bewertung}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a00b0d926e5e36212fef92285c8d572d8}{}\label{class_datenbank_a00b0d926e5e36212fef92285c8d572d8}
+
+
+Bild\+Bewerten bewertet ein Bild in der \hyperlink{class_datenbank}{Datenbank}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bildes, das bewertet werden soll \\
+\hline
+{\em Bewertung} & (von 1 bis 5) welche Bewertung das Bild erhalten soll \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool erfolgreich, ob das Bild bewertet werden konnte (true) oder nicht (false) 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Bild\+Exists@{Bild\+Exists}}
+\index{Bild\+Exists@{Bild\+Exists}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Bild\+Exists(int I\+D)}{BildExists(int ID)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Datenbank\+::\+Bild\+Exists (
+\begin{DoxyParamCaption}
+\item[{int}]{ID}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a82a097cc2818f0ebcce4c8d6c287ad2d}{}\label{class_datenbank_a82a097cc2818f0ebcce4c8d6c287ad2d}
+
+
+Bild\+Exists ueberprueft, ob das Bild in der \hyperlink{class_datenbank}{Datenbank} existiert oder nicht. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bildes, das gesucht wird \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool erfolgreich, ob das Bild existiert (true) oder nicht (false) 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Bild\+Loeschen@{Bild\+Loeschen}}
+\index{Bild\+Loeschen@{Bild\+Loeschen}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Bild\+Loeschen(int I\+D)}{BildLoeschen(int ID)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Datenbank\+::\+Bild\+Loeschen (
+\begin{DoxyParamCaption}
+\item[{int}]{ID}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a994d146f7d2e61d76e8c9aa7341b82e2}{}\label{class_datenbank_a994d146f7d2e61d76e8c9aa7341b82e2}
+
+
+Bild\+Loeschen loescht ein Bild aus der \hyperlink{class_datenbank}{Datenbank}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bildes, das geloescht werden soll \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool erfolgreich, ob das Bild geloescht wurde (true) oder nicht (false) 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Bildtags\+Aendern@{Bildtags\+Aendern}}
+\index{Bildtags\+Aendern@{Bildtags\+Aendern}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Bildtags\+Aendern(int I\+D, Q\+String Tag)}{BildtagsAendern(int ID, QString Tag)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Datenbank\+::\+Bildtags\+Aendern (
+\begin{DoxyParamCaption}
+\item[{int}]{ID, }
+\item[{Q\+String}]{Tag}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_aa49f50a80d0453410ce15a88c8e2654b}{}\label{class_datenbank_aa49f50a80d0453410ce15a88c8e2654b}
+
+
+Bildtags\+Aendern fuegt Tags zu einem Bild hinzu. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bilds, das einen neuen Tag erhalten soll \\
+\hline
+{\em Tag} & Tag, der hinzugefuegt werden soll \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool erfolgreich, ob der tag hinzugefuegt werden konnte (true) oder nicht (false) 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!get\+ID@{get\+ID}}
+\index{get\+ID@{get\+ID}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{get\+I\+D()}{getID()}}]{\setlength{\rightskip}{0pt plus 5cm}int Datenbank\+::get\+ID (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_abc0b108d061a5700b9d305bc2c29cc8d}{}\label{class_datenbank_abc0b108d061a5700b9d305bc2c29cc8d}
+
+
+liefert den I\+D\+Zaehler zurück 
+
+\begin{DoxyReturn}{Returns}
+int\+: I\+D\+Zaehler 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!neues\+Bild@{neues\+Bild}}
+\index{neues\+Bild@{neues\+Bild}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{neues\+Bild(string Bildpfad)}{neuesBild(string Bildpfad)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Datenbank\+::neues\+Bild (
+\begin{DoxyParamCaption}
+\item[{string}]{Bildpfad}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a7f4b8a305791e06232a6e5e618c05ed4}{}\label{class_datenbank_a7f4b8a305791e06232a6e5e618c05ed4}
+
+
+neues\+Bild speichert ein neues Bild in der \hyperlink{class_datenbank}{Datenbank} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bildpfad} & Pfad, unter dem das Bild auf dem Computer des Nutzers zu finden ist \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool erfolgreich, ob das Bild hinzugefuegt wurde (true) oder nicht (false) 
+\end{DoxyReturn}
+\index{Datenbank@{Datenbank}!Tags\+Anzeigen@{Tags\+Anzeigen}}
+\index{Tags\+Anzeigen@{Tags\+Anzeigen}!Datenbank@{Datenbank}}
+\subsubsection[{\texorpdfstring{Tags\+Anzeigen(int I\+D)}{TagsAnzeigen(int ID)}}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Datenbank\+::\+Tags\+Anzeigen (
+\begin{DoxyParamCaption}
+\item[{int}]{ID}
+\end{DoxyParamCaption}
+)}\hypertarget{class_datenbank_a1fa37141427e410e36b87636e12c68ba}{}\label{class_datenbank_a1fa37141427e410e36b87636e12c68ba}
+
+
+Tags\+Anzeigen zeigt die Tags von einem Bild an. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID des Bildes, dessen Tags angezeigt werden sollen \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Qstring Tags die Tags des Bildes 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Christopher/\+Documents/\+Privat/\+Studium/\+Semester 4/\+Project V\+O\+N/\+V\+O\+N/datenbank.\+h\item 
+C\+:/\+Users/\+Christopher/\+Documents/\+Privat/\+Studium/\+Semester 4/\+Project V\+O\+N/\+V\+O\+N/datenbank.\+cpp\end{DoxyCompactItemize}

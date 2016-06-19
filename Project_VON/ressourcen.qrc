@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/sound">
+        <file>Zankyou no Terror OST - geschnitten.mp3</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>Icon.png</file>
+    </qresource>
+    <qresource prefix="/language">
+        <file>VON_Ueberstzung_Deutsch_zu_Englisch.qm</file>
+    </qresource>
+</RCC>
