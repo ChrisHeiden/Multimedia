@@ -68,7 +68,7 @@ bool Datenbank::neuesBild(string Bildpfad){
     return erfolgreich;
 }
 
-bool Datenbank::BildExists(int ID){
+bool Datenbank::BildExistiert(int ID){
 
     bool existiert = false;
     QSqlQuery query;
@@ -87,7 +87,7 @@ bool Datenbank::BildExists(int ID){
 
 bool Datenbank::BildLoeschen(int ID){
     bool erfolgreich = false;
-    if (BildExists(ID))
+    if (BildExistiert(ID))
     {
        QSqlQuery query;
        query.prepare("DELETE FROM Bilder WHERE BildID = (:BildID)");
@@ -130,7 +130,7 @@ void Datenbank::alleIDsAusgeben(){
 
 bool Datenbank::BildBewerten(int ID, int Bewertung){
     bool erfolgreich = false;
-    if(BildExists(ID)){
+    if(BildExistiert(ID)){
         QSqlQuery query;
         query.prepare("UPDATE Bilder SET Bildwertung = (:Bildwertung) WHERE BildID = (:BildID)");
         query.bindValue(":Bildwertung", Bewertung);
@@ -152,7 +152,7 @@ bool Datenbank::BildBewerten(int ID, int Bewertung){
 
 int Datenbank::BewertungAnzeigen(int ID){
     int wertung = -1;
-    if(BildExists(ID)){
+    if(BildExistiert(ID)){
         QSqlQuery query;
         query.prepare("SELECT Bildwertung FROM Bilder WHERE BildID = (:BildID)");
         query.bindValue(":BildID", ID);
@@ -173,7 +173,7 @@ int Datenbank::BewertungAnzeigen(int ID){
 
 bool Datenbank::BildtagsAendern(int ID, QString Tag){
     bool erfolgreich = false;
-    if(BildExists(ID)){
+    if(BildExistiert(ID)){
         QString Tags = TagsAnzeigen(ID);
 
         Tags = Tags + ", " + Tag;
@@ -198,7 +198,7 @@ bool Datenbank::BildtagsAendern(int ID, QString Tag){
 
 QString Datenbank::TagsAnzeigen(int ID){
     QString Tags;
-    if(BildExists(ID)){
+    if(BildExistiert(ID)){
         QSqlQuery query;
         query.prepare("SELECT Tags FROM Bilder WHERE BildID = (:BildID)");
         query.bindValue(":BildID", ID);

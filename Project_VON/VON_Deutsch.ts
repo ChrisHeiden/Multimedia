@@ -114,56 +114,6 @@
         <location filename="zweitesfenster.h" line="83"/>
         <source>Vollbildmodus deaktiviern</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="101"/>
-        <source>Filters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="102"/>
-        <source>Background</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="103"/>
-        <source>Number of images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="104"/>
-        <source>Full screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="105"/>
-        <source>full screen mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="106"/>
-        <source>Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="110"/>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="111"/>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="112"/>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="zweitesfenster.h" line="113"/>
-        <source>deactivate full screen mode</source>
-        <translation type="unfinished"></translation>
-    </message>
+    </message>  
 </context>
 </TS>

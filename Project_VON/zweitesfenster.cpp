@@ -64,7 +64,7 @@ void zweitesFenster::erzeugeZweitesFenster(){
     /*Einstellung des Vollbildmoduses mit dem Label*/
     QFont font4( "Calibri", 10, QFont::Bold);
     vollbild->setFont(font4);
-    //QObject::connect(vollbildmodus, &QRadioButton::clicked,this, &erstesFenster::vollbildModusAktiv);
+    QObject::connect(vollbildmodus, &QRadioButton::clicked,this, &zweitesFenster::vollbildModusAktiv);
     QVBoxLayout *voll = new QVBoxLayout();
     voll->addWidget(vollbild);
     voll->addWidget(vollbildmodus);
@@ -158,15 +158,26 @@ void zweitesFenster::erzeugeZweitesFenster(){
     westpart->setStyleSheet("background-color:rgb(189, 195, 199);");
     westpart->setLayout(menu);
     west->addWidget(westpart);
-    window->addWidget(westpart);
+    oberesWindow->addWidget(westpart);
 
-    south->addWidget(vollbildModusDeaktiviern);
-    south->insertStretch(30,300);
-    southpart->setStyleSheet("background-color:red;");
+    /* Southpart muss hier programmiert werden */
+
+    south->addWidget(tags);
+    south->addWidget(tagsFeld);
+    south->addWidget(bildPfad);
+    south->addWidget(bildPfadFeld);
+    bildPfadFeld->setReadOnly(true);
+    bildPfadFeld->setStyleSheet("background-color: rgb(209,209,209)");
+    bildPfadFeld->setAlignment(Qt::AlignRight);
+    south->addWidget(bildBewertung);
+    south->addWidget(bildBewertungsFeld);
+    bildBewertungsFeld->setReadOnly(true);
+    bildBewertungsFeld->setStyleSheet("background-color: rgb(209,209,209)");
+    south->minimumSize();
     southpart->setLayout(south);
 
 
-    /*Center muss hier programmiert werden*/
+    /* Center muss hier programmiert werden */
 
     QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
     suche = new BilderSuche(gewuenschterPfad);
@@ -218,16 +229,14 @@ void zweitesFenster::BilderDarstellen(vector<QImage*> *qimages){
     int index = 0;
 
     for (unsigned int y = 0; y < qimages->size() ; y++) {
-        //for(unsigned int x = 0; x < 5; x++){
-            /* Funktioniert nicht */
-            QLabel *l = new QLabel();
-            l->setPixmap(QPixmap::fromImage(*(qimages->at(y))));
-            index = index + 1;
-            center1->addWidget(l);
-            if(index % 5 == 0){
-                center1 = new QHBoxLayout;
-                layout->addLayout(center1);
-            }
+        QLabel *l = new QLabel();
+        l->setPixmap(QPixmap::fromImage(*(qimages->at(y))));
+        index = index + 1;
+        center1->addWidget(l);
+        if(index % 5 == 0){
+            center1 = new QHBoxLayout;
+            layout->addLayout(center1);
+        }
     }
 
     layout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -235,39 +244,47 @@ void zweitesFenster::BilderDarstellen(vector<QImage*> *qimages){
 
     /*Layouts dem Widget hinzufügen*/
 
-    window->addWidget(westpart,0,0,0,1);
-    window->addWidget(m_area,0,1,1,4);
+    oberesWindow->addWidget(westpart,0,0,0,1);
+    oberesWindow->addWidget(m_area,0,1,1,4);
 
+    ganzesWindow->addLayout(oberesWindow);
+    ganzesWindow->addWidget(southpart);
 
-    //fenster->update();
     cout << "1" << endl;
 
-    this->setLayout(window);
+    this->setLayout(ganzesWindow);
 }
 
 void zweitesFenster::schwarz(){
     Farben schwarz(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
-                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                    deutsch,  englisch,  vollbildModusDeaktiviern);
+                   vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
+                   deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
+                   bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
     schwarz.schwarz();
 }
 
 void zweitesFenster::beige(){
     Farben beige(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
-                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                    deutsch,  englisch,  vollbildModusDeaktiviern);    beige.beige();
+                 vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
+                 deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
+                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+    beige.beige();
 }
 
 void zweitesFenster::weiss(){
     Farben weiss(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
-                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                    deutsch,  englisch,  vollbildModusDeaktiviern);    weiss.weiss();
+                 vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
+                 deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
+                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+    weiss.weiss();
 }
 
 void zweitesFenster::pink(){
     Farben pink(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                     vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                    deutsch,  englisch,  vollbildModusDeaktiviern);    pink.pink();
+                    deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
+                    bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+    pink.pink();
 }
 
 void zweitesFenster::hilfeAngeklicket(){
@@ -330,4 +347,36 @@ void zweitesFenster::englischUebersetzung(){
 void zweitesFenster::deutschUebersetzung(){
     QApplication::instance()->removeTranslator(m_translator);
     qDebug() << "1";
+}
+
+void zweitesFenster::vollbildModusAktiv(){
+
+    vollbildModusDeaktiviern->setHidden(false);
+    southpart->setHidden(true);
+    tags->setHidden(true);
+    bildBewertung->setHidden(true);
+    bildPfad->setHidden(true);
+    tagsFeld->setHidden(true);
+    bildBewertungsFeld->setHidden(true);
+    bildPfadFeld->setHidden(true);
+    south->addWidget(vollbildModusDeaktiviern);
+    southpart->setHidden(false);
+    westpart->setHidden(true); //Menu wird versteckt
+    QObject::connect(vollbildModusDeaktiviern, &QPushButton::clicked,this, &zweitesFenster::vollbildModusInaktiv);
+    fenster->update();
+}
+
+void zweitesFenster::vollbildModusInaktiv(){
+
+    southpart->setHidden(false);
+    tags->setHidden(false);
+    bildBewertung->setHidden(false);
+    bildPfad->setHidden(false);
+    tagsFeld->setHidden(false);
+    bildBewertungsFeld->setHidden(false);
+    bildPfadFeld->setHidden(false);
+    westpart->setHidden(false); //Menu wird wieder angezeigt
+    vollbildModusDeaktiviern->setHidden(true);  //Button, der Vollbildmodus deaktivieren kann wird unsichtbar
+    vollbildmodus->setChecked(false);
+    fenster->update();
 }

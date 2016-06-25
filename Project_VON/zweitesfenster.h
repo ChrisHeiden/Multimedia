@@ -12,6 +12,7 @@
 #include <QScrollArea>
 #include <QApplication>
 #include <QTranslator>
+#include <QTextEdit>
 
 /**
  * @brief The zweitesFenster class erbt von QWidget und stellt das weite Fenster dar.
@@ -56,9 +57,12 @@ public:
 
 
 private:
+
+    /* für die Darstelltung */
     QWidget *fenster;
     Datenbank *bank;
-    QGridLayout *window = new QGridLayout;   //wird fenster übergeben
+    QVBoxLayout *ganzesWindow = new QVBoxLayout;
+    QGridLayout *oberesWindow = new QGridLayout;   //wird fenster übergeben
     QVBoxLayout *west = new QVBoxLayout;     //wird window übergeben und enthält Labels, Buttons und andere Layouts
     QVBoxLayout *center = new QVBoxLayout;   //wird später Bilder des Nutzers darstellen
     QVBoxLayout *menu = new QVBoxLayout;     //menu wird westpart übergeben
@@ -68,15 +72,25 @@ private:
     QHBoxLayout *south = new QHBoxLayout;
     QWidget *southpart = new QWidget;
 
+    /* Für die Infobox */
+    QLabel *tags = new QLabel("Tags:");
+    QLabel *bildBewertung = new QLabel(tr("Sterne:"));
+    QLabel *bildPfad = new QLabel(tr("Pfad:"));
+    QLineEdit *tagsFeld = new QLineEdit ;
+    QLineEdit *bildBewertungsFeld = new QLineEdit ;
+    QLineEdit *bildPfadFeld = new QLineEdit;
+
+
+    /* Für die Optionen */
     QLabel *filter = new QLabel(tr("Filter"));
     QLabel *hintergrund = new QLabel(tr("Hintergrund"));
     QLabel *anzahlBilder = new QLabel(tr("Anzahl Bilder"));
     QLabel *vollbild = new QLabel(tr("Vollbildmodus"));
     QRadioButton *vollbildmodus = new QRadioButton(tr("Vollbildmodus"));
     QLabel *option = new QLabel(tr("Optionen"));
-    QPushButton *zwanzig = new QPushButton(tr("20"));
-    QPushButton *vierzig = new QPushButton(tr("40"));
-    QPushButton *sechsig = new QPushButton(tr("60"));
+    QPushButton *zwanzig = new QPushButton("20");
+    QPushButton *vierzig = new QPushButton("40");
+    QPushButton *sechsig = new QPushButton("60");
     QLabel *sprache = new QLabel(tr("Sprache"));
     QRadioButton *deutsch = new QRadioButton(tr("Deutsch"));
     QRadioButton *englisch = new QRadioButton(tr("Englisch"));
@@ -84,6 +98,9 @@ private:
     QLabel *myLabel = new QLabel;
     BilderSuche *suche;
     QTranslator *m_translator;
+
+    QPushButton *beenden;
+
 
 
     void schwarz();
@@ -93,6 +110,9 @@ private:
     void hilfeAngeklicket();
     void englischUebersetzung();
     void deutschUebersetzung();
+    void vollbildModusAktiv();
+    void vollbildModusInaktiv();
+
 
     /* für die Übersetzung */
     inline void changeEvent(QEvent *event)

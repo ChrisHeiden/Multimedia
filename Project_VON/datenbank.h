@@ -35,7 +35,7 @@ public:
      * @param ID ID des Bildes, das gesucht wird
      * @return bool erfolgreich, ob das Bild existiert (true) oder nicht (false)
      */
-    bool BildExists(int ID);
+    bool BildExistiert(int ID);
 
     /**
      * @brief BildLoeschen loescht ein Bild aus der Datenbank

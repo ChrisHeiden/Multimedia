@@ -21,7 +21,8 @@ SOURCES += main.cpp\
            WindowManager.cpp \
            zweitesfenster.cpp \
            farben.cpp \
-    hilfe.cpp
+    hilfe.cpp \
+    drittesfenster.cpp
 
 HEADERS  += erstesfenster.h \
             sound.h \
@@ -30,7 +31,8 @@ HEADERS  += erstesfenster.h \
             WindowManager.h \
             zweitesfenster.h \
             farben.h \
-    hilfe.h
+            hilfe.h \
+            drittesfenster.h
 
 CONFIG += c++11
 
