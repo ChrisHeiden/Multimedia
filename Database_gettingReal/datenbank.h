@@ -20,6 +20,8 @@ public:
      */
     Datenbank();
 
+    bool bildpfadExists(QString Pfad);
+
     /**
      * @brief neuesBild speichert ein neues Bild in der Datenbank
      * @param Bildpfad Pfad, unter dem das Bild auf dem Computer des Nutzers zu finden ist
@@ -28,40 +30,40 @@ public:
     bool neuesBild(QString Bildpfad);
 
     /**
-     * @brief BildExists ueberprueft, ob das Bild in der Datenbank existiert oder nicht
+     * @brief bildExists ueberprueft, ob das Bild in der Datenbank existiert oder nicht
      * @param ID ID des Bildes, das gesucht wird
      * @return bool erfolgreich, ob das Bild existiert (true) oder nicht (false)
      */
-    bool BildExists(int ID);
+    bool bildExists(int ID);
 
     /**
-     * @brief BildLoeschen loescht ein Bild aus der Datenbank
+     * @brief bildLoeschen loescht ein Bild aus der Datenbank
      * @param ID ID des Bildes, das geloescht werden soll
      * @return bool erfolgreich, ob das Bild geloescht wurde (true) oder nicht (false)
      */
-    bool BildLoeschen(int ID);
+    bool bildLoeschen(int ID);
 
     /**
-     * @brief BildBewerten bewertet ein Bild in der Datenbank
+     * @brief bildBewerten bewertet ein Bild in der Datenbank
      * @param ID ID des Bildes, das bewertet werden soll
      * @param Bewertung (von 1 bis 5) welche Bewertung das Bild erhalten soll
      * @return bool erfolgreich, ob das Bild bewertet werden konnte (true) oder nicht (false)
      */
-    bool BildBewerten(int ID, int Bewertung);
+    bool bildBewerten(int ID, int Bewertung);
 
     /**
-     * @brief BildtagsAendern fuegt Tags zu einem Bild hinzu
+     * @brief bildtagsAendern fuegt Tags zu einem Bild hinzu
      * @param ID ID des Bilds, das einen neuen Tag erhalten soll
      * @param Tag Tag, der hinzugefuegt werden soll
      * @return bool erfolgreich, ob der tag hinzugefuegt werden konnte (true) oder nicht (false)
      */
-    bool BildtagsAendern(int ID, QString Tag);
+    bool bildtagsAendern(int ID, QString Tag);
 
     /**
-     * @brief DatenbankEmpty ueberprueft, ob die Datenbank leer ist
+     * @brief datenbankEmpty ueberprueft, ob die Datenbank leer ist
      * @return bool empty, ob die Datenbank leer ist (true) oder nicht (false)
      */
-    //bool DatenbankEmpty();
+    bool datenbankEmpty();
 
     /**
      * @brief alleBilderAusgeben gibt alle Bildpfade aus der Datenbank in qDebug aus
@@ -69,23 +71,37 @@ public:
     void alleBilderAusgeben();
 
     /**
-     * @brief BewertungAnzeigen zeigt die Bewertung eines Bildes an
+     * @brief bewertungAnzeigen zeigt die Bewertung eines Bildes an
      * @param ID ID des Bildes, dessen Bewertung angezeigt werden soll
      * @return int wertung die Bewertung des Bildes
      */
-    int BewertungAnzeigen(int ID);
+    int bewertungAnzeigen(int ID);
 
     /**
-     * @brief TagsAnzeigen zeigt die Tags von einem Bild an
+     * @brief bildtagsAnzeigen zeigt die Tags von einem Bild an
      * @param ID ID des Bildes, dessen Tags angezeigt werden sollen
      * @return Qstring Tags die Tags des Bildes
      */
-    QString TagsAnzeigen(int ID);
+    QString bildtagsAnzeigen(int ID);
 
     /**
      * @brief alleIDsAusgeben gibt in qDebug alle IDs aus, die in der Datenbank gespeichert sind
      */
     void alleIDsAusgeben();
+
+    /**
+     * @brief bildtagsFiltern laesst den Nutzer nach Tags filtern
+     * @param filtertags Tags, nach denen gefiltert werden soll
+     * @return IDs, der Bilder mit den entsprechenden Tags
+     */
+    bool bildtagsFiltern(QString filtertag);
+
+    /**
+     * @brief bewertungFiltern laesst den Nutzer nach einer bestimmten Bildwertung filtern
+     * @param filterwertung Wertung, nach der gefiltert werden soll
+     * @return IDs, der Bilder mit der ausgewählten wertung
+     */
+    bool bewertungFiltern(int filterwertung);
 
 private:
     QSqlDatabase mydb;
