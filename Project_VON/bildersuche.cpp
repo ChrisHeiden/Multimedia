@@ -25,7 +25,8 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     while(it.next() != NULL){
          if((it.fileInfo().isFile() == true)  && (regex_match(it.fileInfo().absoluteFilePath().toStdString(),e,exp))){
              for(auto a:e){
-                 bilderdatenbank.neuesBild(a);
+                 QString b = QString::fromStdString(a);
+                 bilderdatenbank.neuesBild(b);
                  bilder.push_back(a);
               }
          }

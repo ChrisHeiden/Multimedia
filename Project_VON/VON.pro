@@ -39,6 +39,9 @@ CONFIG += c++11
 RESOURCES += \
     ressourcen.qrc
 
+doc.commands = doxygen documentation/Doxyfile
+QMAKE_EXTRA_TARGETS += doc
+
 TRANSLATIONS += VON_Ueberstzung_Deutsch_zu_Englisch.ts\
                 VON_Deutsch.ts
 

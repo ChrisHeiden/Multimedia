@@ -105,27 +105,27 @@ void zweitesFenster::erzeugeZweitesFenster(){
     QPushButton *eins = new QPushButton;
     eins->setText("1");
     eins->setStyleSheet("background-color:red ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
-    //QObject::connect(eins, &QPushButton::clicked,this, ...);
+    QObject::connect(eins, &QPushButton::clicked,this, &zweitesFenster::nachEinsFiltern);
 
     QPushButton *zwei = new QPushButton;
     zwei->setText("2");
     zwei->setStyleSheet("background-color:orange ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
-    //QObject::connect(zwei, &QPushButton::clicked,this, ...);
+    QObject::connect(zwei, &QPushButton::clicked,this, &zweitesFenster::nachZweiFiltern);
 
     QPushButton *drei = new QPushButton;
     drei->setText("3");
     drei->setStyleSheet("background-color:yellow ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
-    //QObject::connect(drei, &QPushButton::clicked,this, ...);
+    QObject::connect(drei, &QPushButton::clicked,this, &zweitesFenster::nachDreiFiltern);
 
     QPushButton *vier = new QPushButton;
     vier->setText("4");
     vier->setStyleSheet("background-color:blue ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
-    //QObject::connect(vier, &QPushButton::clicked,this, ...);
+    QObject::connect(vier, &QPushButton::clicked,this, &zweitesFenster::nachVierFiltern);
 
     QPushButton *fuenf = new QPushButton;
     fuenf->setText("5");
     fuenf->setStyleSheet("background-color:green ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
-    //QObject::connect(fuenf, &QPushButton::clicked,this, ...);
+    QObject::connect(fuenf, &QPushButton::clicked,this, &zweitesFenster::nachFuenfFiltern);
 
     sterne->addWidget(eins);
     sterne->addWidget(zwei);
@@ -161,18 +161,32 @@ void zweitesFenster::erzeugeZweitesFenster(){
     oberesWindow->addWidget(westpart);
 
     /* Southpart muss hier programmiert werden */
-
+    bank = new Datenbank;
+    south->addWidget(bildBewertung);
+    bildBewertungsFeld->addItem("1");
+    bildBewertungsFeld->addItem("2");
+    bildBewertungsFeld->addItem("3");
+    bildBewertungsFeld->addItem("4");
+    bildBewertungsFeld->addItem("5");
+    bildBewertungsFeld->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
+    bildBewertungsFeld->setMinimumContentsLength(25);
+    south->addWidget(bildBewertungsFeld);
     south->addWidget(tags);
     south->addWidget(tagsFeld);
+
+    tagsFeld->setText("");
+    QObject::connect(tagsFeld, &QLineEdit::editingFinished,this, &zweitesFenster::bildtagsandern);// BildID muss als erster Parameter übergeben werden
+    tagsFeld->clear();
+    bank->bildtagsAnzeigen(1);//doppelklicken des Bildes
+    QObject::connect(bildBewertungsFeld, static_cast<void (QComboBox::*)(const int)>(&QComboBox::currentIndexChanged),this, &zweitesFenster::bildbewertungandern);// BildID muss als erster Parameter übergeben werden
     south->addWidget(bildPfad);
     south->addWidget(bildPfadFeld);
+
+    const QString pfadanzeigen = bank->aktuellenBildPfadAnzeigen(1); //doppelklicken des Bildes
+    bildPfadFeld->setText(pfadanzeigen);
     bildPfadFeld->setReadOnly(true);
     bildPfadFeld->setStyleSheet("background-color: rgb(209,209,209)");
-    bildPfadFeld->setAlignment(Qt::AlignRight);
-    south->addWidget(bildBewertung);
-    south->addWidget(bildBewertungsFeld);
-    bildBewertungsFeld->setReadOnly(true);
-    bildBewertungsFeld->setStyleSheet("background-color: rgb(209,209,209)");
+    bildPfadFeld->setAlignment(Qt::AlignLeft);
     south->minimumSize();
     southpart->setLayout(south);
 
@@ -212,6 +226,15 @@ QString zweitesFenster::ordnerVerzeichnis(){
 void zweitesFenster::letzter(){
     std::cout << 3 << std::endl;
 
+}
+
+void zweitesFenster::bildtagsandern(){
+    bank->bildtagsAendern(1,tagsFeld->text());
+}
+
+void zweitesFenster::bildbewertungandern(){
+    int wert = bildBewertungsFeld->currentIndex() + 1;
+    bank->bildBewerten(1,wert); // Bild doppelklick
 }
 
 void zweitesFenster::BilderDarstellen(vector<QImage*> *qimages){
@@ -379,4 +402,29 @@ void zweitesFenster::vollbildModusInaktiv(){
     vollbildModusDeaktiviern->setHidden(true);  //Button, der Vollbildmodus deaktivieren kann wird unsichtbar
     vollbildmodus->setChecked(false);
     fenster->update();
+}
+
+void zweitesFenster::nachEinsFiltern(){
+    bank->bewertungFiltern(1);
+
+}
+
+void zweitesFenster::nachZweiFiltern(){
+    bank->bewertungFiltern(2);
+
+}
+
+void zweitesFenster::nachDreiFiltern(){
+    bank->bewertungFiltern(3);
+
+}
+
+void zweitesFenster::nachVierFiltern(){
+    bank->bewertungFiltern(4);
+
+}
+
+void zweitesFenster::nachFuenfFiltern(){
+    bank->bewertungFiltern(5);
+
 }

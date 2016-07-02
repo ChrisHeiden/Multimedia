@@ -4,7 +4,7 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
                QLabel *anzahlBilder,QLabel *vollbild, QRadioButton *vollbildmodus, QLabel *option,
                QPushButton *zwanzig, QPushButton *vierzig, QPushButton *sechsig, QLabel *sprache, QRadioButton *deutsch,
                QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,  QLabel *tags, QLabel *bildBewertung,
-               QLabel *bildPfad, QLineEdit *tagsFeld, QLineEdit *bildBewertungsFeld, QLineEdit  *bildPfadFeld)
+               QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld)
 {
     m_fenster = fenster;
     m_westpart = westpart;

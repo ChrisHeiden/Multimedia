@@ -5,8 +5,7 @@ erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
 {
     bank = new Datenbank();
 
-    int id = 2;
-    if( id < 2 ){
+    if( bank->datenbankEmpty() == true ){
 
         /*--------1.Fenster----------*/
 

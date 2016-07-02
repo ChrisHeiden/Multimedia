@@ -6,6 +6,7 @@
 #include <QRadioButton>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QComboBox>
 
 /**
  * @brief The Farben class verändert die Farbe des dargestllten Fenstern in verschiedenen Farben
@@ -37,7 +38,7 @@ public:
            QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach,
            QRadioButton *deutsch, QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
-           QLineEdit *bildBewertungsFeld, QLineEdit  *bildPfadFeld);
+           QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld);
 
     /**
      * @brief schwarz verändert alle Elemente des dargestellten Fensters, sodass das Fenster schwarz
@@ -83,7 +84,7 @@ private:
     QLabel *m_bildBewertung;
     QLabel *m_bildPfad;
     QLineEdit *m_tagsFeld;
-    QLineEdit *m_bildBewertungsFeld;
+    QComboBox *m_bildBewertungsFeld;
     QLineEdit *m_bildPfadFeld;
 
 };

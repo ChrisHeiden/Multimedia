@@ -45,6 +45,7 @@ public:
     std::vector<QImage*> umwandeln(std::vector<std::string> *images);
 private:
     QString m_pfad;
+
 signals:
    void sucheBeenden(std::vector<QImage*> *images);
 };

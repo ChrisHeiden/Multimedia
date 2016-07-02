@@ -4,6 +4,7 @@
 #include "Bildersuche.h"
 #include "farben.h"
 #include "hilfe.h"
+#include "datenbank.h"
 #include <QWidget>
 #include <QRadioButton>
 #include <QLabel>
@@ -76,8 +77,8 @@ private:
     QLabel *tags = new QLabel("Tags:");
     QLabel *bildBewertung = new QLabel(tr("Sterne:"));
     QLabel *bildPfad = new QLabel(tr("Pfad:"));
-    QLineEdit *tagsFeld = new QLineEdit ;
-    QLineEdit *bildBewertungsFeld = new QLineEdit ;
+    QLineEdit *tagsFeld = new QLineEdit;
+    QComboBox *bildBewertungsFeld = new QComboBox;
     QLineEdit *bildPfadFeld = new QLineEdit;
 
 
@@ -99,8 +100,17 @@ private:
     BilderSuche *suche;
     QTranslator *m_translator;
 
+
     QPushButton *beenden;
 
+
+    void bildtagsandern();
+    void bildbewertungandern();
+    void nachEinsFiltern();
+    void nachZweiFiltern();
+    void nachDreiFiltern();
+    void nachVierFiltern();
+    void nachFuenfFiltern();
 
 
     void schwarz();
@@ -135,11 +145,6 @@ private:
         } else
             QWidget::changeEvent(event);
     }
-
-
-signals:
-
-public slots:
 };
 
 #endif // ZWEITESFENSTER_H
