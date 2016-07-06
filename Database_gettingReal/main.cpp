@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     test.neuesBild("./Testbilder/Phil.jpg");
     test.neuesBild("./Testbilder/Delia.jpg");*/
 
-    test.getID("./Testbilder/Phil.jpg");
+    //test.getID("./Testbilder/Phil.jpg");
 
     //test.alleBilderAusgeben();
     //test.alleIDsAusgeben();
@@ -42,27 +42,29 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     test.bildtagsAendern(10, "Tiere, Zoo");
     test.bildtagsAnzeigen(10);*/
     //test.bildtagsFiltern("Tiere");
-    /*test.bildtagsAendern(10, "Tiere");
-    test.bildtagsAnzeigen(10);
-    test.bildtagsAendern(10, "Tiere");
+    /*test.bildtagsAendern(3, "Tiere");
+    test.bildtagsAnzeigen(3);
+    test.bildtagsAendern(4, "Tiere");
     test.bildtagsAendern(5, "Pflanze");
-    test.bildtagsAendern(6, "Test");
-    test.bildtagsAendern(6, "Landschaft");
-    test.bildtagsAendern(8, "Tiere");
-    test.bildtagsAendern(9, "Tiere");
-    test.bildtagsAendern(10, "Pflanze");
-    test.bildtagsFiltern("Landschaft");*/
+    test.bildtagsAendern(2, "Test");
+    test.bildtagsAendern(2, "Landschaft");
+    test.bildtagsAendern(3, "Tiere");
+    test.bildtagsAendern(4, "Tiere");
+    test.bildtagsAendern(5, "Pflanze");*/
+    //test.bildtagsFiltern("Tiere");
+    //test.getAlleBilder_dargestelltTrue();
     /*test.bildBewerten(4, 5);
     cout << test.bewertungAnzeigen(4) << endl;
     test.bildBewerten(5, 3);
     cout << test.bewertungAnzeigen(5) << endl;
-    test.bildBewerten(6, 2);
+    test.bildBewerten(6, 5);
     cout << test.bewertungAnzeigen(6) << endl;
     test.bildBewerten(7, 3);
     cout << test.bewertungAnzeigen(7) << endl;
     test.bildBewerten(4, 4);
-    cout << test.bewertungAnzeigen(4) << endl;
-    test.bewertungFiltern(3);*/
+    cout << test.bewertungAnzeigen(4) << endl;*/
+    //test.bewertungFiltern(3);
+    //test.getAlleBilder_dargestelltTrue();
 
     //return a.exec();
     return 0;

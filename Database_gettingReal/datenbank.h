@@ -108,14 +108,25 @@ public:
      * @param filtertags Tags, nach denen gefiltert werden soll
      * @return IDs, der Bilder mit den entsprechenden Tags
      */
-    vector<QString> bildtagsFiltern(QString filtertag) const;
+    vector<QString> bildtagsFiltern(QString filtertag);
 
     /**
      * @brief bewertungFiltern laesst den Nutzer nach einer bestimmten Bildwertung filtern
      * @param filterwertung Wertung, nach der gefiltert werden soll
      * @return IDs, der Bilder mit der ausgewählten wertung
      */
-    vector<QString> bewertungFiltern(int filterwertung) const;
+    vector<QString> bewertungFiltern(int filterwertung);
+
+    /**
+     * @brief alleBilder_dargestelltFalse setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf false
+     */
+    void alleBilder_dargestelltFalse();
+
+    /**
+     * @brief getAlleBilder_dargestelltTrue liefert alle Bilder zurueck, die angezeigt werden
+     * @return vector mit allen Bilder, bei denen Bild_dargestellt true ist
+     */
+    vector<QString> getAlleBilder_dargestelltTrue();
 
 private:
     QSqlDatabase mydb;
