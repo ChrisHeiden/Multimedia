@@ -2,7 +2,7 @@
 #include "datenbank.h"
 #include "iostream"
 #include <QApplication>
-
+using namespace std;
 int main(int argc, char *argv[]) //int argc, char *argv[]
 {
     /*QApplication a(argc, argv);
@@ -16,6 +16,8 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     else{
         cout << "Die Datenbank ist nicht leer." << endl;
     }
+
+    //test.aktuellenBildPfadAnzeigen(2);
     /*test.BildLoeschen(1);
     test.BildLoeschen(2);
     test.BildLoeschen(3);
@@ -29,6 +31,8 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     test.neuesBild("./Testbilder/Blume.jpg");
     test.neuesBild("./Testbilder/Phil.jpg");
     test.neuesBild("./Testbilder/Delia.jpg");*/
+
+    test.getID("./Testbilder/Phil.jpg");
 
     //test.alleBilderAusgeben();
     //test.alleIDsAusgeben();

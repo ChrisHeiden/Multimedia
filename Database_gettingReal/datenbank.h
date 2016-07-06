@@ -44,6 +44,13 @@ public:
     bool bildLoeschen(int ID);
 
     /**
+     * @brief aktuellenBildPfadAnzeigen gibt den Bildpfad einer bestimmten ID zurueck
+     * @param ID ID des Bildes, dessen Pfad angezeigt werden soll
+     * @return Bildpfad des Bildes mit der ausgewählten ID
+     */
+    QString aktuellenBildPfadAnzeigen(int ID);
+
+    /**
      * @brief bildBewerten bewertet ein Bild in der Datenbank
      * @param ID ID des Bildes, das bewertet werden soll
      * @param Bewertung (von 1 bis 5) welche Bewertung das Bild erhalten soll
@@ -90,18 +97,25 @@ public:
     void alleIDsAusgeben();
 
     /**
+     * @brief getID gibt die ID zu einem Bildpfad zurueck
+     * @param pfad Pfad, dessen ID zurueckgeliefert werden soll
+     * @return ID des Pfads
+     */
+    int getID(string pfad);
+
+    /**
      * @brief bildtagsFiltern laesst den Nutzer nach Tags filtern
      * @param filtertags Tags, nach denen gefiltert werden soll
      * @return IDs, der Bilder mit den entsprechenden Tags
      */
-    bool bildtagsFiltern(QString filtertag);
+    vector<QString> bildtagsFiltern(QString filtertag) const;
 
     /**
      * @brief bewertungFiltern laesst den Nutzer nach einer bestimmten Bildwertung filtern
      * @param filterwertung Wertung, nach der gefiltert werden soll
      * @return IDs, der Bilder mit der ausgewählten wertung
      */
-    bool bewertungFiltern(int filterwertung);
+    vector<QString> bewertungFiltern(int filterwertung) const;
 
 private:
     QSqlDatabase mydb;
