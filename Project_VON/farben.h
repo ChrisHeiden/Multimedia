@@ -38,7 +38,7 @@ public:
            QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach,
            QRadioButton *deutsch, QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
-           QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld);
+           QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern);
 
     /**
      * @brief schwarz verändert alle Elemente des dargestellten Fensters, sodass das Fenster schwarz
@@ -86,6 +86,7 @@ private:
     QLineEdit *m_tagsFeld;
     QComboBox *m_bildBewertungsFeld;
     QLineEdit *m_bildPfadFeld;
+    QLineEdit *m_filtern;
 
 };
 

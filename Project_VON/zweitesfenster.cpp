@@ -3,6 +3,7 @@
 zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, QWidget *parent) : QWidget(parent)
 {
     m_translator = translator;
+    m_bilderAnzahl = 20;
     this->fenster = fenster;
 }
 
@@ -48,6 +49,9 @@ void zweitesFenster::erzeugeZweitesFenster(){
     zwanzig->setStyleSheet("background-color:grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
     vierzig->setStyleSheet("background-color:grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
     sechsig->setStyleSheet("background-color:grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
+    //QObject::connect(zwanzig, &QPushButton::clicked,this, &zweitesFenster::zwanzig);
+    //QObject::connect(vierzig, &QPushButton::clicked,this, &zweitesFenster::vierzig);
+    //QObject::connect(sechsig, &QPushButton::clicked,this, &zweitesFenster::sechsig);
 
 
     QGridLayout *bilder = new QGridLayout();
@@ -91,8 +95,13 @@ void zweitesFenster::erzeugeZweitesFenster(){
     /*Filter zur Behandlung ihrer Bildermenge + Label Filter*/
     QFont font6( "Calibri", 10, QFont::Bold);
     filter->setFont(font6);
-    QLineEdit *filtern = new QLineEdit();
-    QPushButton *filteraktivieren = new QPushButton("Filtern");
+    filtern = new QLineEdit;
+    filtern->setStyleSheet("background-color:white, color: black");
+    filternNachTags = filtern->text();
+    //qDebug() << filternNachTags;
+    QObject::connect(filtern, &QLineEdit::editingFinished,this, &zweitesFenster::nachTagFiltern);
+    QPushButton *filteraktivieren = new QPushButton(tr("Filtern"));
+
     filteraktivieren->setStyleSheet("background-color:grey ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
     QGridLayout *filt = new QGridLayout();
     filt->addWidget(filter,0,0);
@@ -175,10 +184,10 @@ void zweitesFenster::erzeugeZweitesFenster(){
     south->addWidget(tagsFeld);
 
     tagsFeld->setText("");
-    QObject::connect(tagsFeld, &QLineEdit::editingFinished,this, &zweitesFenster::bildtagsandern);// BildID muss als erster Parameter übergeben werden
+    QObject::connect(tagsFeld, &QLineEdit::editingFinished,this, &zweitesFenster::bildtagsAendern);// BildID muss als erster Parameter übergeben werden
     tagsFeld->clear();
     bank->bildtagsAnzeigen(1);//doppelklicken des Bildes
-    QObject::connect(bildBewertungsFeld, static_cast<void (QComboBox::*)(const int)>(&QComboBox::currentIndexChanged),this, &zweitesFenster::bildbewertungandern);// BildID muss als erster Parameter übergeben werden
+    QObject::connect(bildBewertungsFeld, static_cast<void (QComboBox::*)(const int)>(&QComboBox::currentIndexChanged),this, &zweitesFenster::bildBewertungAendern);// BildID muss als erster Parameter übergeben werden
     south->addWidget(bildPfad);
     south->addWidget(bildPfadFeld);
 
@@ -192,9 +201,8 @@ void zweitesFenster::erzeugeZweitesFenster(){
 
 
     /* Center muss hier programmiert werden */
-
     QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
-    suche = new BilderSuche(gewuenschterPfad);
+    suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl);
     suche->start();
     QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
     QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
@@ -228,17 +236,23 @@ void zweitesFenster::letzter(){
 
 }
 
-void zweitesFenster::bildtagsandern(){
-    bank->bildtagsAendern(1,tagsFeld->text());
+void zweitesFenster::bildtagsAendern(){
+
+    string pfad = l->getPfad();
+    cout << pfad << endl;
+    int id = bank->getID(pfad);
+    bank->bildtagsAendern(id,tagsFeld->text());
 }
 
-void zweitesFenster::bildbewertungandern(){
+void zweitesFenster::bildBewertungAendern(){
     int wert = bildBewertungsFeld->currentIndex() + 1;
-    bank->bildBewerten(1,wert); // Bild doppelklick
+    string pfad = l->getPfad();
+    cout << pfad << endl;
+    int id = bank->getID(pfad);
+    bank->bildBewerten(id,wert);
 }
 
-void zweitesFenster::BilderDarstellen(vector<QImage*> *qimages){
-
+void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
 
     QVBoxLayout *m_mainLayout = new QVBoxLayout;
     QScrollArea *m_area = new QScrollArea;
@@ -251,9 +265,15 @@ void zweitesFenster::BilderDarstellen(vector<QImage*> *qimages){
     layout->addLayout(center1);
     int index = 0;
 
-    for (unsigned int y = 0; y < qimages->size() ; y++) {
-        QLabel *l = new QLabel();
-        l->setPixmap(QPixmap::fromImage(*(qimages->at(y))));
+    map<string,QImage*>::iterator bilderDurchgehen;
+
+
+   for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
+        l = new MyLabel(bilderDurchgehen->first);
+        int idPfad = bank->getID(bilderDurchgehen->first);
+        cout << idPfad << endl;
+
+        l->setPixmap(QPixmap::fromImage(*(bilderDurchgehen->second)));
         index = index + 1;
         center1->addWidget(l);
         if(index % 5 == 0){
@@ -282,7 +302,7 @@ void zweitesFenster::schwarz(){
     Farben schwarz(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                    deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
-                   bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+                   bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern);
     schwarz.schwarz();
 }
 
@@ -290,7 +310,7 @@ void zweitesFenster::beige(){
     Farben beige(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                  vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                  deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
-                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern);
     beige.beige();
 }
 
@@ -298,7 +318,7 @@ void zweitesFenster::weiss(){
     Farben weiss(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                  vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                  deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
-                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+                 bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern);
     weiss.weiss();
 }
 
@@ -306,7 +326,7 @@ void zweitesFenster::pink(){
     Farben pink(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                     vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                     deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
-                    bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld);
+                    bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern);
     pink.pink();
 }
 
@@ -405,26 +425,60 @@ void zweitesFenster::vollbildModusInaktiv(){
 }
 
 void zweitesFenster::nachEinsFiltern(){
-    bank->bewertungFiltern(1);
+    vector<string> gefilterteBilder = bank->bewertungFiltern(1);
+
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
 
 }
 
 void zweitesFenster::nachZweiFiltern(){
-    bank->bewertungFiltern(2);
-
+    vector<string> gefilterteBilder = bank->bewertungFiltern(2);
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
 }
 
 void zweitesFenster::nachDreiFiltern(){
-    bank->bewertungFiltern(3);
+    vector<string> gefilterteBilder = bank->bewertungFiltern(3);
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
 
 }
 
 void zweitesFenster::nachVierFiltern(){
-    bank->bewertungFiltern(4);
+    vector<string> gefilterteBilder = bank->bewertungFiltern(4);
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
 
 }
 
 void zweitesFenster::nachFuenfFiltern(){
-    bank->bewertungFiltern(5);
+    vector<string> gefilterteBilder = bank->bewertungFiltern(5);
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
 
 }
+
+void zweitesFenster::nachTagFiltern(){
+   // qDebug() << filternNachTags;
+    vector<string> gefilterteBilder = bank->bildtagsFiltern(filternNachTags);
+    std::map<string, QImage*> umgewandelteBilder = suche->umwandeln(&gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(&umgewandelteBilder);
+}
+
+/*
+void zweitesFenster::zwanzig(){
+
+}
+
+void zweitesFenster::vierzig(){
+    m_bilderAnzahl = 40;
+}
+
+void zweitesFenster::sechsig(){
+    m_bilderAnzahl = 60;
+
+}
+*/
+
+

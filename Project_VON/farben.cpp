@@ -4,7 +4,7 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
                QLabel *anzahlBilder,QLabel *vollbild, QRadioButton *vollbildmodus, QLabel *option,
                QPushButton *zwanzig, QPushButton *vierzig, QPushButton *sechsig, QLabel *sprache, QRadioButton *deutsch,
                QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,  QLabel *tags, QLabel *bildBewertung,
-               QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld)
+               QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern)
 {
     m_fenster = fenster;
     m_westpart = westpart;
@@ -28,6 +28,7 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
     m_tagsFeld = tagsFeld;
     m_bildBewertungsFeld = bildBewertungsFeld;
     m_bildPfadFeld = bildPfadFeld;
+    m_filtern = filtern;
 }
 
 void Farben::schwarz(){
@@ -52,10 +53,10 @@ void Farben::schwarz(){
     m_bildBewertung->setStyleSheet("color: rgb(199,187,187);");
     m_bildPfad->setStyleSheet("color: rgb(199,187,187);");
 
-    m_tagsFeld->setStyleSheet("background-color: white; color: black");
-    m_bildBewertungsFeld->setStyleSheet("background-color: rbg(33,30,33); color: white");
-    m_bildPfadFeld->setStyleSheet("background-color: rbg(33,30,33); color: white");
-
+    m_tagsFeld->setStyleSheet("background-color: back; color: gray");
+    m_bildBewertungsFeld->setStyleSheet("background-color: back; color: gray");
+    m_bildPfadFeld->setStyleSheet("background-color: rbg(33,30,33); color: gray");
+    m_filtern->setStyleSheet("background-color: rbg(33,30,33); color: gray");
 
     m_fenster->update();
 }
@@ -83,9 +84,10 @@ void Farben::beige(){
     m_bildBewertung->setStyleSheet("color: rgb(245,194,93);");
     m_bildPfad->setStyleSheet("color: rgb(245,194,93);");
 
-    m_tagsFeld->setStyleSheet("background-color: white; color: rgb(245,230,199)");
-    m_bildBewertungsFeld->setStyleSheet("background-color:rgb(245,230,199); color: beige");
-    m_bildPfadFeld->setStyleSheet("background-color:rgb(245,230,199); color: beige");
+    m_tagsFeld->setStyleSheet("background-color: beige; color: rgb(245,194,93)");
+    m_bildBewertungsFeld->setStyleSheet("background-color:beige; color: rgb(245,194,93)");
+    m_bildPfadFeld->setStyleSheet("background-color:rgb(245,230,199); color: rgb(245,194,93)");
+    m_filtern->setStyleSheet("background-color: beige; color: rgb(245,194,93)");
 
     m_fenster->update();
 }
@@ -114,8 +116,9 @@ void Farben::weiss(){
     m_bildPfad->setStyleSheet("color: black;");
 
     m_tagsFeld->setStyleSheet("background-color: white; color: black");
-    m_bildBewertungsFeld->setStyleSheet("background-color: grey; color: white");
+    m_bildBewertungsFeld->setStyleSheet("background-color: white; color: white");
     m_bildPfadFeld->setStyleSheet("background-color: grey; color: white");
+    m_filtern->setStyleSheet("background-color: white; color: black");
 
     m_fenster->update();
 }
@@ -143,8 +146,8 @@ void Farben::pink(){
     m_bildBewertung->setStyleSheet("color: rgb(171,19,171);");
     m_bildPfad->setStyleSheet("color: rgb(171,19,171);");
 
-    m_tagsFeld->setStyleSheet("background-color: white; color: rgb(171,19,171); ");
-    m_bildBewertungsFeld->setStyleSheet("background-color: rgb(240,192,240); color: rgb(171,19,171);");
+    m_tagsFeld->setStyleSheet("background-color: pink; color: rgb(171,19,171); ");
+    m_bildBewertungsFeld->setStyleSheet("background-color: pink; color: rgb(171,19,171);");
     m_bildPfadFeld->setStyleSheet("background-color: rgb(240,192,240); color: rgb(171,19,171);");
 
     m_fenster->update();

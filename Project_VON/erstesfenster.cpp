@@ -67,13 +67,13 @@ erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
         palette->setColor(QPalette::WindowText,Qt::gray);
         txt->setPalette(*palette);
 
-        txt->setStyleSheet("QLabel { background-color: black;color:  grey  }");
+        txt->setStyleSheet("background-color: black; color: rgb(255,250,250)");
         scene->addWidget(txt);                //Label txt wird zur Scene hinzugefügt
 
         /*--------------Button Layout------------------*/
 
         QObject::connect(startButton, &QPushButton::clicked,this, &erstesFenster::openSecondWindow);
-        startButton->setStyleSheet("background-color: black; color:  grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 10pt; font-weight: bold;");
+        startButton->setStyleSheet("background-color: black; color: rgb(255,250,250) ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 10pt; font-weight: bold;");
         startButton->setGeometry(285, 550, 180, 35);  // absolute positionierung
 
 
@@ -141,16 +141,16 @@ erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
         palette->setColor(QPalette::WindowText,Qt::gray);
         txt->setPalette(*palette);
 
-        txt->setStyleSheet("QLabel { background-color: black }");
+        txt->setStyleSheet("background-color: black; color: rgb(255,250,250)");
         scene->addWidget(txt);                //Label txt wird zur Scene hinzugefügt
 
         /*--------------Button Layout------------------*/
         QObject::connect(startButton, &QPushButton::clicked,this, &erstesFenster::openSecondWindow);
-        startButton->setStyleSheet("background-color: black; color:  grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
+        startButton->setStyleSheet("background-color: black; color: rgb(255,250,250); border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
         startButton->setGeometry(15, 550, 220, 25);  // absolute positionierung
 
         //QObject::connect(letztenOrdnerButton, &QPushButton::clicked,this, &erstesFenster::letzter);
-        letztenOrdnerButton->setStyleSheet("background-color: black; color:  grey ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
+        letztenOrdnerButton->setStyleSheet("background-color: black; color: rgb(255,250,250); border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
         letztenOrdnerButton->setGeometry(490, 550, 300, 35);  // absolute positionierung
 
         scene->addWidget(startButton);           //Button "ja" wird zur Scene hinzugefügt

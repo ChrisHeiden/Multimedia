@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QGridLayout>
+#include <mylabel.h>
+#include <map>
 
 /**
  * @brief The BilderSuche class ist ein Thread, welcher sich um die Suche aller Bilder kümmert
@@ -25,7 +27,7 @@ public:
      * @brief BilderSuche ist der Konstruktor der Klasse, welcher die Membervariable initialsiert
      * @param str, ist der Bildpfad von dem die Suche starten soll
      */
-    BilderSuche(QString str);
+    BilderSuche(QString str, int anzahhlBilder);
     /**
      * @brief run ist der Start des Threads, welcher dem Thread anweist in die
      *        alleGenfundenenBilder()-Funktion zu gehen und in die umwandeln()-Funktion.
@@ -42,12 +44,13 @@ public:
      * @param images vom Typ vector<string>, welcher alle Bildpfade enthält
      * @return vector<QImage> enthält alle Bilder, welche in der Aplikation dargestellt werden sollen
      */
-    std::vector<QImage*> umwandeln(std::vector<std::string> *images);
+    std::map<string, QImage *> umwandeln(std::vector<std::string> *images, int zahl);
 private:
     QString m_pfad;
+    int m_anzahhlBilder;
 
 signals:
-   void sucheBeenden(std::vector<QImage*> *images);
+   void sucheBeenden(std::map<string, QImage*> *images);
 };
 
 #endif // BILDERSUCHE_H
