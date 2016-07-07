@@ -237,8 +237,7 @@ void zweitesFenster::letzter(){
 }
 
 void zweitesFenster::bildtagsAendern(){
-
-    string pfad = l->getPfad();
+    //string pfad = l->getPfad();
     cout << pfad << endl;
     int id = bank->getID(pfad);
     bank->bildtagsAendern(id,tagsFeld->text());
@@ -246,7 +245,7 @@ void zweitesFenster::bildtagsAendern(){
 
 void zweitesFenster::bildBewertungAendern(){
     int wert = bildBewertungsFeld->currentIndex() + 1;
-    string pfad = l->getPfad();
+    //string pfad = l->getPfad();
     cout << pfad << endl;
     int id = bank->getID(pfad);
     bank->bildBewerten(id,wert);
@@ -269,9 +268,11 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
 
 
    for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
-        l = new MyLabel(bilderDurchgehen->first);
-        int idPfad = bank->getID(bilderDurchgehen->first);
-        cout << idPfad << endl;
+        MyLabel *l= new MyLabel(bilderDurchgehen->first);
+        QObject::connect(l,&MyLabel::pfadNutzen,this, &zweitesFenster::setPfad);
+
+        //int idPfad = bank->getID(bilderDurchgehen->first);
+        //cout << idPfad << endl;
 
         l->setPixmap(QPixmap::fromImage(*(bilderDurchgehen->second)));
         index = index + 1;
@@ -481,4 +482,8 @@ void zweitesFenster::sechsig(){
 }
 */
 
-
+void zweitesFenster::setPfad(string pfad){
+    this->pfad = pfad;
+    cout << "" << endl;
+    cout << pfad << endl;
+}

@@ -9,6 +9,7 @@ using namespace std;
 
 class MyLabel: public QLabel
 {
+    Q_OBJECT
 public:
 
     explicit MyLabel(string pfad, QWidget *parent = 0);
@@ -29,6 +30,12 @@ protected:
 
 private:
     string m_pfad;
+
+public:
+signals:
+void pfadNutzen(std::string pfad);
+
+
 };
 
 #endif // MYLABEL_H

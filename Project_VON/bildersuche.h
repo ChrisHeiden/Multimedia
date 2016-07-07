@@ -45,10 +45,13 @@ public:
      * @return vector<QImage> enthält alle Bilder, welche in der Aplikation dargestellt werden sollen
      */
     std::map<string, QImage *> umwandeln(std::vector<std::string> *images, int zahl);
+    std::map<string, QImage*> qimages;
 private:
     QString m_pfad;
     int m_anzahhlBilder;
 
+
+public:
 signals:
    void sucheBeenden(std::map<string, QImage*> *images);
 };

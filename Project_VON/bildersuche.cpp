@@ -37,7 +37,6 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
 
 
 std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int zahl){
-    std::map<string, QImage*> qimages;
     for(unsigned int i= 0; i < images->size(); i++){
          QString qstring(images->at(i).c_str());
          QImage *image = new QImage(qstring);

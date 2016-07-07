@@ -102,7 +102,8 @@ private:
     QLineEdit *filtern;
     QString filternNachTags;
     int m_bilderAnzahl;
-    MyLabel *l;
+    //MyLabel *l;
+    string pfad;
 
     //QLabel *myLabel = new QLabel;
     BilderSuche *suche;
@@ -159,6 +160,9 @@ private:
         } else
             QWidget::changeEvent(event);
     }
+
+public slots:
+    void setPfad(std::string pfad);
 };
 
 #endif // ZWEITESFENSTER_H

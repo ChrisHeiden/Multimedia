@@ -17,9 +17,10 @@ void MyLabel::mousePressEvent(QMouseEvent *e)
     QString result = "Mouse Press: raw button=" + QString::number(j) + "  Qt=" + enumNameFromValue(e->button());
     QString buttonsString = MyLabel::enumNamesFromMouseButtons(e->buttons());
     result += "\n heldbuttons " + buttonsString;
+    //setPfad(m_pfad);
     //qDebug() << result;
-    std::cout << m_pfad << std::endl;
-
+    //std::cout << m_pfad << std::endl;
+    pfadNutzen(m_pfad);
 
 }
 
@@ -41,9 +42,10 @@ void MyLabel::mouseDoubleClickEvent(QMouseEvent *e)
                 + "  Qt=" + enumNameFromValue(e->button());
     QString buttonsString = MyLabel::enumNamesFromMouseButtons(e->buttons());
     result += "\n heldbuttons" + buttonsString;
-    getPfad();
+    //setPfad(m_pfad);
     //std::cout << m_pfad << std::endl;
     //qDebug() << result;
+    pfadNutzen(m_pfad);
 
 }
 
@@ -88,6 +90,11 @@ QString MyLabel::enumNamesFromMouseButtons(const Qt::MouseButtons buttons)
 }
 
 string MyLabel::getPfad(){
-    std::cout << m_pfad << std::endl;
+    //std::cout << m_pfad << std::endl;
     return m_pfad;
 }
+/*
+void MyLabel::setPfad(string pfad){
+    this->m_pfad = pfad;
+}
+*/
