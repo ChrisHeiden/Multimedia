@@ -228,9 +228,9 @@ int Datenbank::bewertungAnzeigen(int ID){
     return wertung;
 }
 
-vector<QString> Datenbank::bewertungFiltern(int filterwertung){
+vector<string> Datenbank::bewertungFiltern(int filterwertung){
     alleBilder_dargestelltFalse();
-    vector<QString> bildauswahl;
+    vector<string> bildauswahl;
     QSqlQuery query;
     query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung))");
     query.bindValue(":Bildwertung", filterwertung);
@@ -242,7 +242,8 @@ vector<QString> Datenbank::bewertungFiltern(int filterwertung){
     while (query.next())
     {
        QString Bildpfad = query.value(idName).toString();
-       bildauswahl.push_back(Bildpfad);
+       string pfad = Bildpfad.toStdString();
+       bildauswahl.push_back(pfad);
        qDebug() << Bildpfad;
     }
     return bildauswahl;
@@ -317,9 +318,9 @@ QString Datenbank::bildtagsAnzeigen(int ID){
     return Tags;
 }
 
-vector<QString> Datenbank::bildtagsFiltern(QString filtertag){
+vector<string> Datenbank::bildtagsFiltern(QString filtertag){
     this->alleBilder_dargestelltFalse();
-    vector<QString> bildauswahl;
+    vector<string> bildauswahl;
     QSqlQuery query;
     QString filter = "%" + filtertag + "%";
     query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag))");
@@ -332,7 +333,8 @@ vector<QString> Datenbank::bildtagsFiltern(QString filtertag){
     while (query.next())
     {
        QString Bildpfad = query.value(idName).toString();
-       bildauswahl.push_back(Bildpfad);
+       string pfad = Bildpfad.toStdString();
+       bildauswahl.push_back(pfad);
        qDebug() << Bildpfad;
     }
     return bildauswahl;
