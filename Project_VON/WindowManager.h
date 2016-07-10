@@ -2,6 +2,8 @@
 #define WINDOWMANAGER_H
 #include "erstesfenster.h"
 #include "zweitesfenster.h"
+#include "drittesfenster.h"
+#include "mylabel.h"
 #include <QWidget>
 #include <QStackedLayout>
 
@@ -20,21 +22,25 @@ public:
     WindowManager(QTranslator *translator);
 
     /**
-     * @brief ~WindowManager ist der Dekonstruktor der Klasse, welcher sich um die Entfernung des
-     *        Widgets Fenster kümmert. Dieser darf überschrieben werden
+     * @brief ~WindowManager ist der Destruktor der Klasse, welcher sich um die Entfernung des
+     *        Widgets fenster kümmert.
      */
     virtual ~WindowManager();
 
 
 private:
-    QWidget *fenster = new QWidget;          //zur Dastellung aller Objekte innerhalb des Fensters
-    void showZweitesFenster();
+    QWidget *fenster;        //zur Dastellung aller Objekte innerhalb des Fensters
+    QStackedLayout *layout;
     QVBoxLayout *layout2;
 
     erstesFenster *erstes;
-    zweitesFenster *zwei;
-    QStackedLayout *layout;
+    zweitesFenster *zweites;
+    drittesFenster *drittes;
+
     QTranslator *m_translator;
+
+    void showZweitesFenster();
+    void showDrittesFenster(string pfad);
 };
 
 #endif // WINDOWMANAGER_H

@@ -15,20 +15,20 @@ Datenbank::Datenbank(){
     {
        qDebug() << "Database: connection ok";
     }
-/*
-    QSqlQuery qry;
+
+    /*QSqlQuery qry;
     qry.prepare( "Drop table Bilder" );
         if( !qry.exec() )
             qDebug() << qry.lastError();
         else
-            qDebug() << "Table dropped!";
-*/
+            qDebug() << "Table dropped!";*/
+
     QSqlQuery qry;
-    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 0 and 5), Bildtags text, Bild_dargestellt boolean)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer)" ); //Bild_dargestellt 0 = false, 1 = true
       if( !qry.exec() )
         qDebug() << qry.lastError();
       else
-          qDebug() << "Table created!" << IDZaehler;
+          qDebug() << "Table created!";
 }
 
 bool Datenbank::datenbankEmpty(){
@@ -36,7 +36,6 @@ bool Datenbank::datenbankEmpty(){
     QSqlQuery query("SELECT COUNT(*) FROM Bilder");
     query.first();
     int count = query.value(0).toInt();
-    cout << count << endl;
     if(count == 0){
         empty = true;
     }
@@ -65,13 +64,13 @@ bool Datenbank::neuesBild(QString Bildpfad){
     bool erfolgreich = false;
     if(!bildpfadExists(Bildpfad)){
         QSqlQuery query;
-        //query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bildwertung, Tags) values ((:BildID), (:Bildpfad), 3, 'TestTag')");
-        query.prepare("INSERT INTO Bilder(BildID, Bildpfad) values (null,(:Bildpfad))");
+        //query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bildwertung, Tags, Bild_dargestellt) values ((:BildID), (:Bildpfad), 3, 'TestTag')");
+        query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bild_dargestellt) values (null,(:Bildpfad), 1)");
         query.bindValue(":Bildpfad", Bildpfad);
         if(query.exec())
         {
             erfolgreich = true;
-            qDebug() << "Bild hinzugefuegt!" << Bildpfad; //" ID: " <<  IDZaehler
+            qDebug() << "Bild hinzugefuegt!"; //" ID: " <<  IDZaehler
             //IDZaehler++;
         }
         else
@@ -81,10 +80,33 @@ bool Datenbank::neuesBild(QString Bildpfad){
         }
     }
     else{
-        cout << "Bild existiert bereits!" << endl;
+        qDebug() << "Bild existiert bereits!";
     }
 
     return erfolgreich;
+}
+
+int Datenbank::getID(string pfad){
+    QString qPfad = QString::fromStdString(pfad);
+    if(bildpfadExists(qPfad)){
+        int ID;
+        QSqlQuery query;
+        query.prepare("SELECT BildID FROM Bilder WHERE Bildpfad = (:Bildpfad)");
+        query.bindValue(":Bildpfad", qPfad);
+        if(query.exec()){
+
+            query.first();
+            ID = query.value(0).toInt();
+            qDebug() << "ID gefunden:" << ID;
+        }
+        else{
+            qDebug() << "ID nicht gefunden";
+        }
+        return ID;
+    }
+    else{
+        return -1;
+    }
 }
 
 bool Datenbank::bildExists(int ID){
@@ -135,6 +157,22 @@ void Datenbank::alleBilderAusgeben(){
        QString Bildpfad = query.value(idName).toString();
        qDebug() << Bildpfad;
     }
+}
+
+QString Datenbank::aktuellenBildPfadAnzeigen(int ID){
+    QString Pfad = "";
+    QSqlQuery query;
+    query.prepare("SELECT Bildpfad FROM Bilder WHERE BildID = (:BildID)");
+    query.bindValue(":BildID", ID);
+    if(!query.exec()){
+        qDebug() << "Query Error:" << query.lastError();
+    }
+    else{
+        query.first();
+        Pfad = query.value(0).toString();
+        qDebug() << Pfad;
+    }
+    return Pfad;
 }
 
 void Datenbank::alleIDsAusgeben(){
@@ -189,9 +227,14 @@ int Datenbank::bewertungAnzeigen(int ID){
     }
     return wertung;
 }
-/*
-bool Datenbank::bewertungFiltern(int filterwertung){
+
+vector<string> Datenbank::bewertungFiltern(int filterwertung){
+    alleBilder_dargestelltFalse();
+    vector<string> bildauswahl;
     QSqlQuery query;
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung))");
+    query.bindValue(":Bildwertung", filterwertung);
+    query.exec();
     query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung)");
     query.bindValue(":Bildwertung", filterwertung);
     query.exec();
@@ -199,37 +242,12 @@ bool Datenbank::bewertungFiltern(int filterwertung){
     while (query.next())
     {
        QString Bildpfad = query.value(idName).toString();
+       string pfad = Bildpfad.toStdString();
+       bildauswahl.push_back(pfad);
        qDebug() << Bildpfad;
     }
-    return true;
+    return bildauswahl;
 }
-*/
-/* ALT
-bool Datenbank::bildtagsAendern(int ID, QString Tag){
-    bool erfolgreich = false;
-    if(bildExists(ID)){
-        QString alteTags = bildtagsAnzeigen(ID);
-        qDebug() << alteTags;
-
-        alteTags = alteTags + ", " + Tag;
-        QSqlQuery query;
-        query.prepare("UPDATE Bilder SET Bildtags = (:Bildtags) WHERE BildID = (:BildID)");
-        query.bindValue(":Bildtags", alteTags);
-        query.bindValue(":BildID", ID);
-
-        if(query.exec())
-        {
-            erfolgreich = true;
-            qDebug() << "Tags geaendert!";
-        }
-        else
-        {
-            qDebug() << "BildtagsAendern error:  "
-                      << query.lastError();
-        }
-    }
-    return erfolgreich;
-}*/
 
 bool Datenbank::bildtagsAendern(int ID, QString Tag){
     bool erfolgreich = false;
@@ -254,13 +272,13 @@ bool Datenbank::bildtagsAendern(int ID, QString Tag){
 }
 
 QString Datenbank::bildtagsAnzeigen(int ID){
-    QString Tags;
+    QString Tags = "";
     if(bildExists(ID)){
         QSqlQuery query;
         query.prepare("SELECT Bildtags FROM Bilder WHERE BildID = (:BildID)");
         query.bindValue(":BildID", ID);
         if(!query.exec()){
-            qDebug() << "Query Error:" << query.lastError();
+            qDebug() << "bildtagsAnzeigen Error:" << query.lastError();
         }
         else{
             int idName = query.record().indexOf("Bildtags");
@@ -272,10 +290,15 @@ QString Datenbank::bildtagsAnzeigen(int ID){
     }
     return Tags;
 }
-/*
-bool Datenbank::bildtagsFiltern(QString filtertag){
+
+vector<string> Datenbank::bildtagsFiltern(QString filtertag){
+    this->alleBilder_dargestelltFalse();
+    vector<string> bildauswahl;
     QSqlQuery query;
     QString filter = "%" + filtertag + "%";
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag))");
+    query.bindValue(":Filtertag", filter);
+    query.exec();
     query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag)");
     query.bindValue(":Filtertag", filter);
     query.exec();
@@ -283,82 +306,35 @@ bool Datenbank::bildtagsFiltern(QString filtertag){
     while (query.next())
     {
        QString Bildpfad = query.value(idName).toString();
-       qDebug() << Bildpfad;
-       cout << "test" << endl;
-    }
-    return true;
-}
-*/
-QString Datenbank::aktuellenBildPfadAnzeigen(int ID){
-    QString Pfad = "";
-    QSqlQuery query;
-    query.prepare("SELECT Bildpfad FROM Bilder WHERE BildID = (:BildID)");
-    query.bindValue(":BildID", ID);
-    if(!query.exec()){
-        qDebug() << "Query Error:" << query.lastError();
-    }
-    else{
-        query.first();
-        Pfad = query.value(0).toString();
-        // qDebug() << Pfad;
-    }
-    return Pfad;
-}
-
-vector<string> Datenbank::bildtagsFiltern(QString filtertag) const{
-    vector<string> bildauswahl;
-    QSqlQuery query;
-    QString filter = "%" + filtertag + "%";
-    query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag)");
-    query.bindValue(":Filtertag", filter);
-    query.exec();
-    int idName = query.record().indexOf("Bildpfad");
-    while (query.next())
-    {
-       QString Bildpfad = query.value(idName).toString();
-       string path = Bildpfad.toStdString();
-       bildauswahl.push_back(path);
+       string pfad = Bildpfad.toStdString();
+       bildauswahl.push_back(pfad);
        qDebug() << Bildpfad;
     }
     return bildauswahl;
 }
 
-vector<string> Datenbank::bewertungFiltern(int filterwertung) const{
-    vector<string> bildauswahl;
+void Datenbank::alleBilder_dargestelltFalse(){
     QSqlQuery query;
-    query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung)");
-    query.bindValue(":Bildwertung", filterwertung);
-    query.exec();
-    int idName = query.record().indexOf("Bildpfad");
-    while (query.next())
-    {
-       QString Bildpfad = query.value(idName).toString();
-       string path = Bildpfad.toStdString();
-       bildauswahl.push_back(path);
-       qDebug() << Bildpfad;
-    }
-    return bildauswahl;
-}
-
-int Datenbank::getID(string pfad){
-    QString qPfad = QString::fromStdString(pfad);
-    if(bildpfadExists(qPfad)){
-        int ID;
-        QSqlQuery query;
-        query.prepare("SELECT BildID FROM Bilder WHERE Bildpfad = (:Bildpfad)");
-        query.bindValue(":Bildpfad", qPfad);
-        if(query.exec()){
-
-            query.first();
-            ID = query.value(0).toInt();
-            qDebug() << "ID gefunden:" << ID;
-        }
-        else{
-            qDebug() << "ID nicht gefunden";
-        }
-        return ID;
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 0 WHERE Bild_dargestellt = 1");
+    if(query.exec()){
+        qDebug() << "Alle Bild_dargestellt auf false gesetzt";
     }
     else{
-        return -1;
+        qDebug() << "alleBilder_dargestelltFalse Error:" << query.lastError();
     }
+}
+
+vector<string> Datenbank::getAlleBilder_dargestelltTrue(){
+    vector<string> bildauswahl;
+    QSqlQuery query;
+    query.prepare("SELECT Bildpfad FROM Bilder WHERE Bild_dargestellt = 1");
+    query.exec();
+    int idName = query.record().indexOf("Bildpfad");
+    while(query.next()){
+        QString Bildpfad = query.value(idName).toString();
+        string str = Bildpfad.toStdString();
+        bildauswahl.push_back(str);
+        qDebug() << Bildpfad;
+    }
+    return bildauswahl;
 }

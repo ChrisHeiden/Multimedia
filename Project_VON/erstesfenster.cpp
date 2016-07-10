@@ -5,12 +5,10 @@ erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
 {
     bank = new Datenbank();
 
+
+
+
     if( bank->datenbankEmpty() == true ){
-
-        /*--------1.Fenster----------*/
-
-        this->setWindowTitle("VON");  //Setzt Titel des Fensters
-
         /*--------Sound abspielen----------*/
 
         sound = new Sound();
@@ -83,10 +81,6 @@ erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
 
     }
     else{
-        /*--------1.Fenster----------*/
-
-        this->setWindowTitle("VON");  //Setzt Titel des Fensters
-
         /*--------Sound abspielen----------*/
 
         sound = new Sound();

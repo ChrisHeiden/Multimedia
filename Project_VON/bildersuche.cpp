@@ -22,7 +22,7 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     smatch e;
     regex exp(".*.jpg$");
     Datenbank bilderdatenbank;
-
+   //bilderdatenbank.alleBilder_dargestelltFalse();
     while(it.next() != NULL){
         if((it.fileInfo().isFile() == true)  && (regex_match(it.fileInfo().absoluteFilePath().toStdString(),e,exp))){
             for(auto a:e){
@@ -35,15 +35,18 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     return bilder;
 }
 
-
 std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int zahl){
+    std::map<string, QImage*> qimages;
+    cout << zahl << endl;
+
     for(unsigned int i= 0; i < images->size(); i++){
          QString qstring(images->at(i).c_str());
          QImage *image = new QImage(qstring);
          if(zahl == 20){
             if(image->height() > image->width()){
                 (*image) = image->scaledToHeight(300, Qt::SmoothTransformation);
-                 qimages[images->at(i)] = image;
+                qimages[images->at(i)] = image;
+
             }
             else{
                 (*image) = image->scaledToWidth(300, Qt::SmoothTransformation);
@@ -51,10 +54,25 @@ std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *image
             }
          }
          else if(zahl == 40){
-             qDebug() << "test";
+             if(image->height() > image->width()){
+                 (*image) = image->scaledToHeight(200, Qt::SmoothTransformation);
+                 qimages[images->at(i)] = image;
+             }
+             else{
+                 (*image) = image->scaledToWidth(200, Qt::SmoothTransformation);
+                 qimages[images->at(i)] = image;
+             }
          }
          else{
-             qDebug() << "test2";
+             if(image->height() > image->width()){
+                 (*image) = image->scaledToHeight(100, Qt::SmoothTransformation);
+                 qimages[images->at(i)] = image;
+
+                 }
+             else{
+                 (*image) = image->scaledToWidth(100, Qt::SmoothTransformation);
+                 qimages[images->at(i)] = image;
+             }
          }
     }
     std::cout << "Ende" << std::endl;

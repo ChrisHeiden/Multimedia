@@ -1,13 +1,10 @@
 #include "mylabel.h"
 
-MyLabel::MyLabel(QWidget *parent) :
-    QLabel(parent)
-{}
+MyLabel::MyLabel(QWidget *parent) : QLabel(parent){}
 
-MyLabel::MyLabel(string pfad, QWidget *parent) :
-    QLabel(parent)
+MyLabel::MyLabel(string pfad, Datenbank* bank, QWidget *parent) : QLabel(parent)
 {
-
+    this->bank = bank;
     m_pfad = pfad;
 }
 
@@ -17,10 +14,13 @@ void MyLabel::mousePressEvent(QMouseEvent *e)
     QString result = "Mouse Press: raw button=" + QString::number(j) + "  Qt=" + enumNameFromValue(e->button());
     QString buttonsString = MyLabel::enumNamesFromMouseButtons(e->buttons());
     result += "\n heldbuttons " + buttonsString;
-    //setPfad(m_pfad);
-    //qDebug() << result;
-    //std::cout << m_pfad << std::endl;
     pfadNutzen(m_pfad);
+
+    bildBewertung();
+    bewertungAnzeigen(bewertung);
+
+    bildTags();
+    tagsAnzeigen(tags);
 
 }
 
@@ -30,9 +30,6 @@ void MyLabel::mouseReleaseEvent(QMouseEvent *e)
     QString result = "Mouse Release: raw button=" + QString::number(j) + "  Qt=" + enumNameFromValue(e->button());
     QString buttonsString = MyLabel::enumNamesFromMouseButtons(e->buttons());
     result += "\n heldbuttons " + buttonsString;
-    //std::cout << m_pfad << std::endl;
-    //qDebug() << result;
-
 }
 
 void MyLabel::mouseDoubleClickEvent(QMouseEvent *e)
@@ -42,13 +39,9 @@ void MyLabel::mouseDoubleClickEvent(QMouseEvent *e)
                 + "  Qt=" + enumNameFromValue(e->button());
     QString buttonsString = MyLabel::enumNamesFromMouseButtons(e->buttons());
     result += "\n heldbuttons" + buttonsString;
-    //setPfad(m_pfad);
-    //std::cout << m_pfad << std::endl;
-    //qDebug() << result;
-    pfadNutzen(m_pfad);
+    diahow(m_pfad);
 
 }
-
 
 int MyLabel::buttonByNumber(const Qt::MouseButton button)
 {
@@ -90,11 +83,15 @@ QString MyLabel::enumNamesFromMouseButtons(const Qt::MouseButtons buttons)
 }
 
 string MyLabel::getPfad(){
-    //std::cout << m_pfad << std::endl;
     return m_pfad;
 }
-/*
-void MyLabel::setPfad(string pfad){
-    this->m_pfad = pfad;
+
+void MyLabel::bildBewertung(){
+    int id = bank->getID(m_pfad);
+    bewertung = bank->bewertungAnzeigen(id);
 }
-*/
+
+void MyLabel::bildTags(){
+    int id = bank->getID(m_pfad);
+    tags = bank->bildtagsAnzeigen(id);
+}

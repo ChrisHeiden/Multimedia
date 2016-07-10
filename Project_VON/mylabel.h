@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <iostream>
+#include "datenbank.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ class MyLabel: public QLabel
     Q_OBJECT
 public:
 
-    explicit MyLabel(string pfad, QWidget *parent = 0);
+    explicit MyLabel(string pfad, Datenbank *bank, QWidget *parent = 0);
 
     MyLabel(QWidget* parent = 0);
 
@@ -30,11 +31,21 @@ protected:
 
 private:
     string m_pfad;
+    int bewertung;
+    QString tags;
+    Datenbank *bank;
+
+public slots:
+    void bildBewertung();
+    void bildTags();
+
 
 public:
 signals:
 void pfadNutzen(std::string pfad);
-
+void tagsAnzeigen(QString tags);
+void bewertungAnzeigen(int bewertung);
+void diahow(string m_pfad);
 
 };
 

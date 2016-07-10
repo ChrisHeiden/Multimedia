@@ -4,6 +4,12 @@
 #include "datenbank.h"
 #include <QPushButton>
 #include <QGridLayout>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
+#include <iostream>
+
+using namespace std;
 
 
 class drittesFenster : public QWidget
@@ -18,29 +24,35 @@ public:
      */
     explicit drittesFenster(QWidget *fenster, QWidget *parent = 0);
 
-    virtual ~drittesFenster();
+    ~drittesFenster();
     /**
      * @brief erzeuge drittes Fenster und stellt es dar
      */
-    void erzeugeDrittesFenster();
-
-    /**
-     * @brief bildInGrossDarstellen zeigt dem Nutzer das gewünschte Bild in einer Diashow
-     */
-    void bildInGrossDarstellen();
-
+    void erzeugeDrittesFenster(string pfad);
 
 private:
 
     QWidget *m_fenster;
+
+    QGridLayout *layout;
+    QVBoxLayout *buttons;
+    QHBoxLayout *buttons2;
+
+    QVBoxLayout *fuellung1;
+    QVBoxLayout *fuellung2;
+    QHBoxLayout *fuellung3;
+    QHBoxLayout *fuellung4;
+
+    QGraphicsScene *scene;
+    QGraphicsView *view;
+
     QPushButton *eins;
     QPushButton *zwei;
     QPushButton *drei;
     QPushButton *vier;
     QPushButton *fuenf;
     QPushButton *beenden;
-    Datenbank *bank;
-    QGridLayout *layout;
+    QGraphicsPixmapItem *item;
 
 signals:
 

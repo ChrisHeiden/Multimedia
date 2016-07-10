@@ -85,13 +85,14 @@ private:
     QLineEdit *bildPfadFeld = new QLineEdit;
 
 
+
     /* Für die Optionen -> Westpart */
     QLabel *option = new QLabel(tr("Optionen"));
     QLabel *hintergrund = new QLabel(tr("Hintergrund"));
-    QLabel *anzahlBilder = new QLabel(tr("Anzahl Bilder"));
-    QPushButton *zwanzig = new QPushButton("20");
-    QPushButton *vierzig = new QPushButton("40");
-    QPushButton *sechsig = new QPushButton("60");
+    QLabel *anzahlBilder = new QLabel(tr("Bildergröße"));
+    QPushButton *zwanzig = new QPushButton;
+    QPushButton *vierzig = new QPushButton;
+    QPushButton *sechsig = new QPushButton;
     QLabel *vollbild = new QLabel(tr("Vollbildmodus"));
     QRadioButton *vollbildmodus = new QRadioButton(tr("Vollbildmodus"));
     QPushButton *vollbildModusDeaktiviern = new QPushButton(tr("Vollbildmodus deaktiviern"));
@@ -99,6 +100,7 @@ private:
     QRadioButton *deutsch = new QRadioButton(tr("Deutsch"));
     QRadioButton *englisch = new QRadioButton(tr("Englisch"));
     QLabel *filter = new QLabel(tr("Filter"));
+    QPushButton *filterAufloesen;
     QLineEdit *filtern;
     QString filternNachTags;
     int m_bilderAnzahl;
@@ -130,12 +132,12 @@ private:
     void deutschUebersetzung();
     void vollbildModusAktiv();
     void vollbildModusInaktiv();
+    void ungefiltert(); //Hier muss das stehen, was man benötig, um alle Bilder dazustellen, welche vor dem Filtern angezeigt wurden
 
 
-    //void zwanzig();
-    //void vierzig();
-    //void sechsig();
-
+    void zwanzigBilder();
+    void vierzigBilder();
+    void sechsigBilder();
 
 
 
@@ -161,8 +163,17 @@ private:
             QWidget::changeEvent(event);
     }
 
+
+signals:
+    void bildBewertet(int zahl);
+    void bildTagsGesetzt(string tags);
+    void openThirdWindow(string m_pfad);
+
 public slots:
     void setPfad(std::string pfad);
+    void tagsInInfoleisteAnzeige(QString tags);
+    void bewertungInInfoleisteAnzeige(int bewertung);
+
 };
 
 #endif // ZWEITESFENSTER_H

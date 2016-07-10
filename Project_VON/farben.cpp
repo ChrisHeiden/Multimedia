@@ -40,9 +40,10 @@ void Farben::schwarz(){
     m_vollbild->setStyleSheet("color: rgb(199,187,187);");
     m_vollbildmodus->setStyleSheet("color: rgb(199,187,187);");
     m_option->setStyleSheet("color: rgb(199,187,187);");
-    m_zwanzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_vierzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_sechsig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
+
+    m_zwanzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 60px; height: 60px;");
+    m_vierzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 40px; height: 40px;");
+    m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(199,187,187);");
     m_deutsch->setStyleSheet("color: rgb(199,187,187);");
@@ -71,9 +72,10 @@ void Farben::beige(){
     m_vollbildmodus->setStyleSheet("color: rgb(245,194,93);");
     m_option->setStyleSheet("color: rgb(245,194,93);");
 
-    m_zwanzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_vierzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_sechsig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
+
+    m_zwanzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 60px; height: 60px;");
+    m_vierzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 40px; height: 40px;");
+    m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(245,194,93);");
     m_deutsch->setStyleSheet("color: rgb(245,194,93);");
@@ -102,9 +104,9 @@ void Farben::weiss(){
     m_vollbildmodus->setStyleSheet("color: black;");
     m_option->setStyleSheet("color: black;");
 
-    m_zwanzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_vierzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_sechsig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
+    m_zwanzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 60px; height: 60px;");
+    m_vierzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 40px; height: 40px;");
+    m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: black;");
     m_deutsch->setStyleSheet("color: black;");
@@ -133,9 +135,9 @@ void Farben::pink(){
     m_vollbildmodus->setStyleSheet("color: rgb(171,19,171);");
     m_option->setStyleSheet("color: rgb(171,19,171);");
 
-    m_zwanzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_vierzig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    m_sechsig->setStyleSheet("background-color: grey; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
+    m_zwanzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 60px; height: 60px;");
+    m_vierzig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 40px; height: 40px;");
+    m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(171,19,171);");
     m_deutsch->setStyleSheet("color: rgb(171,19,171);");

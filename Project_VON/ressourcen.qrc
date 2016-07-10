@@ -4,6 +4,9 @@
     </qresource>
     <qresource prefix="/icon">
         <file>Icon.png</file>
+        <file>back_Transparent.tif</file>
+        <file>Fragezeichen.tif</file>
+        <file>trichter.tif</file>
     </qresource>
     <qresource prefix="/language">
         <file>VON_Ueberstzung_Deutsch_zu_Englisch.qm</file>

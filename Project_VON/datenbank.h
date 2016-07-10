@@ -8,8 +8,6 @@
 #include <QString>
 #include <iostream>
 #include <string>
-#include <String>
-
 
 using namespace std;
 
@@ -44,6 +42,13 @@ public:
      * @return bool erfolgreich, ob das Bild geloescht wurde (true) oder nicht (false)
      */
     bool bildLoeschen(int ID);
+
+    /**
+     * @brief aktuellenBildPfadAnzeigen gibt den Bildpfad einer bestimmten ID zurueck
+     * @param ID ID des Bildes, dessen Pfad angezeigt werden soll
+     * @return Bildpfad des Bildes mit der ausgewählten ID
+     */
+    QString aktuellenBildPfadAnzeigen(int ID);
 
     /**
      * @brief bildBewerten bewertet ein Bild in der Datenbank
@@ -92,55 +97,42 @@ public:
     void alleIDsAusgeben();
 
     /**
+     * @brief getID gibt die ID zu einem Bildpfad zurueck
+     * @param pfad Pfad, dessen ID zurueckgeliefert werden soll
+     * @return ID des Pfads
+     */
+    int getID(string pfad);
+
+    /**
      * @brief bildtagsFiltern laesst den Nutzer nach Tags filtern
      * @param filtertags Tags, nach denen gefiltert werden soll
      * @return IDs, der Bilder mit den entsprechenden Tags
      */
-    //bool bildtagsFiltern(QString filtertag);
+    vector<string> bildtagsFiltern(QString filtertag);
 
     /**
      * @brief bewertungFiltern laesst den Nutzer nach einer bestimmten Bildwertung filtern
      * @param filterwertung Wertung, nach der gefiltert werden soll
      * @return IDs, der Bilder mit der ausgewählten wertung
      */
-    //bool bewertungFiltern(int filterwertung);
+    vector<string> bewertungFiltern(int filterwertung);
 
     /**
-     * @brief aktuellenBildPfadAnzeigen gibt den Bildpfad einer bestimmten ID zurueck
-     * @param ID ID des Bildes, dessen Pfad angezeigt werden soll
-     * @return Bildpfad des Bildes mit der ausgewählten ID
+     * @brief alleBilder_dargestelltFalse setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf false
      */
-    QString aktuellenBildPfadAnzeigen(int ID);
+    void alleBilder_dargestelltFalse();
 
-
-     /**
-      * @brief bildtagsFiltern laesst den Nutzer nach Tags filtern
-      * @param filtertags Tags, nach denen gefiltert werden soll
-      * @return IDs, der Bilder mit den entsprechenden Tags
-      */
-     vector<string> bildtagsFiltern(QString filtertag) const;
-
-     /**
-      * @brief bewertungFiltern laesst den Nutzer nach einer bestimmten Bildwertung filtern
-      * @param filterwertung Wertung, nach der gefiltert werden soll
-      * @return IDs, der Bilder mit der ausgewählten wertung
-      */
-     vector<string> bewertungFiltern(int filterwertung) const;
-
-     /**
-       * @brief getID gibt die ID zu einem Bildpfad zurueck
-       * @param pfad Pfad, dessen ID zurueckgeliefert werden soll
-       * @return ID des Pfads
-       */
-     int getID(string pfad);
-
+    /**
+     * @brief getAlleBilder_dargestelltTrue liefert alle Bilder zurueck, die angezeigt werden
+     * @return vector mit allen Bilder, bei denen Bild_dargestellt true ist
+     */
+    vector<string> getAlleBilder_dargestelltTrue();
 
 private:
     QSqlDatabase mydb;
     static unsigned int IDZaehler;
 
 signals:
-
 
 public slots:
 };

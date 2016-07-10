@@ -1,7 +1,6 @@
 #ifndef ERSTESFENSTER_H
 #define ERSTESFENSTER_H
 
-/* erstes Fenster */
 #include "sound.h"
 #include "datenbank.h"
 #include "bildersuche.h"
@@ -9,8 +8,6 @@
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QLabel>
-#include <QFileDialog>
-#include <QApplication>
 #include <QTranslator>
 
 class erstesFenster : public QMainWindow
