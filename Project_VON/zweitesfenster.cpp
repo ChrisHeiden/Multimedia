@@ -261,8 +261,11 @@ QString zweitesFenster::ordnerVerzeichnis(){
 }
 
 void zweitesFenster::letzter(){
-    std::cout << 3 << std::endl;
-
+    vector<string> *letzteBilder = new vector<string>;
+    (*letzteBilder) = bank->getAlleBilder_dargestelltTrue();
+    std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
+    (*umgewandelteBilder) = suche->umwandeln(letzteBilder, m_bilderAnzahl);
+    BilderDarstellen(umgewandelteBilder);
 }
 
 void zweitesFenster::bildtagsAendern(){

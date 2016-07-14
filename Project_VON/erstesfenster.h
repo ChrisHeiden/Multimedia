@@ -29,6 +29,7 @@ public:
 
 signals:
     void openSecondWindow();
+    void showLetzteBilder();
 
 private:
 

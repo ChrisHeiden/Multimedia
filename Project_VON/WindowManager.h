@@ -40,7 +40,10 @@ private:
     QTranslator *m_translator;
 
     void showZweitesFenster();
+    void showLetzteBilder();
     void showDrittesFenster(string pfad);
+    void letzteBilder();
+
 };
 
 #endif // WINDOWMANAGER_H

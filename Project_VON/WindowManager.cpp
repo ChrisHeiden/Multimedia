@@ -18,7 +18,7 @@ WindowManager::WindowManager(QTranslator *translator)
     layout->addWidget(erstes);
     layout->addWidget(zweites);
     layout->addWidget(drittes);
-
+    QObject::connect(this->erstes, &erstesFenster::showLetzteBilder, this, &WindowManager::letzteBilder);
     QObject::connect(this->erstes, &erstesFenster::openSecondWindow, this, &WindowManager::showZweitesFenster);
     QObject::connect(this->zweites, &zweitesFenster::openThirdWindow, this, &WindowManager::showDrittesFenster);
 
@@ -46,5 +46,11 @@ void WindowManager::showDrittesFenster(string pfad)
 {
     this->layout->setCurrentWidget(drittes);
     this->drittes->erzeugeDrittesFenster(pfad);
+}
+
+void WindowManager::letzteBilder()
+{
+    this->layout->setCurrentWidget(zweites);
+    this->zweites->letzter();
 }
 

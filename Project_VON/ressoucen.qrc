@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/icon">
-        <file>Icon.png</file>
-    </qresource>
-    <qresource prefix="/sprache">
-        <file>Project_VON_de.ts</file>
-        <file>Project_VON_en.ts</file>
-    </qresource>
-</RCC>

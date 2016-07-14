@@ -22,7 +22,7 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     smatch e;
     regex exp(".*.jpg$");
     Datenbank bilderdatenbank;
-   //bilderdatenbank.alleBilder_dargestelltFalse();
+    //bilderdatenbank.alleBilder_dargestelltFalse();
     while(it.next() != NULL){
         if((it.fileInfo().isFile() == true)  && (regex_match(it.fileInfo().absoluteFilePath().toStdString(),e,exp))){
             for(auto a:e){
