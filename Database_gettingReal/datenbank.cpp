@@ -24,11 +24,11 @@ Datenbank::Datenbank(){
             qDebug() << "Table dropped!";*/
 
     QSqlQuery qry;
-    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer)" ); //Bild_dargestellt 0 = false, 1 = true
+    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer, Bildausrichtung integer)" ); //Bild_dargestellt 0 = false, 1 = true
       if( !qry.exec() )
-        qDebug() << qry.lastError();
+        qDebug() << "Datenbank anlegen Error:" << qry.lastError();
       else
-          qDebug() << "Table created!";
+        qDebug() << "Table created!";
 }
 
 bool Datenbank::datenbankEmpty(){
@@ -65,7 +65,7 @@ bool Datenbank::neuesBild(QString Bildpfad){
     if(!bildpfadExists(Bildpfad)){
         QSqlQuery query;
         //query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bildwertung, Tags, Bild_dargestellt) values ((:BildID), (:Bildpfad), 3, 'TestTag')");
-        query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bild_dargestellt) values (null,(:Bildpfad), 1)");
+        query.prepare("INSERT INTO Bilder(BildID, Bildpfad, Bild_dargestellt, Bildausrichtung) values (null,(:Bildpfad), 2, 0)");
         query.bindValue(":Bildpfad", Bildpfad);
         if(query.exec())
         {
@@ -81,8 +81,21 @@ bool Datenbank::neuesBild(QString Bildpfad){
     }
     else{
         qDebug() << "Bild existiert bereits!";
-    }
+        QSqlQuery query;
+        query.prepare("UPDATE Bilder SET Bild_dargestellt = 2 WHERE Bildpfad = (:Bildpfad)");
+        query.bindValue(":Bildpfad", Bildpfad);
 
+        if(query.exec())
+        {
+            erfolgreich = true;
+            qDebug() << "Bild dargestellt!";
+        }
+        else
+        {
+            qDebug() << "neuesBild error:  "
+                      << query.lastError();
+        }
+    }
     return erfolgreich;
 }
 
@@ -161,16 +174,18 @@ void Datenbank::alleBilderAusgeben(){
 
 QString Datenbank::aktuellenBildPfadAnzeigen(int ID){
     QString Pfad = "";
-    QSqlQuery query;
-    query.prepare("SELECT Bildpfad FROM Bilder WHERE BildID = (:BildID)");
-    query.bindValue(":BildID", ID);
-    if(!query.exec()){
-        qDebug() << "Query Error:" << query.lastError();
-    }
-    else{
-        query.first();
-        Pfad = query.value(0).toString();
-        qDebug() << Pfad;
+    if(bildExists(ID)){
+        QSqlQuery query;
+        query.prepare("SELECT Bildpfad FROM Bilder WHERE BildID = (:BildID)");
+        query.bindValue(":BildID", ID);
+        if(!query.exec()){
+            qDebug() << "Query Error:" << query.lastError();
+        }
+        else{
+            query.first();
+            Pfad = query.value(0).toString();
+            qDebug() << Pfad;
+        }
     }
     return Pfad;
 }
@@ -229,10 +244,10 @@ int Datenbank::bewertungAnzeigen(int ID){
 }
 
 vector<string> Datenbank::bewertungFiltern(int filterwertung){
-    alleBilder_dargestelltFalse();
+    setBilder_dargestelltMemory();
     vector<string> bildauswahl;
     QSqlQuery query;
-    query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung))");
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 2 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung))");
     query.bindValue(":Bildwertung", filterwertung);
     query.exec();
     query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildwertung = (:Bildwertung)");
@@ -319,11 +334,11 @@ QString Datenbank::bildtagsAnzeigen(int ID){
 }
 
 vector<string> Datenbank::bildtagsFiltern(QString filtertag){
-    this->alleBilder_dargestelltFalse();
+    this->setBilder_dargestelltMemory();
     vector<string> bildauswahl;
     QSqlQuery query;
     QString filter = "%" + filtertag + "%";
-    query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag))");
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 2 WHERE Bildpfad IN (SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag))");
     query.bindValue(":Filtertag", filter);
     query.exec();
     query.prepare("SELECT Bildpfad FROM Bilder WHERE Bildtags LIKE (:Filtertag)");
@@ -340,9 +355,9 @@ vector<string> Datenbank::bildtagsFiltern(QString filtertag){
     return bildauswahl;
 }
 
-void Datenbank::alleBilder_dargestelltFalse(){
+void Datenbank::setAlleBilder_dargestelltFalse(){
     QSqlQuery query;
-    query.prepare("UPDATE Bilder SET Bild_dargestellt = 0 WHERE Bild_dargestellt = 1");
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 0 WHERE Bild_dargestellt = 2 AND Bild_dargestellt = 1");
     if(query.exec()){
         qDebug() << "Alle Bild_dargestellt auf false gesetzt";
     }
@@ -351,17 +366,96 @@ void Datenbank::alleBilder_dargestelltFalse(){
     }
 }
 
-vector<QString> Datenbank::getAlleBilder_dargestelltTrue(){
-    vector<QString> bildauswahl;
+vector<string> Datenbank::getAlleBilder_dargestelltMemory(){
+    vector<string> bildauswahl;
     QSqlQuery query;
     query.prepare("SELECT Bildpfad FROM Bilder WHERE Bild_dargestellt = 1");
     query.exec();
     int idName = query.record().indexOf("Bildpfad");
     while(query.next()){
         QString Bildpfad = query.value(idName).toString();
-        bildauswahl.push_back(Bildpfad);
+        string pfad = Bildpfad.toStdString();
+        bildauswahl.push_back(pfad);
         qDebug() << Bildpfad;
     }
     return bildauswahl;
+}
+
+void Datenbank::setBilder_dargestelltMemory(){
+    QSqlQuery query;
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 1 WHERE Bild_dargestellt = 2");
+    if(query.exec()){
+        qDebug() << "Alle Bild_dargestellt auf false gesetzt";
+    }
+    else{
+        qDebug() << "alleBilder_dargestelltFalse Error:" << query.lastError();
+    }
+}
+
+vector<string> Datenbank::getAlleBilder_dargestelltTrue(){
+    vector<string> bildauswahl;
+    QSqlQuery query;
+    query.prepare("SELECT Bildpfad FROM Bilder WHERE Bild_dargestellt = 2");
+    query.exec();
+    int idName = query.record().indexOf("Bildpfad");
+    while(query.next()){
+        QString Bildpfad = query.value(idName).toString();
+        string pfad = Bildpfad.toStdString();
+        bildauswahl.push_back(pfad);
+        qDebug() << Bildpfad;
+    }
+    return bildauswahl;
+}
+
+void setAlleBilder_dargestelltTrue(){
+    QSqlQuery query;
+    query.prepare("UPDATE Bilder SET Bild_dargestellt = 2 WHERE Bild_dargestellt = 1");
+    if(query.exec()){
+        qDebug() << "Alle Bild_dargestellt auf false gesetzt";
+    }
+    else{
+        qDebug() << "alleBilder_dargestelltFalse Error:" << query.lastError();
+    }
+}
+
+void Datenbank::setNeueBildausrichtung(int id){
+    if(bildExists(id)){
+        QSqlQuery query;
+        int neueAusrichtung;
+        int alteAusrichtung = getBildausrichtung(id);
+        if(alteAusrichtung == 270){
+            neueAusrichtung = 0;
+        }
+        else{
+            neueAusrichtung = alteAusrichtung + 90;
+        }
+        query.prepare("UPDATE Bilder SET Bildausrichtung = (:neueAusrichtung) WHERE BildID = (:BildID)");
+        query.bindValue(":neueAusrichtung", neueAusrichtung);
+        query.bindValue(":BildID", id);
+        if(query.exec()){
+            qDebug() << "Bild gedreht!";
+        }
+        else{
+            qDebug() << "neueBildausrichtung Error:" << query.lastError();
+        }
+    }
+}
+
+int Datenbank::getBildausrichtung(int id){
+    int ausrichtung = 0;
+    if(bildExists(id)){
+        QSqlQuery query;
+        query.prepare("SELECT Bildausrichtung FROM Bilder WHERE BildID = (:BildID)");
+        query.bindValue(":BildID", id);
+        if(query.exec()){
+            query.first();
+            ausrichtung = query.value(0).toInt();
+            qDebug() << ausrichtung;
+        }
+        else{
+            qDebug() << "getBildausrichtung error:" << query.lastError();
+        }
+    }
+    return ausrichtung;
 }
 
