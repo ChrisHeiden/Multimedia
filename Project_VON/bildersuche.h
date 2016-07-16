@@ -27,7 +27,13 @@ public:
      * @brief BilderSuche ist der Konstruktor der Klasse, welcher die Membervariable initialsiert
      * @param str, ist der Bildpfad von dem die Suche starten soll
      */
-    BilderSuche(QString str, int anzahhlBilder);
+    BilderSuche(QString str, int anzahhlBilder, Datenbank *bank);
+
+    /**
+     * @brief ~Bildersuche loescht den Zeiger m_bank
+     */
+    virtual ~BilderSuche();
+
     /**
      * @brief run ist der Start des Threads, welcher dem Thread anweist in die
      *        alleGenfundenenBilder()-Funktion zu gehen und in die umwandeln()-Funktion.
@@ -48,6 +54,7 @@ public:
 private:
     QString m_pfad;
     int m_anzahhlBilder;
+    Datenbank *m_bank;
 
 
 public:

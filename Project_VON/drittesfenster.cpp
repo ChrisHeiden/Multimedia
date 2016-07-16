@@ -1,19 +1,29 @@
 #include "drittesfenster.h"
+#include <QScreen>
+#include <iostream>
+#include <QApplication>
+
+using namespace std;
 
 
-drittesFenster::drittesFenster(QWidget *fenster, QWidget *parent) : QWidget(parent){
+drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent) : QWidget(parent){
     m_fenster = fenster;
+    m_bank = bank;
     scene = new QGraphicsScene;
     view = new QGraphicsView(scene);
+    view->setAlignment(Qt::AlignTop | Qt::AlignCenter);
+    drehen  = new QPushButton;
 
+    links = new QPushButton;
+    rechts = new QPushButton;
 
-    eins = new QPushButton(view);
-    zwei = new QPushButton(view);
-    drei = new QPushButton(view);
+    eins = new QPushButton();
+    zwei = new QPushButton();
+    drei = new QPushButton();
 
-    vier = new QPushButton(view);
-    fuenf = new QPushButton(view);
-    beenden = new QPushButton(view);
+    vier = new QPushButton();
+    fuenf = new QPushButton();
+    beenden = new QPushButton();
 
     buttons = new QVBoxLayout();
     fuellung1 = new QVBoxLayout();
@@ -47,14 +57,14 @@ drittesFenster::~drittesFenster(){
     delete (fuellung4);
     delete (buttons2);
     delete (fuellung4);
+    delete (drehen);
 }
 
 void drittesFenster::erzeugeDrittesFenster(string pfad){
 
-    cout << 1 << endl;
+    m_pfad = pfad;
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
-   // QImage image("C:\\Users\\Christopher\\Desktop\\Test\\WP_20160225_07_49_05_Pro.jpg");
 
     eins->setStyleSheet("background-color:tomato; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
     eins->setText("1");
@@ -80,44 +90,321 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
     beenden->setText("beende");
     beenden->setFixedSize(80,50);
 
+    drehen->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
+    drehen->setText("drehen");
+    drehen->setFixedSize(80,50);
 
-    if(image.height() >= image.width()){
-        image = image.scaledToHeight(1300, Qt::FastTransformation);
+    links->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
+    links->setText("Links");
+    links->setFixedSize(80,50);
 
-        layout->addWidget(view,0,8,3,6);
-        fuellung1->addSpacing(500);
-        fuellung2->addSpacing(320);
+    rechts->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
+    rechts->setText("Rechts");
+    rechts->setFixedSize(80,50);
 
-        buttons->addLayout(fuellung1);
-        buttons->addWidget(eins);
-        buttons->addWidget(zwei);
-        buttons->addWidget(drei);
-        buttons->addWidget(vier);
-        buttons->addWidget(fuenf);
-        buttons->addLayout(fuellung2);
-        buttons->addWidget(beenden);
-        layout->addLayout(buttons,0,0);
+    QScreen *screen = QApplication::screens().at(0);
+    QSize size = screen->size();
+
+    if(size.width() == 1280 && size.height() == 720){
+        if(image.height() >= image.width()){
+            image = image.scaledToHeight(620, Qt::FastTransformation);
+            layout->addWidget(view,0,8,3,6);
+            fuellung1->addSpacing(500);
+            fuellung2->addSpacing(320);
+
+            buttons->addLayout(fuellung1);
+            buttons->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons->addWidget(zwei);
+            QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons->addWidget(drei);
+            QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons->addWidget(vier);
+            QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons->addWidget(fuenf);
+            QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons->addLayout(fuellung2);
+            buttons->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+
+
+            layout->addLayout(buttons,0,0);
+        }
+        if(image.height() < image.width()){
+            image = image.scaledToWidth(530, Qt::FastTransformation);
+            layout->addWidget(view,0,8,1,6);
+            fuellung3->addSpacing(700);
+            fuellung4->addSpacing(700);
+
+            buttons2->addLayout(fuellung3);
+            buttons2->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons2->addWidget(zwei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons2->addWidget(drei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons2->addWidget(vier);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons2->addWidget(fuenf);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons2->addLayout(fuellung4);
+            buttons2->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+            layout->addLayout(buttons2,1,8,1,6);
+        }
     }
-    if(image.height() < image.width()){
-        image = image.scaledToHeight(1200, Qt::FastTransformation);
-        layout->addWidget(view,0,8,1,6);
-        fuellung3->addSpacing(700);
-        fuellung4->addSpacing(700);
+    else if(size.width() == 1920 && size.height() == 1080){
+        if(image.height() >= image.width()){
+            image = image.scaledToHeight(1100, Qt::FastTransformation);
+            layout->addWidget(view,0,8,3,6);
+            fuellung1->addSpacing(500);
+            fuellung2->addSpacing(320);
 
-        buttons2->addLayout(fuellung3);
-        buttons2->addWidget(eins);
-        buttons2->addWidget(zwei);
-        buttons2->addWidget(drei);
-        buttons2->addWidget(vier);
-        buttons2->addWidget(fuenf);
-        buttons2->addLayout(fuellung4);
-        buttons2->addWidget(beenden);
-        layout->addLayout(buttons2,1,8,1,6);
+            buttons->addLayout(fuellung1);
+            buttons->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons->addWidget(zwei);
+            QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons->addWidget(drei);
+            QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons->addWidget(vier);
+            QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons->addWidget(fuenf);
+            QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons->addLayout(fuellung2);
+            buttons->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
 
+            layout->addLayout(buttons,0,0);
+        }
+        if(image.height() < image.width()){
+            image = image.scaledToWidth(1000, Qt::FastTransformation);
+            layout->addWidget(view,0,8,1,6);
+            fuellung3->addSpacing(700);
+            fuellung4->addSpacing(700);
+
+            buttons2->addLayout(fuellung3);
+            buttons2->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons2->addWidget(zwei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons2->addWidget(drei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons2->addWidget(vier);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons2->addWidget(fuenf);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons2->addLayout(fuellung4);
+            buttons2->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+            layout->addLayout(buttons2,1,8,1,6);
+        }
+    }
+
+    else if(size.width() == 1680 && size.height() == 1050){     //Bildauflösung des großen Monitors auf dem ich programmiere
+        if(image.height() >= image.width()){
+            image = image.scaledToHeight(950, Qt::FastTransformation);
+            layout->addWidget(view,0,8,3,6);
+            fuellung1->addSpacing(500);
+            fuellung2->addSpacing(320);
+
+            buttons->addLayout(fuellung1);
+            buttons->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons->addWidget(zwei);
+            QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons->addWidget(drei);
+            QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons->addWidget(vier);
+            QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons->addWidget(fuenf);
+            QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons->addLayout(fuellung2);
+            buttons->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+
+            layout->addLayout(buttons,0,0);
+        }
+        if(image.height() < image.width()){
+            image = image.scaledToHeight(870, Qt::FastTransformation);
+            layout->addWidget(view,0,8,1,6);
+            fuellung3->addSpacing(700);
+            fuellung4->addSpacing(700);
+
+            buttons2->addLayout(fuellung3);
+            buttons2->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons2->addWidget(zwei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons2->addWidget(drei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons2->addWidget(vier);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons2->addWidget(fuenf);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons2->addLayout(fuellung4);
+            buttons2->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+            layout->addLayout(buttons2,1,8,1,6);
+        }
+    }
+    else{                                                       //Bildauflösung des Surface
+        if(image.height() >= image.width()){
+            image = image.scaledToHeight(1300, Qt::FastTransformation);
+            layout->addWidget(view,0,8,3,6);
+            fuellung1->addSpacing(500);
+            fuellung2->addSpacing(320);
+
+            buttons->addLayout(fuellung1);
+            buttons->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons->addWidget(zwei);
+            QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons->addWidget(drei);
+            QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons->addWidget(vier);
+            QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons->addWidget(fuenf);
+            QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons->addLayout(fuellung2);
+            buttons->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+            buttons->addWidget(links);
+            QObject::connect(links, &QPushButton::clicked,this, &drittesFenster::vorherigesBild);
+            buttons->addWidget(rechts);
+            QObject::connect(rechts, &QPushButton::clicked,this, &drittesFenster::naechstesBild);
+
+
+            layout->addLayout(buttons,0,0);
+        }
+        if(image.height() < image.width()){
+            image = image.scaledToHeight(1200, Qt::FastTransformation);
+            layout->addWidget(view,0,8,1,6);
+            fuellung3->addSpacing(700);
+            fuellung4->addSpacing(700);
+
+            buttons2->addLayout(fuellung3);
+            buttons2->addWidget(eins);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+            buttons2->addWidget(zwei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+            buttons2->addWidget(drei);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+            buttons2->addWidget(vier);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+            buttons2->addWidget(fuenf);
+            QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+            buttons2->addLayout(fuellung4);
+            buttons2->addWidget(beenden);
+            QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+            buttons->addWidget(drehen);
+            QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+            buttons->addWidget(links);
+            QObject::connect(links, &QPushButton::clicked,this, &drittesFenster::vorherigesBild);
+            buttons->addWidget(rechts);
+            QObject::connect(rechts, &QPushButton::clicked,this, &drittesFenster::naechstesBild);
+
+
+            layout->addLayout(buttons2,1,8,1,6);
+        }
     }
     item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     scene->addItem(item);
 
     this->setLayout(layout);
     this->showMaximized();
+}
+
+void drittesFenster::bewertenEins(){
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,1);
+}
+void drittesFenster::bewertenZwei(){
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,2);
+}
+
+void drittesFenster::bewertenDrei(){
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,3);
+}
+
+void drittesFenster::bewertenVier(){
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,4);
+}
+
+void drittesFenster::bewertenFuenf(){
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,5);
+}
+
+void drittesFenster::bildDrehen(){
+    view->rotate(90);
+    int id = m_bank->getID(m_pfad);
+    cout << id << endl;
+    m_bank->setNeueBildausrichtung(id);
+    m_bank->getBildausrichtung(id);
+}
+
+void drittesFenster::naechstesBild(){
+    int index;
+    vector<string> *bilder = new vector<string>;
+    (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
+
+
+    for(unsigned int i = 0 ; i < bilder->size(); i++){
+        try{
+            if(bilder->at(i) == m_pfad){
+                index = i;
+            }
+            else{
+                continue;
+            }
+        }catch(...){
+            index = 0;
+        }
+
+    }
+    erzeugeDrittesFenster(bilder->at(index + 1));
+}
+
+void drittesFenster::vorherigesBild(){
+    int index;
+    vector<string> *bilder = new vector<string>;
+    (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
+    cout << "Size: " << bilder->size() << endl;
+
+
+    try{
+        for(unsigned int i = 0 ;i < bilder->size(); i++){
+            if(bilder->at(i) == m_pfad){
+                index = i;
+                cout << "Index: " << index << endl;
+            }
+            else{
+                continue;
+            }
+        }
+        erzeugeDrittesFenster(bilder->at(index - 1));
+        cout << "Pfad: " << bilder->at(index -1)<< endl;
+    }catch(...){
+        index = bilder->size();
+        erzeugeDrittesFenster(bilder->at(index));
+        cout << "Pfad: " << bilder->at(index -1)<< endl;
+    }
 }

@@ -16,6 +16,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QTextEdit>
+#include <iostream>
 
 /**
  * @brief The zweitesFenster class erbt von QWidget und stellt das weite Fenster dar.
@@ -31,7 +32,9 @@ public:
      * @param fenster
      * @param parent
      */
-    explicit zweitesFenster(QWidget *fenster, QTranslator *translator, QWidget *parent = 0);
+    explicit zweitesFenster(QWidget *fenster, QTranslator *translator,Datenbank *bank, QWidget *parent = 0);
+
+    virtual ~zweitesFenster();
 
     /**
      * @brief erzeugeZweitesFenster stellt das zweite Fenster dar
@@ -57,6 +60,12 @@ public:
      */
     void BilderDarstellen(map<string, QImage *> *qimages);
 
+    /**
+     * @brief zweitesFenster::optionsleisteDarstellen stellt die Optionsleiste dar
+     */
+    void optionsleisteDarstellen();
+
+
     /* Ab hier ist was verändert */
     string m_pfad;
 
@@ -65,7 +74,7 @@ private:
 
     /* für die Darstelltung im Fenster */
     QWidget *fenster;
-    Datenbank *bank;
+    Datenbank *m_bank;
     QVBoxLayout *ganzesWindow = new QVBoxLayout;
     QGridLayout *oberesWindow = new QGridLayout;   //wird fenster übergeben
     QVBoxLayout *west = new QVBoxLayout;     //wird window übergeben und enthält Labels, Buttons und andere Layouts

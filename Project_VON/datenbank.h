@@ -120,13 +120,32 @@ public:
     /**
      * @brief alleBilder_dargestelltFalse setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf false
      */
-    void alleBilder_dargestelltFalse();
+    void setAlleBilder_dargestelltFalse();
 
     /**
      * @brief getAlleBilder_dargestelltTrue liefert alle Bilder zurueck, die angezeigt werden
      * @return vector mit allen Bilder, bei denen Bild_dargestellt true ist
      */
     vector<string> getAlleBilder_dargestelltTrue();
+
+    void setAlleBilder_dargestelltTrue();
+
+    vector<string> getAlleBilder_dargestelltMemory();
+
+    void setBilder_dargestelltMemory();
+
+    /**
+     * @brief neueBildausrichtung setzt die Bildausrichtung eines Bildes neu, das gedreht wurde
+     * @param id ID des Bildes, das gedreht wurde
+     */
+    void setNeueBildausrichtung(int id);
+
+    /**
+     * @brief getBildausrichtung gibt die Bildausrichtung eines Bildes zurueck
+     * @param id ID des Bildes, dessen Ausrichtung zurueckgegeben wird
+     * @return Bildausrichtung
+     */
+    int getBildausrichtung(int id);
 
 private:
     QSqlDatabase mydb;
@@ -138,3 +157,4 @@ public slots:
 };
 
 #endif // DATENBANK_H
+

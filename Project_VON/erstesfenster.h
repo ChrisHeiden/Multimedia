@@ -20,7 +20,7 @@ public:
      * @param fenster
      * @param parent
      */
-    erstesFenster(QWidget *fenster, QWidget *parent = 0);
+    erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent = 0);
 
     /**
      * Dekonstruktor, welcher sich um die Lösung der Zeiger kümmern soll
@@ -52,7 +52,7 @@ private:
     QPushButton *letztenOrdnerButton = new QPushButton(tr("Letzte Bilder anzeigen"));
     QLabel *txt = new QLabel(tr("<h1><strong>Bitte Startverzeichnis auswählen</strong></h1>"));
     Sound *sound;
-    Datenbank *bank;
+    Datenbank *m_bank;
 };
 
 #endif // ERSTESFENSTER_H

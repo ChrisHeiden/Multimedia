@@ -1,13 +1,72 @@
 #include "zweitesfenster.h"
 
-zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, QWidget *parent) : QWidget(parent)
+zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenbank *bank, QWidget *parent) : QWidget(parent)
 {
     m_translator = translator;
+    m_bank = bank;
     m_bilderAnzahl = 20;
     this->fenster = fenster;
 }
 
+zweitesFenster::~zweitesFenster(){
+
+    delete (fenster);
+    delete (m_bank);
+    delete (ganzesWindow);
+    delete (oberesWindow);
+    delete (west);
+    delete (center);
+    delete (menu);
+    delete (westpart);
+    delete (east);
+    delete (south);
+    delete (southpart);
+
+    delete (tags);
+    delete (bildBewertung);
+    delete (bildPfad);
+    delete (tagsFeld );
+    delete (bildBewertungsFeld);
+    delete (bildPfadFeld);
+
+
+
+    delete (option);
+    delete (hintergrund);
+    delete (anzahlBilder);
+    delete (zwanzig);
+    delete (vierzig);
+    delete (sechsig);
+    delete (vollbild);
+    delete (vollbildmodus);
+    delete (vollbildModusDeaktiviern);
+    delete (sprache);
+    delete (deutsch);
+    delete (englisch);
+    delete (filter);
+    delete (filterAufloesen);
+    delete (filtern);
+
+    delete (suche);
+    delete (m_translator);
+    delete (beenden);
+
+}
+
 void zweitesFenster::erzeugeZweitesFenster(){
+
+    optionsleisteDarstellen();
+
+    /* Center muss hier programmiert werden */
+    QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
+    suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl, m_bank);
+    suche->start();
+    QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
+    QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
+
+}
+
+void zweitesFenster::optionsleisteDarstellen(){
 
     QFont font1( "Calibri", 20, QFont::Bold);
     option->setFont(font1);
@@ -98,7 +157,6 @@ void zweitesFenster::erzeugeZweitesFenster(){
     filtern = new QLineEdit;
     filtern->setStyleSheet("background-color:white, color: black");
     filternNachTags = filtern->text();
-    //qDebug() << filternNachTags;
     QObject::connect(filtern, &QLineEdit::editingFinished,this, &zweitesFenster::nachTagFiltern);
 
 
@@ -157,7 +215,6 @@ void zweitesFenster::erzeugeZweitesFenster(){
     sterne->addWidget(vier);
     sterne->addWidget(fuenf);
     sterne->addWidget(filterAufloesen);
-
     filt->addLayout(sterne,3,0);
 
 
@@ -176,22 +233,15 @@ void zweitesFenster::erzeugeZweitesFenster(){
     hilfe->setIconSize(QSize(50, 50));
     hilfe->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
     QObject::connect(hilfe, &QPushButton::clicked,this, &zweitesFenster::hilfeAngeklicket);
-   // menu->addWidget(hilfe, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
 /*Hier habe ich einen Button eingesetzt um zum dritten Fenster zu gelangen */
 /*Im späteren Verlauf wird der Button ersetzt duch den Doppelklick des Nutzers auf ein Bild*/
-
-    QPushButton *diashow = new QPushButton;
-    diashow->setStyleSheet("background-color: black; border: none; margin-bottom: 0px;padding: 0px;");
-    //QObject::connect(diashow, &QPushButton::clicked,this, &zweitesFenster::openThirdWindow);
-
-
 
     QVBoxLayout *menu2 = new QVBoxLayout();
     menu->insertStretch(300,30);
     menu->addLayout(menu2);
     menu2->addWidget(hilfe, 0, Qt::AlignLeft | Qt::AlignVCenter);
-    menu2->addWidget(diashow, 0, Qt::AlignLeft | Qt::AlignVCenter);
+    //menu2->addWidget(diashow, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
 
     fenster->setStyleSheet("background-color:white;");
@@ -201,7 +251,6 @@ void zweitesFenster::erzeugeZweitesFenster(){
     oberesWindow->addWidget(westpart);
 
     /* Southpart muss hier programmiert werden */
-    bank = new Datenbank;
     south->addWidget(bildBewertung);
     bildBewertungsFeld->addItem(" ");
     bildBewertungsFeld->addItem("1");
@@ -227,15 +276,6 @@ void zweitesFenster::erzeugeZweitesFenster(){
     bildPfadFeld->setAlignment(Qt::AlignLeft);
     south->minimumSize();
     southpart->setLayout(south);
-
-
-    /* Center muss hier programmiert werden */
-    QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
-    suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl);
-    suche->start();
-    QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
-    QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
-
 }
 
 QString zweitesFenster::ordnerVerzeichnis(){
@@ -261,8 +301,10 @@ QString zweitesFenster::ordnerVerzeichnis(){
 }
 
 void zweitesFenster::letzter(){
+
+    optionsleisteDarstellen();
     vector<string> *letzteBilder = new vector<string>;
-    (*letzteBilder) = bank->getAlleBilder_dargestelltTrue();
+    (*letzteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(letzteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -270,16 +312,16 @@ void zweitesFenster::letzter(){
 
 void zweitesFenster::bildtagsAendern(){
     cout << pfad << endl;
-    int id = bank->getID(pfad);
-    bank->bildtagsAendern(id,tagsFeld->text());
+    int id = m_bank->getID(pfad);
+    m_bank->bildtagsAendern(id,tagsFeld->text());
 }
 
 void zweitesFenster::bildBewertungAendern(){
     int wert = bildBewertungsFeld->currentIndex();
     cout << wert << endl;
     cout << pfad << endl;
-    int id = bank->getID(pfad);
-    bank->bildBewerten(id,wert);
+    int id = m_bank->getID(pfad);
+    m_bank->bildBewerten(id,wert);
 }
 
 void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
@@ -297,9 +339,9 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
 
     map<string,QImage*>::iterator bilderDurchgehen;
 
-
-   for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
-        MyLabel *l = new MyLabel(bilderDurchgehen->first, bank);
+    for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
+        MyLabel *l = new MyLabel(bilderDurchgehen->first, m_bank);
+        l->setAlignment(Qt::AlignBottom);
         QObject::connect(l,&MyLabel::pfadNutzen,this, &zweitesFenster::setPfad);
         QObject::connect(l,&MyLabel::tagsAnzeigen,this, &zweitesFenster::tagsInInfoleisteAnzeige);
         QObject::connect(l,&MyLabel::bewertungAnzeigen,this, &zweitesFenster::bewertungInInfoleisteAnzeige);
@@ -308,7 +350,15 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
         l->setPixmap(QPixmap::fromImage(*(bilderDurchgehen->second)));
         index = index + 1;
         center1->addWidget(l);
-        if(index % 5 == 0){
+        if(m_bilderAnzahl == 20 && index % 5 == 0){
+            center1 = new QHBoxLayout;
+            layout->addLayout(center1);
+        }
+        else if(m_bilderAnzahl == 40 && index % 10 == 0){
+            center1 = new QHBoxLayout;
+            layout->addLayout(center1);
+        }
+        if(m_bilderAnzahl == 60 && index % 15 == 0){
             center1 = new QHBoxLayout;
             layout->addLayout(center1);
         }
@@ -454,7 +504,7 @@ void zweitesFenster::vollbildModusInaktiv(){
 
 void zweitesFenster::nachEinsFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->bewertungFiltern(1);
+    (*gefilterteBilder) = m_bank->bewertungFiltern(1);
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -462,7 +512,7 @@ void zweitesFenster::nachEinsFiltern(){
 
 void zweitesFenster::nachZweiFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->bewertungFiltern(1);
+    (*gefilterteBilder) = m_bank->bewertungFiltern(2);
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -470,7 +520,7 @@ void zweitesFenster::nachZweiFiltern(){
 
 void zweitesFenster::nachDreiFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->bewertungFiltern(1);
+    (*gefilterteBilder) = m_bank->bewertungFiltern(3);
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -479,7 +529,7 @@ void zweitesFenster::nachDreiFiltern(){
 
 void zweitesFenster::nachVierFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->bewertungFiltern(1);
+    (*gefilterteBilder) = m_bank->bewertungFiltern(4);
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -488,7 +538,7 @@ void zweitesFenster::nachVierFiltern(){
 
 void zweitesFenster::nachFuenfFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->bewertungFiltern(1);
+    (*gefilterteBilder) = m_bank->bewertungFiltern(5);
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -497,15 +547,35 @@ void zweitesFenster::nachFuenfFiltern(){
 
 void zweitesFenster::nachTagFiltern(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) =  bank->bildtagsFiltern(filternNachTags);
-    std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+    cout << "Filtertag: ";
+    std::cout << filternNachTags.toStdString() << std::endl;
+
+    (*gefilterteBilder) = m_bank->bildtagsFiltern(filternNachTags);
+
+    cout << gefilterteBilder->size() << endl;
+   // cout << 1 << endl;
+
+    if(gefilterteBilder->empty() == true){
+        cout << 2 << endl;
+        QMessageBox *information = new QMessageBox();
+
+        QString text = (tr("<h1>Achtung!</h1>"
+                       "Es existieren keine Bilder mit dem eingegebenen Tags."));
+
+        information->setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
+        QMessageBox::information(this,"Hilfe",text);
+    }
+    else{
+     //   cout << 3 << endl;
+        std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
+        (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
+        BilderDarstellen(umgewandelteBilder);
+    }
 }
 
 void zweitesFenster::zwanzigBilder(){
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->getAlleBilder_dargestelltTrue();
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -514,7 +584,7 @@ void zweitesFenster::zwanzigBilder(){
 void zweitesFenster::vierzigBilder(){
     m_bilderAnzahl = 40;
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->getAlleBilder_dargestelltTrue();
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -523,7 +593,7 @@ void zweitesFenster::vierzigBilder(){
 void zweitesFenster::sechsigBilder(){
     m_bilderAnzahl = 60;
     vector<string> *gefilterteBilder = new vector<string>;
-    (*gefilterteBilder) = bank->getAlleBilder_dargestelltTrue();
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -543,7 +613,9 @@ void zweitesFenster::bewertungInInfoleisteAnzeige(int bewertung){
 }
 
 void zweitesFenster::ungefiltert(){
-    //Hier muss das stehen, was man benötig, um alle Bilder dazustellen, welche vor dem Filtern angezeigt wurden
+    vector<string> *gefilterteBilder = new vector<string>;
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltMemory();
+    std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
+    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(umgewandelteBilder);
 }
-
-

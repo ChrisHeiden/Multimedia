@@ -1,12 +1,18 @@
 #include "bildersuche.h"
 
-BilderSuche::BilderSuche(QString pfad, int anzahhlBilder)
+BilderSuche::BilderSuche(QString pfad, int anzahhlBilder, Datenbank *bank)
 {
     m_pfad = pfad;
     m_anzahhlBilder = anzahhlBilder;
+    m_bank = bank;
+}
+
+BilderSuche::~BilderSuche(){
+    delete (m_bank);
 }
 
 void BilderSuche::run(){
+    m_bank->setAlleBilder_dargestelltFalse();
     std::vector<std::string> *images = new std::vector<std::string>();
     (*images) = alleGefundenenBilder(); // alle Bilder ab einem bestimmten Verzeichnis werden geladen
 
@@ -22,7 +28,6 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     smatch e;
     regex exp(".*.jpg$");
     Datenbank bilderdatenbank;
-    //bilderdatenbank.alleBilder_dargestelltFalse();
     while(it.next() != NULL){
         if((it.fileInfo().isFile() == true)  && (regex_match(it.fileInfo().absoluteFilePath().toStdString(),e,exp))){
             for(auto a:e){
@@ -39,10 +44,11 @@ std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *image
     std::map<string, QImage*> qimages;
     cout << zahl << endl;
 
-    for(unsigned int i= 0; i < images->size(); i++){
-         QString qstring(images->at(i).c_str());
-         QImage *image = new QImage(qstring);
-         if(zahl == 20){
+    if(zahl == 20){
+        for(unsigned int i= 0; i < images->size(); i++){
+            QString qstring(images->at(i).c_str());
+            QImage *image = new QImage(qstring);
+
             if(image->height() > image->width()){
                 (*image) = image->scaledToHeight(300, Qt::SmoothTransformation);
                 qimages[images->at(i)] = image;
@@ -53,29 +59,37 @@ std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *image
                 qimages[images->at(i)] = image;
             }
          }
-         else if(zahl == 40){
-             if(image->height() > image->width()){
-                 (*image) = image->scaledToHeight(200, Qt::SmoothTransformation);
-                 qimages[images->at(i)] = image;
-             }
-             else{
-                 (*image) = image->scaledToWidth(200, Qt::SmoothTransformation);
-                 qimages[images->at(i)] = image;
-             }
+    }
+    else if(zahl == 40){
+        for(unsigned int i= 0; i < images->size(); i++){
+            QString qstring(images->at(i).c_str());
+            QImage *image = new QImage(qstring);
+
+            if(image->height() > image->width()){
+                (*image) = image->scaledToHeight(150, Qt::SmoothTransformation);
+                qimages[images->at(i)] = image;
+
+            }
+            else{
+                (*image) = image->scaledToWidth(150, Qt::SmoothTransformation);
+                qimages[images->at(i)] = image;
+            }
          }
-         else{
+    }
+    else{
+        for(unsigned int i= 0; i < images->size(); i++){
+            QString qstring(images->at(i).c_str());
+            QImage *image = new QImage(qstring);
              if(image->height() > image->width()){
                  (*image) = image->scaledToHeight(100, Qt::SmoothTransformation);
                  qimages[images->at(i)] = image;
-
-                 }
+             }
              else{
                  (*image) = image->scaledToWidth(100, Qt::SmoothTransformation);
                  qimages[images->at(i)] = image;
              }
          }
     }
-    std::cout << "Ende" << std::endl;
     return qimages;
 }
 

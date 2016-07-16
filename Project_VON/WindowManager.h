@@ -1,11 +1,14 @@
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
+
+#include <QWidget>
+#include <QStackedLayout>
+
 #include "erstesfenster.h"
 #include "zweitesfenster.h"
 #include "drittesfenster.h"
+#include "datenbank.h"
 #include "mylabel.h"
-#include <QWidget>
-#include <QStackedLayout>
 
 /**
  * @brief The WindowManager class erbt von QWidget und hat die Aufgabe vom ersten
@@ -39,6 +42,7 @@ private:
 
     QTranslator *m_translator;
 
+    Datenbank *bank;
     void showZweitesFenster();
     void showLetzteBilder();
     void showDrittesFenster(string pfad);

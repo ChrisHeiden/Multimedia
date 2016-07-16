@@ -1,14 +1,14 @@
 #include "erstesfenster.h"
 
-erstesFenster::erstesFenster(QWidget *fenster, QWidget *parent)
+erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
     : QMainWindow(parent)
 {
-    bank = new Datenbank();
+    m_bank = bank;
 
 
 
 
-    if( bank->datenbankEmpty() == true ){
+    if( m_bank->datenbankEmpty() == true ){
         /*--------Sound abspielen----------*/
 
         sound = new Sound();
@@ -165,4 +165,5 @@ erstesFenster::~erstesFenster()
     delete (letztenOrdnerButton);
     delete (txt);
     delete (sound);
+    delete (m_bank);
 }
