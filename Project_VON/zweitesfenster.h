@@ -103,7 +103,7 @@ private:
     QPushButton *vierzig = new QPushButton;
     QPushButton *sechsig = new QPushButton;
     QLabel *vollbild = new QLabel(tr("Vollbildmodus"));
-    QRadioButton *vollbildmodus = new QRadioButton(tr("Vollbildmodus"));
+    QPushButton *vollbildmodus = new QPushButton("X");
     QPushButton *vollbildModusDeaktiviern = new QPushButton(tr("Vollbildmodus deaktiviern"));
     QLabel *sprache = new QLabel(tr("Sprache"));
     QRadioButton *deutsch = new QRadioButton(tr("Deutsch"));
@@ -121,6 +121,38 @@ private:
     QTranslator *m_translator;
     QPushButton *beenden;
 
+    QPushButton *schwarz;
+    QPushButton *weiss;
+    QPushButton *beige;
+    QPushButton *rose;
+
+    QGridLayout *farben;
+    QGridLayout *farb;
+    QWidget *farbenWidget;
+
+    QGridLayout *bilder;
+    QGridLayout *bild;
+    QWidget *bilderWidget;
+
+
+    QWidget *vollWidget;
+    QPushButton *filteraktivieren;
+    QGridLayout *filt;
+    QWidget *filterWidget;
+
+    QHBoxLayout *sterne;
+    QPushButton *eins;
+    QPushButton *zwei;
+    QPushButton *drei;
+    QPushButton *vier;
+    QPushButton *fuenf;
+    QPushButton *hilfe;
+    QVBoxLayout *menu2;
+
+
+    QHBoxLayout *language;
+    QVBoxLayout *sprachen;
+    QWidget *sprachenWidget;
 
     void bildtagsAendern();
     void bildBewertungAendern();
@@ -129,13 +161,13 @@ private:
     void nachDreiFiltern();
     void nachVierFiltern();
     void nachFuenfFiltern();
-    void nachTagFiltern();
+    void nachTagFiltern(QString tag);
 
 
-    void schwarz();
-    void beige();
-    void weiss();
-    void pink();
+    void schwarzFunktion();
+    void beigeFunktion();
+    void weissFunktion();
+    void pinkFunktion();
     void hilfeAngeklicket();
     void englischUebersetzung();
     void deutschUebersetzung();

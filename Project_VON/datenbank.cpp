@@ -264,33 +264,6 @@ vector<string> Datenbank::bewertungFiltern(int filterwertung){
     return bildauswahl;
 }
 
-/* ALT
-bool Datenbank::bildtagsAendern(int ID, QString Tag){
-    bool erfolgreich = false;
-    if(bildExists(ID)){
-        QString alteTags = bildtagsAnzeigen(ID);
-        qDebug() << alteTags;
-
-        alteTags = alteTags + ", " + Tag;
-        QSqlQuery query;
-        query.prepare("UPDATE Bilder SET Bildtags = (:Bildtags) WHERE BildID = (:BildID)");
-        query.bindValue(":Bildtags", alteTags);
-        query.bindValue(":BildID", ID);
-
-        if(query.exec())
-        {
-            erfolgreich = true;
-            qDebug() << "Tags geaendert!";
-        }
-        else
-        {
-            qDebug() << "BildtagsAendern error:  "
-                      << query.lastError();
-        }
-    }
-    return erfolgreich;
-}*/
-
 bool Datenbank::bildtagsAendern(int ID, QString Tag){
     bool erfolgreich = false;
     if(bildExists(ID)){

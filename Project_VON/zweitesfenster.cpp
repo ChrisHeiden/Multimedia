@@ -29,8 +29,6 @@ zweitesFenster::~zweitesFenster(){
     delete (bildBewertungsFeld);
     delete (bildPfadFeld);
 
-
-
     delete (option);
     delete (hintergrund);
     delete (anzahlBilder);
@@ -51,6 +49,34 @@ zweitesFenster::~zweitesFenster(){
     delete (m_translator);
     delete (beenden);
 
+    delete (schwarz);
+    delete (weiss);
+    delete (beige);
+    delete (rose);
+
+    delete (farben);
+    delete (farb);
+    delete (farbenWidget);
+
+    delete (bilder);
+    delete (bild);
+    delete (bilderWidget);
+
+
+    delete (vollWidget);
+    delete (filteraktivieren);
+    delete (filt);
+    delete (filterWidget);
+
+    delete (sterne);
+    delete (eins);
+    delete (zwei);
+    delete (drei);
+    delete (vier);
+    delete (fuenf);
+    delete (hilfe);
+    delete (menu2);
+
 }
 
 void zweitesFenster::erzeugeZweitesFenster(){
@@ -68,32 +94,37 @@ void zweitesFenster::erzeugeZweitesFenster(){
 
 void zweitesFenster::optionsleisteDarstellen(){
 
+
+    QHBoxLayout *menu3 = new QHBoxLayout;
+    vollbildmodus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
+    QObject::connect(vollbildmodus, &QRadioButton::clicked,this, &zweitesFenster::vollbildModusAktiv);
+    //menu3->addWidget(vollbildmodus,0, Qt::AlignRight);
+
     QFont font1( "Calibri", 20, QFont::Bold);
     option->setFont(font1);
-    option->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    option->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
-
+    menu3->addWidget(option,0, Qt::AlignRight | Qt::AlignTop);
+    menu3->addWidget(vollbildmodus,0, Qt::AlignRight | Qt::AlignTop);
 
     /*Hintergrundfarben mit ihrem Label Hintergrund */
     QFont font2( "Calibri", 10, QFont::Bold);
     hintergrund->setFont(font2);
 
 
-    QPushButton *schwarz = new QPushButton();
+    schwarz = new QPushButton();
     schwarz->setStyleSheet("background-color:black; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    QObject::connect(schwarz, &QPushButton::clicked,this, &zweitesFenster::schwarz);
-    QPushButton *weiss = new QPushButton();
+    QObject::connect(schwarz, &QPushButton::clicked,this, &zweitesFenster::schwarzFunktion);
+    weiss = new QPushButton();
     weiss->setStyleSheet("background-color:white; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    QObject::connect(weiss, &QPushButton::clicked,this, &zweitesFenster::weiss);
-    QPushButton *beige = new QPushButton();
+    QObject::connect(weiss, &QPushButton::clicked,this, &zweitesFenster::weissFunktion);
+    beige = new QPushButton();
     beige->setStyleSheet("background-color:beige; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    QObject::connect(beige, &QPushButton::clicked,this, &zweitesFenster::beige);
-    QPushButton *rose = new QPushButton();
+    QObject::connect(beige, &QPushButton::clicked,this, &zweitesFenster::beigeFunktion);
+    rose = new QPushButton();
     rose->setStyleSheet("background-color:pink; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px;");
-    QObject::connect(rose, &QPushButton::clicked,this, &zweitesFenster::pink);
-    QGridLayout *farben = new QGridLayout();
-    QGridLayout *farb = new QGridLayout();
-    QWidget *farbenWidget = new QWidget();
+    QObject::connect(rose, &QPushButton::clicked,this, &zweitesFenster::pinkFunktion);
+    farben = new QGridLayout();
+    farb = new QGridLayout();
+    farbenWidget = new QWidget();
     farb->addWidget(schwarz,0,0);
     farb->addWidget(weiss,0,1);
     farb->addWidget(beige,0,2);
@@ -113,34 +144,26 @@ void zweitesFenster::optionsleisteDarstellen(){
     QObject::connect(sechsig, &QPushButton::clicked,this, &zweitesFenster::sechsigBilder);
 
 
-    QGridLayout *bilder = new QGridLayout();
-    QGridLayout *bild = new QGridLayout();
+    bilder = new QGridLayout();
+    bild = new QGridLayout();
     bild->addWidget(zwanzig,1,0);
     bild->addWidget(vierzig,1,1);
     bild->addWidget(sechsig,1,2);
     bilder->addWidget(anzahlBilder,0,0);
     bilder->addLayout(bild,1,0);
-    QWidget *bilderWidget = new QWidget();
+    bilderWidget = new QWidget();
     bilderWidget->setLayout(bilder);
 
 
     /*Einstellung des Vollbildmoduses mit dem Label*/
-    QFont font4( "Calibri", 10, QFont::Bold);
-    vollbild->setFont(font4);
-    QObject::connect(vollbildmodus, &QRadioButton::clicked,this, &zweitesFenster::vollbildModusAktiv);
-    QVBoxLayout *voll = new QVBoxLayout();
-    voll->addWidget(vollbild);
-    voll->addWidget(vollbildmodus);
-    QWidget *vollWidget = new QWidget();
-    vollWidget->setLayout(voll);
     vollbildModusDeaktiviern->setStyleSheet("background-color:rgb(189, 195, 199); color: black; border: none; margin: 0px;padding: 0px; width: 150px; height: 50px;");
 
 
     QFont font5( "Calibri", 10, QFont::Bold);
     sprache->setFont(font5);
-    QHBoxLayout *language = new QHBoxLayout;
-    QVBoxLayout *sprachen = new QVBoxLayout;
-    QWidget *sprachenWidget = new QWidget;
+    language = new QHBoxLayout;
+    sprachen = new QVBoxLayout;
+    sprachenWidget = new QWidget;
     language->addWidget(deutsch);
     QObject::connect(deutsch, &QRadioButton::clicked,this, &zweitesFenster::deutschUebersetzung);
     QObject::connect(englisch, &QRadioButton::clicked,this, &zweitesFenster::englischUebersetzung);
@@ -156,48 +179,63 @@ void zweitesFenster::optionsleisteDarstellen(){
     filter->setFont(font6);
     filtern = new QLineEdit;
     filtern->setStyleSheet("background-color:white, color: black");
-    filternNachTags = filtern->text();
-    QObject::connect(filtern, &QLineEdit::editingFinished,this, &zweitesFenster::nachTagFiltern);
+    /* zu testzwecken */
+    QObject::connect(filtern, &QLineEdit::textEdited,this, &zweitesFenster::nachTagFiltern);
 
 
-    QPushButton *filteraktivieren = new QPushButton;
+    filteraktivieren = new QPushButton;
     QPixmap pixmap2(":/icon/trichter.tif");
     QIcon buttonIcon2(pixmap2);
     filteraktivieren->setIcon(buttonIcon2);
     filteraktivieren->setIconSize(QSize(50, 25));
     filteraktivieren->setStyleSheet("border: none; margin: 0px; padding: 0px;");
-    //filteraktivieren->setStyleSheet("background-color: rgb(255,250,250) ; border: none; margin: 0px;padding: 0px; width: 50px; height: 25px;");
-    QGridLayout *filt = new QGridLayout();
+    filt = new QGridLayout();
     filt->addWidget(filter,0,0);
     filt->addWidget(filtern,2,0);
     filt->addWidget(filteraktivieren,2,2);
-    QWidget *filterWidget = new QWidget();
+    filterWidget = new QWidget();
     filterWidget->setLayout(filt);
 
-    QHBoxLayout *sterne = new QHBoxLayout;
-    QPushButton *eins = new QPushButton;
-    eins->setText("1");
-    eins->setStyleSheet("background-color:red ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
+    sterne = new QHBoxLayout;
+    eins = new QPushButton;
+
+    QPixmap pixmap3(":/icon/eins.tif");
+    QIcon buttonIcon3(pixmap3);
+    eins->setIcon(buttonIcon3);
+    eins->setIconSize(QSize(50, 50));
+    eins->setStyleSheet("border: none; margin: 0px; padding: 0px;");
     QObject::connect(eins, &QPushButton::clicked,this, &zweitesFenster::nachEinsFiltern);
 
-    QPushButton *zwei = new QPushButton;
-    zwei->setText("2");
-    zwei->setStyleSheet("background-color:orange ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
+    zwei = new QPushButton;
+    QPixmap pixmap4(":/icon/zwei.tif");
+    QIcon buttonIcon4(pixmap4);
+    zwei->setIcon(buttonIcon4);
+    zwei->setIconSize(QSize(50, 50));
+    zwei->setStyleSheet("border: none; margin: 0px; padding: 0px;");
     QObject::connect(zwei, &QPushButton::clicked,this, &zweitesFenster::nachZweiFiltern);
 
-    QPushButton *drei = new QPushButton;
-    drei->setText("3");
-    drei->setStyleSheet("background-color:yellow ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
+    drei = new QPushButton;
+    QPixmap pixmap5(":/icon/drei.tif");
+    QIcon buttonIcon5(pixmap5);
+    drei->setIcon(buttonIcon5);
+    drei->setIconSize(QSize(50, 50));
+    drei->setStyleSheet("border: none; margin: 0px; padding: 0px;");
     QObject::connect(drei, &QPushButton::clicked,this, &zweitesFenster::nachDreiFiltern);
 
-    QPushButton *vier = new QPushButton;
-    vier->setText("4");
-    vier->setStyleSheet("background-color:blue ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
+    vier = new QPushButton;
+    QPixmap pixmap6(":/icon/vier.tif");
+    QIcon buttonIcon6(pixmap6);
+    vier->setIcon(buttonIcon6);
+    vier->setIconSize(QSize(50, 50));
+    vier->setStyleSheet("border: none; margin: 0px; padding: 0px;");
     QObject::connect(vier, &QPushButton::clicked,this, &zweitesFenster::nachVierFiltern);
 
-    QPushButton *fuenf = new QPushButton;
-    fuenf->setText("5");
-    fuenf->setStyleSheet("background-color:green ; border: none; margin: 0px;padding: 0px; width: 40px; height: 25px;");
+    fuenf = new QPushButton;
+    QPixmap pixmap7(":/icon/fuenf.tif");
+    QIcon buttonIcon7(pixmap7);
+    fuenf->setIcon(buttonIcon7);
+    fuenf->setIconSize(QSize(50, 50));
+    fuenf->setStyleSheet("border: none; margin: 0px; padding: 0px;");
     QObject::connect(fuenf, &QPushButton::clicked,this, &zweitesFenster::nachFuenfFiltern);
 
     filterAufloesen = new QPushButton;
@@ -206,7 +244,7 @@ void zweitesFenster::optionsleisteDarstellen(){
     QIcon buttonIcon1(pixmap1);
     filterAufloesen->setIcon(buttonIcon1);
     filterAufloesen->setStyleSheet("border: none; margin: 0px;padding: 0px;");
-    filterAufloesen->setIconSize(QSize(40,25));
+    filterAufloesen->setIconSize(QSize(50,50));
 
 
     sterne->addWidget(eins);
@@ -217,16 +255,15 @@ void zweitesFenster::optionsleisteDarstellen(){
     sterne->addWidget(filterAufloesen);
     filt->addLayout(sterne,3,0);
 
-
-    menu->addWidget(option);
+    menu->addLayout(menu3);
+    //menu->addWidget(option);
     menu->addWidget(farbenWidget, 0, Qt::AlignLeft | Qt::AlignTop);
     menu->addWidget(bilderWidget, 0, Qt::AlignLeft | Qt::AlignTop);
-    menu->addWidget(vollWidget, 0, Qt::AlignLeft | Qt::AlignTop);
     menu->addWidget(sprachenWidget, 0, Qt::AlignLeft | Qt::AlignTop);
     menu->addWidget(filterWidget, 0, Qt::AlignLeft | Qt::AlignTop);
 
     /*Hilfe Button*/
-    QPushButton *hilfe = new QPushButton;
+    hilfe = new QPushButton;
     QPixmap pixmap(":/icon/Fragezeichen.tif");
     QIcon buttonIcon(pixmap);
     hilfe->setIcon(buttonIcon);
@@ -237,11 +274,10 @@ void zweitesFenster::optionsleisteDarstellen(){
 /*Hier habe ich einen Button eingesetzt um zum dritten Fenster zu gelangen */
 /*Im späteren Verlauf wird der Button ersetzt duch den Doppelklick des Nutzers auf ein Bild*/
 
-    QVBoxLayout *menu2 = new QVBoxLayout();
+    menu2 = new QVBoxLayout();
     menu->insertStretch(300,30);
     menu->addLayout(menu2);
     menu2->addWidget(hilfe, 0, Qt::AlignLeft | Qt::AlignVCenter);
-    //menu2->addWidget(diashow, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
 
     fenster->setStyleSheet("background-color:white;");
@@ -375,9 +411,11 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
     ganzesWindow->addLayout(oberesWindow);
     ganzesWindow->addWidget(southpart);
     this->setLayout(ganzesWindow);
+    this->showMaximized();
+
 }
 
-void zweitesFenster::schwarz(){
+void zweitesFenster::schwarzFunktion(){
     Farben schwarz(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                    deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
@@ -385,7 +423,7 @@ void zweitesFenster::schwarz(){
     schwarz.schwarz();
 }
 
-void zweitesFenster::beige(){
+void zweitesFenster::beigeFunktion(){
     Farben beige(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                  vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                  deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
@@ -393,7 +431,7 @@ void zweitesFenster::beige(){
     beige.beige();
 }
 
-void zweitesFenster::weiss(){
+void zweitesFenster::weissFunktion(){
     Farben weiss(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                  vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                  deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
@@ -401,7 +439,7 @@ void zweitesFenster::weiss(){
     weiss.weiss();
 }
 
-void zweitesFenster::pink(){
+void zweitesFenster::pinkFunktion(){
     Farben pink(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                     vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
                     deutsch,  englisch,  vollbildModusDeaktiviern, tags, bildBewertung,
@@ -545,20 +583,13 @@ void zweitesFenster::nachFuenfFiltern(){
 
 }
 
-void zweitesFenster::nachTagFiltern(){
+void zweitesFenster::nachTagFiltern(QString tag){
     vector<string> *gefilterteBilder = new vector<string>;
-    cout << "Filtertag: ";
-    std::cout << filternNachTags.toStdString() << std::endl;
+    (*gefilterteBilder) = m_bank->bildtagsFiltern(tag);
 
-    (*gefilterteBilder) = m_bank->bildtagsFiltern(filternNachTags);
-
-    cout << gefilterteBilder->size() << endl;
-   // cout << 1 << endl;
 
     if(gefilterteBilder->empty() == true){
-        cout << 2 << endl;
         QMessageBox *information = new QMessageBox();
-
         QString text = (tr("<h1>Achtung!</h1>"
                        "Es existieren keine Bilder mit dem eingegebenen Tags."));
 
@@ -566,7 +597,6 @@ void zweitesFenster::nachTagFiltern(){
         QMessageBox::information(this,"Hilfe",text);
     }
     else{
-     //   cout << 3 << endl;
         std::map<string, QImage*> *umgewandelteBilder = new std::map<string, QImage*>;
         (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
         BilderDarstellen(umgewandelteBilder);

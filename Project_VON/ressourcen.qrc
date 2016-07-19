@@ -7,6 +7,11 @@
         <file>back_Transparent.tif</file>
         <file>Fragezeichen.tif</file>
         <file>trichter.tif</file>
+        <file>drei.tif</file>
+        <file>eins.tif</file>
+        <file>fuenf.tif</file>
+        <file>vier.tif</file>
+        <file>zwei.tif</file>
     </qresource>
     <qresource prefix="/language">
         <file>VON_Ueberstzung_Deutsch_zu_Englisch.qm</file>

@@ -5,18 +5,20 @@ BilderSuche::BilderSuche(QString pfad, int anzahhlBilder, Datenbank *bank)
     m_pfad = pfad;
     m_anzahhlBilder = anzahhlBilder;
     m_bank = bank;
+    images = new std::vector<std::string>;
+    qimages = new  std::map<string, QImage*>;
 }
 
 BilderSuche::~BilderSuche(){
     delete (m_bank);
+    delete (images);
+    delete (qimages);
 }
 
 void BilderSuche::run(){
     m_bank->setAlleBilder_dargestelltFalse();
-    std::vector<std::string> *images = new std::vector<std::string>();
     (*images) = alleGefundenenBilder(); // alle Bilder ab einem bestimmten Verzeichnis werden geladen
 
-    std::map<string, QImage*> *qimages = new  std::map<string, QImage*>;
     (*qimages) = umwandeln(images, m_anzahhlBilder);
     sucheBeenden(qimages);
 }
@@ -92,4 +94,3 @@ std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *image
     }
     return qimages;
 }
-

@@ -34,7 +34,7 @@ public:
      */
     Farben(QWidget *fenster, QWidget *westpart, QLabel *filter,
            QLabel *hintergrund, QLabel *anzahlBilder, QLabel *vollbild,
-           QRadioButton *vollbildmodus, QLabel *option, QPushButton *zwanzig,
+           QPushButton *vollbildmodus, QLabel *option, QPushButton *zwanzig,
            QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach,
            QRadioButton *deutsch, QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
@@ -71,7 +71,7 @@ private:
     QLabel *m_hintergrund;
     QLabel *m_anzahlBilder;
     QLabel *m_vollbild;
-    QRadioButton *m_vollbildmodus;
+    QPushButton *m_vollbildmodus;
     QLabel *m_option;
     QPushButton *m_zwanzig;
     QPushButton *m_vierzig;

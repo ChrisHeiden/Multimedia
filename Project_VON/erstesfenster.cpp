@@ -5,9 +5,6 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
 {
     m_bank = bank;
 
-
-
-
     if( m_bank->datenbankEmpty() == true ){
         /*--------Sound abspielen----------*/
 

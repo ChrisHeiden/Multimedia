@@ -333,6 +333,7 @@ void drittesFenster::bewertenEins(){
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,1);
 }
+
 void drittesFenster::bewertenZwei(){
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,2);

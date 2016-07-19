@@ -55,6 +55,9 @@ private:
     QString m_pfad;
     int m_anzahhlBilder;
     Datenbank *m_bank;
+    std::vector<std::string> *images;
+    std::map<string, QImage*> *qimages;
+
 
 
 public:

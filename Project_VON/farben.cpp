@@ -1,7 +1,7 @@
 #include "farben.h"
 
 Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hintergrund,
-               QLabel *anzahlBilder,QLabel *vollbild, QRadioButton *vollbildmodus, QLabel *option,
+               QLabel *anzahlBilder,QLabel *vollbild, QPushButton *vollbildmodus, QLabel *option,
                QPushButton *zwanzig, QPushButton *vierzig, QPushButton *sechsig, QLabel *sprache, QRadioButton *deutsch,
                QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,  QLabel *tags, QLabel *bildBewertung,
                QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern)
