@@ -113,10 +113,8 @@ private:
     QLineEdit *filtern;
     QString filternNachTags;
     int m_bilderAnzahl;
-    //MyLabel *l;
     string pfad;
 
-    //QLabel *myLabel = new QLabel;
     BilderSuche *suche;
     QTranslator *m_translator;
     QPushButton *beenden;
@@ -153,6 +151,8 @@ private:
     QHBoxLayout *language;
     QVBoxLayout *sprachen;
     QWidget *sprachenWidget;
+    MyLabel *l;
+    QMessageBox *information;
 
     void bildtagsAendern();
     void bildBewertungAendern();

@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <iostream>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -39,13 +40,20 @@ public:
 
     void naechstesBild();
     void vorherigesBild();
-
-
+    int vectorDurchsuchen();
+    void fehlerMelden();
+    void vertikal();
+    void horizontal();
+    void interaktion();
+    void buttonleisteErzeugen();
+    void buttonsStyle();
 private:
 
     QWidget *m_fenster;
 
-    QGridLayout *layout;
+    QHBoxLayout *layout;
+    QVBoxLayout *layout2;
+
     QVBoxLayout *buttons;
     QHBoxLayout *buttons2;
 
@@ -70,11 +78,16 @@ private:
     QPushButton *drehen;
     QPushButton *links;
     QPushButton *rechts;
+    vector<string> *bilder;
+    QMessageBox *information;
+    QScreen *screen;
+    QImage image;
+    bool bereitsDurchsucht = false;
+
+
 
 signals:
     void showBildergalerie();
-
-public slots:
 };
 
 #endif // DRITTESFENSTER_H

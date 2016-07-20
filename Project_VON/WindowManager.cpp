@@ -41,17 +41,21 @@ void WindowManager::showZweitesFenster()
 {
     this->layout->setCurrentWidget(zweites);
     this->zweites->erzeugeZweitesFenster();
+    this->showMaximized();
 }
 
 void WindowManager::showDrittesFenster(string pfad)
 {
     this->layout->setCurrentWidget(drittes);
     this->drittes->erzeugeDrittesFenster(pfad);
+    this->showMaximized();
 }
 
 void WindowManager::letzteBilder()
 {
     this->layout->setCurrentWidget(zweites);
     this->zweites->letzter();
+    this->showMaximized();
+
 }
 

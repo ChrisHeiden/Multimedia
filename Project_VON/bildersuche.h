@@ -58,8 +58,6 @@ private:
     std::vector<std::string> *images;
     std::map<string, QImage*> *qimages;
 
-
-
 public:
 signals:
    void sucheBeenden(std::map<string, QImage*> *images);
