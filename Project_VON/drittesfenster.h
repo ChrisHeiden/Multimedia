@@ -2,6 +2,7 @@
 #define DRITTESFENSTER_H
 
 #include "datenbank.h"
+#include "gestensteuerung.h"
 #include <QPushButton>
 #include <QGridLayout>
 #include <QGraphicsScene>
@@ -47,7 +48,16 @@ public:
     void interaktion();
     void buttonleisteErzeugen();
     void buttonsStyle();
-private:
+
+
+signals:
+    void showBildergalerie();
+
+private: // Funktionen
+    virtual void wheelEvent(QWheelEvent* event);
+
+
+private: //Membervariablen
 
     QWidget *m_fenster;
 
@@ -85,10 +95,7 @@ private:
     bool bereitsDurchsucht = false;
     unsigned int index;
 
-    virtual void wheelEvent(QWheelEvent* event);
-
-signals:
-    void showBildergalerie();
+    Gestensteuerung *gesten;
 };
 
 #endif // DRITTESFENSTER_H

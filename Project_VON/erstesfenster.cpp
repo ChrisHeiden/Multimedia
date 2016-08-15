@@ -138,7 +138,7 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
         startButton->setStyleSheet("background-color: black; color: rgb(255,250,250); border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
         startButton->setGeometry(15, 550, 220, 25);  // absolute positionierung
 
-        QObject::connect(letztenOrdnerButton, &QPushButton::clicked,this, &erstesFenster::showLetzteBilder);
+        QObject::connect(letztenOrdnerButton, &QPushButton::clicked, this, &erstesFenster::showLetzteBilder);
         letztenOrdnerButton->setStyleSheet("background-color: black; color: rgb(255,250,250); border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
         letztenOrdnerButton->setGeometry(490, 550, 300, 35);  // absolute positionierung
 

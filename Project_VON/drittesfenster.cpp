@@ -25,12 +25,23 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     fuenf = new QPushButton();
     beenden = new QPushButton();
 
-
     bilder =  new vector<string>;
     (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
 
-    interaktion();
+    layout = new QHBoxLayout;
+    layout2 = new QVBoxLayout;
 
+    buttons = new QVBoxLayout;
+    buttons2 = new QHBoxLayout;
+
+    fuellung1 = new QVBoxLayout;
+    fuellung2 = new QVBoxLayout;
+    fuellung3 = new QHBoxLayout;
+    fuellung4 = new QHBoxLayout;
+
+    gesten = new Gestensteuerung(buttons);
+
+    interaktion();
 
 }
 
@@ -65,16 +76,7 @@ drittesFenster::~drittesFenster(){
 void drittesFenster::erzeugeDrittesFenster(string pfad){
      m_pfad = pfad;
 
-    layout = new QHBoxLayout;
-    layout2 = new QVBoxLayout;
 
-    buttons = new QVBoxLayout;
-    buttons2 = new QHBoxLayout;
-
-    fuellung1 = new QVBoxLayout;
-    fuellung2 = new QVBoxLayout;
-    fuellung3 = new QHBoxLayout;
-    fuellung4 = new QHBoxLayout;
 
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);

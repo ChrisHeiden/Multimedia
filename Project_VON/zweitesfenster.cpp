@@ -326,7 +326,6 @@ QString zweitesFenster::ordnerVerzeichnis(){
 }
 
 void zweitesFenster::letzter(){
-
     optionsleisteDarstellen();
     vector<string> *letzteBilder = new vector<string>;
     (*letzteBilder) = m_bank->getAlleBilder_dargestelltTrue();

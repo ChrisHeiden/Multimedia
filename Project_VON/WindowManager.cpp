@@ -56,6 +56,5 @@ void WindowManager::letzteBilder()
     this->layout->setCurrentWidget(zweites);
     this->zweites->letzter();
     this->showMaximized();
-
 }
 

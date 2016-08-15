@@ -23,7 +23,10 @@ SOURCES += main.cpp\
            farben.cpp \
            hilfe.cpp \
            drittesfenster.cpp \
-           mylabel.cpp
+           mylabel.cpp \
+    gespeichertewerte.cpp \
+    notification.cpp \
+    gestensteuerung.cpp
 
 HEADERS  += erstesfenster.h \
             sound.h \
@@ -34,7 +37,10 @@ HEADERS  += erstesfenster.h \
             farben.h \
             hilfe.h \
             drittesfenster.h \
-            mylabel.h
+            mylabel.h \
+    gespeichertewerte.h \
+    notification.h \
+    gestensteuerung.h
 
 CONFIG += c++11
 
