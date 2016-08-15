@@ -51,8 +51,6 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
 
         /*--------------Text Layout------------------*/
 
-
-
         txt->setAlignment(Qt::AlignCenter);         //Label befindet sich im Mittelpunkt
         QFont* font = new QFont("Courier New");
         font->setItalic(true);
@@ -150,10 +148,8 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
         this->setCentralWidget(view);   //View soll dargestellt werden
         setWindowIcon(QIcon(":/icon/Icon.png"));
     }
-
 }
 
-//warum braucht man die Klammern () um die Zeiger
 erstesFenster::~erstesFenster()
 {
     delete (view);

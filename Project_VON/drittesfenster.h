@@ -83,8 +83,9 @@ private:
     QScreen *screen;
     QImage image;
     bool bereitsDurchsucht = false;
+    unsigned int index;
 
-
+    virtual void wheelEvent(QWheelEvent* event);
 
 signals:
     void showBildergalerie();

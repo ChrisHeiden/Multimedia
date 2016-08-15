@@ -162,7 +162,7 @@ private:
     void nachVierFiltern();
     void nachFuenfFiltern();
     void nachTagFiltern(QString tag);
-
+    void interaktion();
 
     void schwarzFunktion();
     void beigeFunktion();
@@ -179,6 +179,7 @@ private:
     void zwanzigBilder();
     void vierzigBilder();
     void sechsigBilder();
+    QString gewuenschterPfad;
 
 
 

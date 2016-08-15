@@ -98,7 +98,6 @@ void zweitesFenster::optionsleisteDarstellen(){
     QHBoxLayout *menu3 = new QHBoxLayout;
     vollbildmodus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
     QObject::connect(vollbildmodus, &QRadioButton::clicked,this, &zweitesFenster::vollbildModusAktiv);
-    //menu3->addWidget(vollbildmodus,0, Qt::AlignRight);
 
     QFont font1( "Calibri", 20, QFont::Bold);
     option->setFont(font1);
@@ -310,7 +309,7 @@ QString zweitesFenster::ordnerVerzeichnis(){
         this,
         tr("Bilderordner"),      // Titel des Fensters
         "C://Users", //Startverzeichnis, welches angegeben wird
-        tr("Alle Dateien(*.*);;JPG Dateien(*.jpg);;PNG Dateien(*.png);; TIFF Dateien (*.tiff);; GIF Dateien(*.gif)")); // Möglichkeiten zur Filterung
+        tr("JPG Dateien(*.jpg)")); // Möglichkeiten zur Filterung
         string path = filename.toStdString();
 
     for(unsigned int i = 0; i <path.size(); i++){       //geht String durch und sucht nach letztem Slash
@@ -365,6 +364,15 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
 
     map<string,QImage*>::iterator bilderDurchgehen;
 
+    std::map<string, QImage*>::iterator it;
+    cout << "Anfang" << endl;
+    for(it = qimages->begin(); it != qimages->end(); ++it){
+        cout << it->first << endl;
+        cout << it->second << endl;
+        cout << typeid(it->second).name() << endl;
+    }
+    cout << "Ende" << endl;
+
     for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
         l = new MyLabel(bilderDurchgehen->first, m_bank);
         l->setAlignment(Qt::AlignBottom);
@@ -402,7 +410,6 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
     ganzesWindow->addWidget(southpart);
     this->setLayout(ganzesWindow);
     this->showMaximized();
-
 }
 
 void zweitesFenster::schwarzFunktion(){

@@ -23,9 +23,9 @@ public:
     erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent = 0);
 
     /**
-     * Dekonstruktor, welcher sich um die Lösung der Zeiger kümmern soll
+     * Dekonstruktor, welcher sich um die Löschung der Zeiger kümmern soll
      */
-    ~erstesFenster();
+    virtual ~erstesFenster();
 
 signals:
     void openSecondWindow();

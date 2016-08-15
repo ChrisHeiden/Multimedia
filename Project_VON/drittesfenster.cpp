@@ -2,6 +2,7 @@
 #include <QScreen>
 #include <iostream>
 #include <QApplication>
+#include <QWheelEvent>
 
 using namespace std;
 
@@ -24,18 +25,12 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     fuenf = new QPushButton();
     beenden = new QPushButton();
 
-    buttons = new QVBoxLayout();
-    fuellung1 = new QVBoxLayout();
-    fuellung2 = new QVBoxLayout();
 
-    buttons2 = new QHBoxLayout();
-    fuellung3 = new QHBoxLayout();
-    fuellung4 = new QHBoxLayout();
-
-    layout = new QHBoxLayout();
-    layout2 = new QVBoxLayout();
     bilder =  new vector<string>;
     (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
+
+    interaktion();
+
 
 }
 
@@ -68,15 +63,23 @@ drittesFenster::~drittesFenster(){
 }
 
 void drittesFenster::erzeugeDrittesFenster(string pfad){
-    m_fenster->layout()->deleteLater();
+     m_pfad = pfad;
 
-    m_pfad = pfad;
+    layout = new QHBoxLayout;
+    layout2 = new QVBoxLayout;
+
+    buttons = new QVBoxLayout;
+    buttons2 = new QHBoxLayout;
+
+    fuellung1 = new QVBoxLayout;
+    fuellung2 = new QVBoxLayout;
+    fuellung3 = new QHBoxLayout;
+    fuellung4 = new QHBoxLayout;
 
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
 
     buttonsStyle();
-    interaktion();
 
     screen = QApplication::screens().at(0);
     QSize size = screen->size();
@@ -87,12 +90,17 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             vertikal();
             layout->addLayout(buttons);
             layout->addWidget(view);
+
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout);
         }
         if(image.height() < image.width()){
             image = image.scaledToWidth(530, Qt::FastTransformation);
             horizontal();
             layout2->addWidget(view);
             layout2->addLayout(buttons2);
+            this->setLayout(layout2);
         }
     }
     else if(size.width() == 1920 && size.height() == 1080){
@@ -101,12 +109,20 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             vertikal();
             layout->addLayout(buttons);
             layout->addWidget(view);
+
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout2);
         }
         if(image.height() < image.width()){
             image = image.scaledToWidth(1000, Qt::FastTransformation);
             horizontal();
             layout2->addWidget(view);
             layout2->addLayout(buttons2);
+
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout2);
         }
     }
 
@@ -116,12 +132,19 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             vertikal();
             layout->addLayout(buttons);
             layout->addWidget(view);
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout);
         }
         if(image.height() < image.width()){
             image = image.scaledToHeight(870, Qt::FastTransformation);
             horizontal();
             layout2->addWidget(view);
             layout2->addLayout(buttons2);
+
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout2);
         }
     }
     else{                                                       //Bildauflösung des Surface
@@ -131,19 +154,21 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             layout->addLayout(buttons);
             layout->addWidget(view);
 
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout);
         }
         if(image.height() < image.width()){
             image = image.scaledToHeight(1200, Qt::FastTransformation);
             horizontal();
             layout2->addWidget(view);
             layout2->addLayout(buttons2);
+
+            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(item);
+            this->setLayout(layout2);
         }
     }
-    item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-    scene->addItem(item);
-
-    this->setLayout(layout);
-    this->showMaximized();
 }
 
 void drittesFenster::buttonsStyle(){
@@ -264,7 +289,6 @@ void drittesFenster::bildDrehen(){
 }
 
 int drittesFenster::vectorDurchsuchen(){
-    int index = 0;
     for(unsigned int i = 0; i < bilder->size(); i++){
         if(bilder->at(i) == m_pfad){
             index = i;
@@ -275,37 +299,75 @@ int drittesFenster::vectorDurchsuchen(){
             continue;
         }
     }
+    throw -1;
 }
 
 void drittesFenster::naechstesBild(){
-    unsigned int index;
+
+    delete(layout);
+    delete(layout2);
+    delete(item);
     if(bereitsDurchsucht == false){
-        if(index <= bilder->size()){
-            try{
-                index = vectorDurchsuchen();
-            }catch(...){
-                fehlerMelden();
+        try{
+            index = vectorDurchsuchen();
+            if(index < bilder->size() -1){
+                cout << "Davor: " << index << endl;
+                ++index;
+                erzeugeDrittesFenster(bilder->at(index));
+                cout << "Danach: " << index << endl;
+            }else{
+                index = 0;
+                erzeugeDrittesFenster(bilder->at(index));
             }
+        }catch(...){
+            fehlerMelden();
+        }
+    }else if(bereitsDurchsucht == true){
+        ++index;
+        if(index < bilder->size()){
+            cout << "gut "  << endl;
             cout << "Davor: " << index << endl;
-            ++index;
             erzeugeDrittesFenster(bilder->at(index));
             cout << "Danach: " << index << endl;
         }else{
             index = 0;
+            cout << "Warum?" << endl;
             erzeugeDrittesFenster(bilder->at(index));
         }
-    }else{
-        ++index;
-        erzeugeDrittesFenster(bilder->at(index));
     }
 }
 
 void drittesFenster::vorherigesBild(){
-    try{
-        int index = vectorDurchsuchen();
-        erzeugeDrittesFenster(bilder->at(index - 1));
-    }catch(int){
-       fehlerMelden();
+    delete(layout);
+    delete(layout2);
+    delete(item);
+    if(bereitsDurchsucht == false){
+        try{
+            index = vectorDurchsuchen();
+            if(index < bilder->size() -1){
+                ++index;
+                cout << "Davor: " << index << endl;
+                erzeugeDrittesFenster(bilder->at(index));
+                cout << "Danach: " << index << endl;
+            }else{
+                index = 0;
+                erzeugeDrittesFenster(bilder->at(index));
+            }
+        }catch(...){
+            fehlerMelden();
+        }
+    }else if(bereitsDurchsucht == true){
+        ++index;
+        if(index < bilder->size()){
+            cout << "gut "  << endl;
+            cout << "Davor: " << index << endl;
+            erzeugeDrittesFenster(bilder->at(index));
+            cout << "Danach: " << index << endl;
+        }else{
+            index = 0;
+            cout << "Warum?" << endl;
+            erzeugeDrittesFenster(bilder->at(index));
+        }
     }
 }
 
@@ -314,5 +376,20 @@ void drittesFenster::fehlerMelden(){
     QString text = (tr("<h1>Bild wurde nicht gefunden!</h1>"));
     information->setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
     QMessageBox::information(this,"Achtung",text);
+}
+
+void drittesFenster::wheelEvent(QWheelEvent *event){
+
+        view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+        // Scale the view / do the zoom
+        double scaleFactor = 1.15;
+        if(event->delta() > 0) {
+            // Zoom in
+            view-> scale(scaleFactor, scaleFactor);
+
+        } else {
+            // Zooming out
+             view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+        }
 }
 
