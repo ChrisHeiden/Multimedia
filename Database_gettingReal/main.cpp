@@ -2,14 +2,21 @@
 #include "datenbank.h"
 #include "iostream"
 #include <QApplication>
+#include <QtTest/QtTest>
+#include "datenbanktest.h"
+
 using namespace std;
+
 int main(int argc, char *argv[]) //int argc, char *argv[]
 {
     /*QApplication a(argc, argv);
     MainWindow w;
     w.show();*/
 
-    Datenbank test;
+    datenbanktest datenbanktest;
+    QTest::qExec(&datenbanktest);
+    //Datenbank test;
+    //test.datenbankLoeschen();
     /*if(test.datenbankEmpty()){
         cout << "Die Datenbank ist leer!" << endl;
     }
@@ -24,13 +31,13 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     test.BildLoeschen(4);
     test.BildLoeschen(5);*/
 
-    test.neuesBild("./Testpilder/Testbild.jpg");
+    /*test.neuesBild("./Testpilder/Testbild.jpg");
     test.neuesBild("./Testbilder/Panorama.jpg");
     test.neuesBild("./Testbilder/Esel.jpg");
     test.neuesBild("./Testbilder/Affe.jpg");
     test.neuesBild("./Testbilder/Blume.jpg");
     test.neuesBild("./Testbilder/Phil.jpg");
-    test.neuesBild("./Testbilder/Delia.jpg");
+    test.neuesBild("./Testbilder/Delia.jpg");*/
 
     //test.getID("./Testbilder/Phil.jpg");
 
@@ -65,8 +72,8 @@ int main(int argc, char *argv[]) //int argc, char *argv[]
     cout << test.bewertungAnzeigen(4) << endl;*/
     //test.bewertungFiltern(3);
     //test.getAlleBilder_dargestelltTrue();
-    test.setNeueBildausrichtung(5);
-    test.getBildausrichtung(5);
+    //test.setNeueBildausrichtung(5);
+    //test.getBildausrichtung(5);
 
     //return a.exec();
     return 0;

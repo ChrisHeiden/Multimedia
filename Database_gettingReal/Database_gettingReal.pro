@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,7 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    datenbank.cpp
+    datenbank.cpp \
+    datenbanktest.cpp
 
 HEADERS  += mainwindow.h \
-    datenbank.h
+    datenbank.h \
+    datenbanktest.h

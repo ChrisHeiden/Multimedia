@@ -16,19 +16,25 @@ Datenbank::Datenbank(){
        qDebug() << "Database: connection ok";
     }
 
-    /*QSqlQuery qry;
-    qry.prepare( "Drop table Bilder" );
-        if( !qry.exec() )
-            qDebug() << qry.lastError();
-        else
-            qDebug() << "Table dropped!";*/
-
     QSqlQuery qry;
-    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer, Bildausrichtung integer)" ); //Bild_dargestellt 0 = false, 1 = true
+    qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer, Bildausrichtung integer)" ); //Bild_dargestellt 0 = false, 1 = memory, 2 = true
       if( !qry.exec() )
         qDebug() << "Datenbank anlegen Error:" << qry.lastError();
       else
         qDebug() << "Table created!";
+}
+
+bool Datenbank::datenbankLoeschen(){
+    QSqlQuery qry;
+    qry.prepare( "Drop table Bilder" );
+        if( !qry.exec() ){
+            qDebug() << qry.lastError();
+            return false;
+        }
+        else{
+            qDebug() << "Table dropped!";
+            return true;
+        }
 }
 
 bool Datenbank::datenbankEmpty(){
@@ -443,17 +449,17 @@ void Datenbank::setNeueBildausrichtung(int id){
 
 int Datenbank::getBildausrichtung(int id){
     int ausrichtung = 0;
-    if(bildExists(id)){
-        QSqlQuery query;
-        query.prepare("SELECT Bildausrichtung FROM Bilder WHERE BildID = (:BildID)");
-        query.bindValue(":BildID", id);
-        if(query.exec()){
-            query.first();
-            ausrichtung = query.value(0).toInt();
-            qDebug() << ausrichtung;
+    if(bildExists(id)){                               //ueberpruefen, ob BildID in der Datenbank vorhanden ist
+        QSqlQuery query;                              //neues QSqlQuery-Objekt
+        query.prepare("SELECT Bildausrichtung FROM Bilder WHERE BildID = (:BildID)");   //vorbereiten eines neuen SQL-Statements
+        query.bindValue(":BildID", id);               //zusaetzliche Informationen werden in das Statement eingebunden
+        if(query.exec()){                             //Query wird ausgeführt und Ueberpruefung des Rueckgabewerts von exec()
+            query.first();                            //es ist nur ein Ergebniswert zu erwarten, deswegen direkter Zugriff auf query.first
+            ausrichtung = query.value(0).toInt();     //Wert in eine Integer-Variable speichern
+            qDebug() << ausrichtung;                  //Wert zur Ueberpruefung im qDebug ausgeben
         }
-        else{
-            qDebug() << "getBildausrichtung error:" << query.lastError();
+        else{                                         //wenn Rueckgabewert von exec() false ist ...
+            qDebug() << "getBildausrichtung error:" << query.lastError();   //... gabe es einen Fehler, der ueber qDebug ausgegeben wird
         }
     }
     return ausrichtung;

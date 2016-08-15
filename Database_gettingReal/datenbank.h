@@ -20,6 +20,17 @@ public:
      */
     Datenbank();
 
+    /**
+     * @brief datenbankLoeschen loescht die gesamte Datenbank
+     * @return true, wenn Datenbank geloescht wurde, false, wenn nicht
+     */
+    bool datenbankLoeschen();
+
+    /**
+     * @brief bildpfadExists gibt an, ob ein Bildpfad bereits in der Datenbank eingetragen ist oder nicht
+     * @param Pfad Bildpfad, der ueberprueft werden soll
+     * @return true, wenn Bildpfad bereits existiert, false, wenn nicht
+     */
     bool bildpfadExists(QString Pfad);
 
     /**
