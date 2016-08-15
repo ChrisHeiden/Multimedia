@@ -19,6 +19,14 @@ public:
     Gestensteuerung(QVBoxLayout *buttons, QWidget *parent = 0);
     ~Gestensteuerung();
 
+signals:
+    void verkleinereBild();
+    void vergroessereBild();
+    void dreheBild();
+    void vorhereigesBild();
+    void nachstesBild();
+
+
 private:
     QProcess *process;
     GespeichertWerte *speichert;

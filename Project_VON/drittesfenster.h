@@ -41,7 +41,7 @@ public:
 
     void naechstesBild();
     void vorherigesBild();
-    int vectorDurchsuchen();
+    void vectorDurchsuchen();
     void fehlerMelden();
     void vertikal();
     void horizontal();
@@ -49,6 +49,9 @@ public:
     void buttonleisteErzeugen();
     void buttonsStyle();
 
+public slots:
+    void verkleinereBild();
+    void vergroessereBild();
 
 signals:
     void showBildergalerie();

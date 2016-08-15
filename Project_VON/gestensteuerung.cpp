@@ -73,7 +73,7 @@ void Gestensteuerung::auslesen()
                     y = stod(hilfe.substr(index +1, size - index));
                     //cout << "X-Wert: " << x << endl;
                     //cout << "Y-Wert: " <<y << endl;
-                    //cout << "Wert werden uebermittelt." << endl;
+                    cout << "Wert werden uebermittelt." << endl;
                     speichert = new GespeichertWerte(x,y);
                     alleGespeichertenWerte->push_back(speichert);
                 }
@@ -170,27 +170,32 @@ void Gestensteuerung::wischGeste(){
     if(x1 < x2){ //
         //vorheriges Bild anzeigen
         cout << " Vorheriges Bild wird dargestellt." << endl;
+        vorhereigesBild();
     }
 
     else if(x1 > x2){
         //vorheriges Bild anzeigen
         cout << " Naechstes Bild wird dargestellt." << endl;
+        nachstesBild();
     }
 }
 
 void Gestensteuerung::drehGeste(){
     // Bild mit uhrzeiger drehen
     cout << " Bilder wird gedreht." << endl;
+    dreheBild();
 }
 
 void Gestensteuerung::vergroesserGeste(){
     //Bild vergroesser
     cout << " Bilder wird groesser dargestellt." << endl;
+    vergroessereBild();
 }
 
 void Gestensteuerung::verkleinerGeste(){
     //Bild verkleinern
     cout << "Bild wird kleiner dartgestellt." << endl;
+    verkleinereBild();
 }
 
 void Gestensteuerung::connectionAktivieren(){

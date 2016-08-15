@@ -76,8 +76,6 @@ drittesFenster::~drittesFenster(){
 void drittesFenster::erzeugeDrittesFenster(string pfad){
      m_pfad = pfad;
 
-
-
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
 
@@ -221,6 +219,13 @@ void drittesFenster::interaktion(){
     QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
     QObject::connect(links, &QPushButton::clicked,this, &drittesFenster::vorherigesBild);
     QObject::connect(rechts, &QPushButton::clicked,this, &drittesFenster::naechstesBild);
+
+    QObject::connect(gesten, &Gestensteuerung::verkleinereBild, this, &verkleinereBild);
+    QObject::connect(gesten, &Gestensteuerung::vergroessereBild, this, &vergroessereBild);
+    //QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
+    QObject::connect(gesten, &Gestensteuerung::vorhereigesBild, this, &vorherigesBild);
+    QObject::connect(gesten, &Gestensteuerung::nachstesBild, this, &naechstesBild);
+
 }
 
 void drittesFenster::vertikal(){
@@ -290,29 +295,30 @@ void drittesFenster::bildDrehen(){
     m_bank->getBildausrichtung(id);
 }
 
-int drittesFenster::vectorDurchsuchen(){
+void drittesFenster::vectorDurchsuchen(){
+
+    cout << m_pfad << endl;
+
     for(unsigned int i = 0; i < bilder->size(); i++){
         if(bilder->at(i) == m_pfad){
             index = i;
             bereitsDurchsucht = true;
-            return index;
         }
         else{
             continue;
         }
     }
-    throw -1;
 }
 
 void drittesFenster::naechstesBild(){
+    // delete(layout);
+    // delete(layout2);
+    // delete(item);
 
-    delete(layout);
-    delete(layout2);
-    delete(item);
     if(bereitsDurchsucht == false){
         try{
-            index = vectorDurchsuchen();
-            if(index < bilder->size() -1){
+            vectorDurchsuchen();
+            if(index < bilder->size()){
                 cout << "Davor: " << index << endl;
                 ++index;
                 erzeugeDrittesFenster(bilder->at(index));
@@ -340,13 +346,14 @@ void drittesFenster::naechstesBild(){
 }
 
 void drittesFenster::vorherigesBild(){
-    delete(layout);
-    delete(layout2);
-    delete(item);
+   // delete(layout);
+   // delete(layout2);
+   // delete(item);
+
     if(bereitsDurchsucht == false){
         try{
-            index = vectorDurchsuchen();
-            if(index < bilder->size() -1){
+            vectorDurchsuchen();
+            if(index < bilder->size()){
                 ++index;
                 cout << "Davor: " << index << endl;
                 erzeugeDrittesFenster(bilder->at(index));
@@ -394,4 +401,15 @@ void drittesFenster::wheelEvent(QWheelEvent *event){
              view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
         }
 }
+
+void drittesFenster::verkleinereBild(){
+   double scaleFactor = 25.0;
+   view->scale(scaleFactor, scaleFactor);
+}
+
+void drittesFenster::vergroessereBild(){
+    double scaleFactor = 25.0;
+    view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+}
+
 
