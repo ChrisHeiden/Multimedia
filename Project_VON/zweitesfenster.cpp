@@ -491,7 +491,7 @@ void zweitesFenster::hilfeAngeklicket(){
 void zweitesFenster::englischUebersetzung(){
     QApplication::instance()->removeTranslator(m_translator);
 
-     if (m_translator->load(":/language/VON_Ueberstzung_Deutsch_zu_Englisch.qm"))
+     if (m_translator->load(":/language/VON_Deutsch.qm"))
 
      {
      qDebug() << "LOAD FINISHED";
@@ -502,6 +502,14 @@ void zweitesFenster::englischUebersetzung(){
 
 void zweitesFenster::deutschUebersetzung(){
     QApplication::instance()->removeTranslator(m_translator);
+
+    if (m_translator->load(":/language/VON_Ueberstzung_Deutsch_zu_Englisch.qm"))
+
+    {
+    qDebug() << "LOAD FINISHED";
+
+    QApplication::instance()->installTranslator(m_translator);
+    }
 }
 
 void zweitesFenster::vollbildModusAktiv(){

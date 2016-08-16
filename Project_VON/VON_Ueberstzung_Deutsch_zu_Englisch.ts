@@ -6,32 +6,32 @@
     <message>
         <location filename="erstesfenster.h" line="42"/>
         <source>Starting index</source>
-        <translation type="unfinished"></translation>
+        <translation>Startverzeichnis</translation>
     </message>
     <message>
         <location filename="erstesfenster.h" line="43"/>
         <source>Show last images</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Bilder anzeigen</translation>
     </message>
     <message>
         <location filename="erstesfenster.h" line="44"/>
         <source>Please choose starting index</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte Startverzeichnis auswaehlen</translation>
     </message>
     <message>
         <location filename="erstesfenster.h" line="53"/>
         <source>Startverzeichnis</source>
-        <translation></translation>
+        <translation>Starting index</translation>
     </message>
     <message>
         <location filename="erstesfenster.h" line="54"/>
         <source>Letzte Bilder anzeigen</source>
-        <translation></translation>
+        <translation>Show last images</translation>
     </message>
     <message>
         <location filename="erstesfenster.h" line="55"/>
         <source>&lt;h1&gt;&lt;strong&gt;Bitte Startverzeichnis auswählen&lt;/strong&gt;&lt;/h1&gt;</source>
-        <translation></translation>
+        <translation type="unfinished">Please choose starting index</translation>
     </message>
 </context>
 <context>
@@ -118,52 +118,52 @@
     <message>
         <location filename="zweitesfenster.h" line="101"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="102"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrund</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="103"/>
         <source>Number of images</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Bilder</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="104"/>
         <source>Full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="105"/>
         <source>full screen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbildmodus</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="106"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionen</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="110"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="111"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="112"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Englisch</translation>
     </message>
     <message>
         <location filename="zweitesfenster.h" line="113"/>
         <source>deactivate full screen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbildmodus deaktivieren</translation>
     </message>
 </context>
 </TS>
