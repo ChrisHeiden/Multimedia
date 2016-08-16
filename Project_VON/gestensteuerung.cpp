@@ -102,6 +102,11 @@ void Gestensteuerung::auslesen()
 void Gestensteuerung::gestenErkennung(){
     int laenge = alleWerte->size();
 
+    vector<GespeichertWerte*> firstpart; std::copy(alleWerte->begin(),(alleWerte->begin() + (alleWerte->size() * 0.25)),  std::back_inserter(firstpart));
+    vector<GespeichertWerte*> secondpart; std::copy(alleWerte->begin() + (alleWerte->size() * 0.25),(alleWerte->begin() + (alleWerte->size() * 0.50)), std::back_inserter(secondpart));
+    vector<GespeichertWerte*> thirdpart; std::copy(alleWerte->begin() + (alleWerte->size() * 0.5),(alleWerte->begin() + (alleWerte->size() * 0.75)), std::back_inserter(thirdpart));
+    vector<GespeichertWerte*> fourthpart; std::copy(alleWerte->begin() + (alleWerte->size() * 0.75),(alleWerte->end()), std::back_inserter(fourthpart));
+
     double schwankungX = 50;
     double schwankungY = 50;
 
@@ -139,26 +144,27 @@ void Gestensteuerung::gestenErkennung(){
     }
 
     /* Drehung */
-    /*    else if((schwankungY1 < y1 && schwankungY2 > y1 && schwankungX1 < x1 && schwankungX2 >x1) && // Start- und Endpunkt muss
-                (schwankungY1 < y2 && schwankungY2 > y2 && schwankungX1 < x1 && schwankungX2 >x1) && // sich in diesem Bereich befinden
-
-                (schwankungX2 < (alleWerte->at(alleWerte->size()*0.25)->getXWert()) && (alleWerte->at(alleWerte->size()*0.25)->getXWert()) < schwankungX2 + 100) &&//Erste Stelle der Kreisbewegung
-                (schwankungY1 < (alleWerte->at(alleWerte->size()*0.25)->getYWert()) && (alleWerte->at(alleWerte->size()*0.25)->getYWert()) < schwankungY1 + 100) && //muss sich hier befinden
-
-                (schwankungX2 < (alleWerte->at(alleWerte->size()*0.5)->getXWert()) && (alleWerte->at(alleWerte->size()*0.5)->getXWert()) < schwankungX2 + 100) && //Zweite Stelle der Kreisbewegung
-                (schwankungY1 < (alleWerte->at(alleWerte->size()*0.5)->getYWert()) && (alleWerte->at(alleWerte->size()*0.5)->getYWert()) < schwankungY1 + 100) && //muss sich hier befinden
-
-                (schwankungX2 < (alleWerte->at(alleWerte->size()*0.75)->getXWert()) && (alleWerte->at(alleWerte->size()*0.75)->getXWert()) < schwankungX2 + 100)&& //Dritte Stelle der Kreisbewegung
-                (schwankungY1 < (alleWerte->at(alleWerte->size()*0.75)->getYWert()) && (alleWerte->at(alleWerte->size()*0.75)->getYWert()) < schwankungY1 + 100)){ //muss sich hier befinden
-
-        drehGeste();
+    if(schwankungY2 < y1 &&  schwankungY1 > y1 && schwankungX1 < x1 && schwankungX2 >x1){
+        if (schwankungY2 < y2 && schwankungY1 > y2 && schwankungX1 < x1 && schwankungX2 >x1){
+            for(unsigned short i = 0; i < secondpart.size(); ++i){
+                if(schwankungY1 > secondpart.at(i)->getYWert() && schwankungX2 > secondpart.at(i)->getXWert()){
+                    for(unsigned short y = 0; y < thirdpart.size(); ++y){
+                        if(schwankungY1 < thirdpart.at(y)->getYWert() && schwankungX1 < thirdpart.at(y)->getXWert() && schwankungX2 > thirdpart.at(y)->getXWert()){
+                            for(unsigned short z = 0; z < fourthpart.size(); ++z){
+                                if(schwankungY1 < fourthpart.at(z)->getYWert() && schwankungX1 > fourthpart.at(z)->getXWert()){
+                                drehGeste();
+                                }
+                            }
+                        }
+                  }
+                }
+            }
+        }
     }
-
     else{
         cout << "Keine Geste erkannt." <<endl;
-    }*/
+    }
 }
-
 
 void Gestensteuerung::wischGeste(){
     int laenge = alleWerte->size();
@@ -180,26 +186,29 @@ void Gestensteuerung::wischGeste(){
     }
 }
 
-void Gestensteuerung::drehGeste(){
+void Gestensteuerung::drehGeste()
+{
     // Bild mit uhrzeiger drehen
     cout << " Bilder wird gedreht." << endl;
     dreheBild();
 }
 
-void Gestensteuerung::vergroesserGeste(){
+void Gestensteuerung::vergroesserGeste()
+{
     //Bild vergroesser
     cout << " Bilder wird groesser dargestellt." << endl;
     vergroessereBild();
 }
 
-void Gestensteuerung::verkleinerGeste(){
+void Gestensteuerung::verkleinerGeste()
+{
     //Bild verkleinern
     cout << "Bild wird kleiner dartgestellt." << endl;
     verkleinereBild();
 }
 
-void Gestensteuerung::connectionAktivieren(){
-
+void Gestensteuerung::connectionAktivieren()
+{
     connect(process, &QProcess::readyReadStandardOutput, this, &Gestensteuerung::auslesen);
     alleWerte->clear();
     alleGespeichertenWerte->clear();

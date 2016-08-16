@@ -222,7 +222,7 @@ void drittesFenster::interaktion(){
 
     QObject::connect(gesten, &Gestensteuerung::verkleinereBild, this, &verkleinereBild);
     QObject::connect(gesten, &Gestensteuerung::vergroessereBild, this, &vergroessereBild);
-    //QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
+    QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
     QObject::connect(gesten, &Gestensteuerung::vorhereigesBild, this, &vorherigesBild);
     QObject::connect(gesten, &Gestensteuerung::nachstesBild, this, &naechstesBild);
 
