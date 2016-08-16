@@ -1,11 +1,9 @@
 #include <QMainWindow>
 #include <QProcess>
-#include <QDebug>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "gespeichertwerte.h"
-#include "mytimer.h"
-#include <time.h>
 #include "notification.h"
 #include <QPushButton>
 
@@ -29,7 +27,6 @@ private:
     vector<GespeichertWerte*> *alleGespeichertenWerte;
     vector<GespeichertWerte*> *alleWerte;
     Notification *n;
-    MyTimer *t;
 
 
 private slots:
