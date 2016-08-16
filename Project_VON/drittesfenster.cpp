@@ -1,10 +1,4 @@
 #include "drittesfenster.h"
-#include <QScreen>
-#include <iostream>
-#include <QApplication>
-#include <QWheelEvent>
-
-using namespace std;
 
 drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent) : QWidget(parent){
     m_fenster = fenster;
@@ -40,7 +34,6 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     fuellung4 = new QHBoxLayout;
 
     gesten = new Gestensteuerung(buttons);
-
     interaktion();
 
 }
@@ -69,12 +62,10 @@ drittesFenster::~drittesFenster(){
     delete (fuellung4);
     delete (drehen);
     delete (bilder);
-
-
 }
 
 void drittesFenster::erzeugeDrittesFenster(string pfad){
-     m_pfad = pfad;
+    m_pfad = pfad;
 
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
@@ -165,6 +156,7 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             layout2->addLayout(buttons2);
 
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+
             scene->addItem(item);
             this->setLayout(layout2);
         }
@@ -172,41 +164,69 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
 }
 
 void drittesFenster::buttonsStyle(){
-    eins->setStyleSheet("background-color:tomato; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    eins->setText("1");
-    eins->setFixedSize(80,80);
 
-    zwei->setStyleSheet("background-color:orange; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    zwei->setText("2");
-    zwei->setFixedSize(80,80);
+    /* Bewertung: 1*/
+    QPixmap pixmap1(":/icon/schwarzEins.tif");
+    QIcon buttonIcon1(pixmap1);
+    eins->setIcon(buttonIcon1);
+    eins->setIconSize(QSize(75, 75));
+    eins->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    drei->setStyleSheet("background-color: rgb(218,165,32); color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    drei->setText("3");
-    drei->setFixedSize(80,80);
+    /* Bewertung: 2*/
+    QPixmap pixmap2(":/icon/schwarzZwei.tif");
+    QIcon buttonIcon2(pixmap2);
+    zwei->setIcon(buttonIcon2);
+    zwei->setIconSize(QSize(75, 75));
+    zwei->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    vier->setStyleSheet("background-color: rgb(173,255,47); color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    vier->setText("4");
-    vier->setFixedSize(80,80);
+    /* Bewertung: 3*/
+    QPixmap pixmap3(":/icon/schwarzDrei.tif");
+    QIcon buttonIcon3(pixmap3);
+    drei->setIcon(buttonIcon3);
+    drei->setIconSize(QSize(75, 75));
+    drei->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    fuenf->setStyleSheet("background-color:rgb(144,238,144); color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    fuenf->setText("5");
-    fuenf->setFixedSize(80,80);
+    /* Bewertung: 4*/
+    QPixmap pixmap4(":/icon/schwarzVier.tif");
+    QIcon buttonIcon4(pixmap4);
+    vier->setIcon(buttonIcon4);
+    vier->setIconSize(QSize(75, 75));
+    vier->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    beenden->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    beenden->setText("beende");
-    beenden->setFixedSize(80,50);
+    /* Bewertung: 5*/
+    QPixmap pixmap5(":/icon/schwarzFuenf.tif");
+    QIcon buttonIcon5(pixmap5);
+    fuenf->setIcon(buttonIcon5);
+    fuenf->setIconSize(QSize(75, 75));
+    fuenf->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    drehen->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    drehen->setText("drehen");
-    drehen->setFixedSize(80,50);
+    /* Beenden */
+    QPixmap pixmap6(":/icon/zurueck.tif");
+    QIcon buttonIcon6(pixmap6);
+    beenden->setIcon(buttonIcon6);
+    beenden->setIconSize(QSize(50, 50));
+    beenden->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    links->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    links->setText("Links");
-    links->setFixedSize(80,50);
+    /* Drehen */
+    QPixmap pixmap7(":/icon/drehen.tif");
+    QIcon buttonIcon7(pixmap7);
+    drehen->setIcon(buttonIcon7);
+    drehen->setIconSize(QSize(50, 50));
+    drehen->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 
-    rechts->setStyleSheet("background-color:gray; color: white; border: none; margin: 0px;padding: 0px; font-weight: bold; width: 10px; height: 25px;");
-    rechts->setText("Rechts");
-    rechts->setFixedSize(80,50);
+    /* Links */
+    QPixmap pixmap8(":/icon/links.tif");
+    QIcon buttonIcon8(pixmap8);
+    links->setIcon(buttonIcon8);
+    links->setIconSize(QSize(50, 50));
+    links->setStyleSheet("border: none; margin: 0px; padding: 0px;");
+
+    /* Rechts */
+    QPixmap pixmap9(":/icon/rechts.tif");
+    QIcon buttonIcon9(pixmap9);
+    rechts->setIcon(buttonIcon9);
+    rechts->setIconSize(QSize(50, 50));
+    rechts->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 }
 
 void drittesFenster::interaktion(){
@@ -225,10 +245,10 @@ void drittesFenster::interaktion(){
     QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
     QObject::connect(gesten, &Gestensteuerung::vorhereigesBild, this, &vorherigesBild);
     QObject::connect(gesten, &Gestensteuerung::nachstesBild, this, &naechstesBild);
-
 }
 
-void drittesFenster::vertikal(){
+void drittesFenster::vertikal()
+{
     fuellung1->addSpacing(250);
     fuellung2->addSpacing(250);
 
@@ -245,7 +265,8 @@ void drittesFenster::vertikal(){
     buttons->addWidget(rechts);
 }
 
-void drittesFenster::horizontal(){
+void drittesFenster::horizontal()
+{
     fuellung3->addSpacing(500);
     fuellung4->addSpacing(500);
 
@@ -262,32 +283,38 @@ void drittesFenster::horizontal(){
     buttons2->addWidget(rechts);
 }
 
-void drittesFenster::bewertenEins(){
+void drittesFenster::bewertenEins()
+{
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,1);
 }
 
-void drittesFenster::bewertenZwei(){
+void drittesFenster::bewertenZwei()
+{
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,2);
 }
 
-void drittesFenster::bewertenDrei(){
+void drittesFenster::bewertenDrei()
+{
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,3);
 }
 
-void drittesFenster::bewertenVier(){
+void drittesFenster::bewertenVier()
+{
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,4);
 }
 
-void drittesFenster::bewertenFuenf(){
+void drittesFenster::bewertenFuenf()
+{
     int id = m_bank->getID(m_pfad);
     m_bank->bildBewerten(id,5);
 }
 
-void drittesFenster::bildDrehen(){
+void drittesFenster::bildDrehen()
+{
     view->rotate(90);
     int id = m_bank->getID(m_pfad);
     cout << id << endl;
@@ -295,9 +322,10 @@ void drittesFenster::bildDrehen(){
     m_bank->getBildausrichtung(id);
 }
 
-void drittesFenster::vectorDurchsuchen(){
+void drittesFenster::vectorDurchsuchen()
+{
 
-    cout << m_pfad << endl;
+    //cout << m_pfad << endl;
 
     for(unsigned int i = 0; i < bilder->size(); i++){
         if(bilder->at(i) == m_pfad){
@@ -310,19 +338,20 @@ void drittesFenster::vectorDurchsuchen(){
     }
 }
 
-void drittesFenster::naechstesBild(){
-    // delete(layout);
-    // delete(layout2);
-    // delete(item);
+void drittesFenster::naechstesBild()
+{
+     delete(layout);
+     delete(layout2);
+     delete(item);
 
     if(bereitsDurchsucht == false){
         try{
             vectorDurchsuchen();
             if(index < bilder->size()){
-                cout << "Davor: " << index << endl;
+                //cout << "Davor: " << index << endl;
                 ++index;
                 erzeugeDrittesFenster(bilder->at(index));
-                cout << "Danach: " << index << endl;
+                //cout << "Danach: " << index << endl;
             }else{
                 index = 0;
                 erzeugeDrittesFenster(bilder->at(index));
@@ -333,19 +362,20 @@ void drittesFenster::naechstesBild(){
     }else if(bereitsDurchsucht == true){
         ++index;
         if(index < bilder->size()){
-            cout << "gut "  << endl;
-            cout << "Davor: " << index << endl;
+            //cout << "gut "  << endl;
+            //cout << "Davor: " << index << endl;
             erzeugeDrittesFenster(bilder->at(index));
-            cout << "Danach: " << index << endl;
+            //cout << "Danach: " << index << endl;
         }else{
             index = 0;
-            cout << "Warum?" << endl;
+            //cout << "Warum?" << endl;
             erzeugeDrittesFenster(bilder->at(index));
         }
     }
 }
 
-void drittesFenster::vorherigesBild(){
+void drittesFenster::vorherigesBild()
+{
    // delete(layout);
    // delete(layout2);
    // delete(item);
@@ -380,14 +410,16 @@ void drittesFenster::vorherigesBild(){
     }
 }
 
-void drittesFenster::fehlerMelden(){
+void drittesFenster::fehlerMelden()
+{
     information = new QMessageBox();
     QString text = (tr("<h1>Bild wurde nicht gefunden!</h1>"));
     information->setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
     QMessageBox::information(this,"Achtung",text);
 }
 
-void drittesFenster::wheelEvent(QWheelEvent *event){
+void drittesFenster::wheelEvent(QWheelEvent *event)
+{
 
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         // Scale the view / do the zoom
@@ -402,12 +434,14 @@ void drittesFenster::wheelEvent(QWheelEvent *event){
         }
 }
 
-void drittesFenster::verkleinereBild(){
+void drittesFenster::verkleinereBild()
+{
    double scaleFactor = 25.0;
    view->scale(scaleFactor, scaleFactor);
 }
 
-void drittesFenster::vergroessereBild(){
+void drittesFenster::vergroessereBild()
+{
     double scaleFactor = 25.0;
     view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
 }

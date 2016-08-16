@@ -39,15 +39,15 @@ private:
     erstesFenster *erstes;
     zweitesFenster *zweites;
     drittesFenster *drittes;
-
     QTranslator *m_translator;
 
     Datenbank *bank;
+
+private slots:
     void showZweitesFenster();
-    void showLetzteBilder();
     void showDrittesFenster(string pfad);
     void letzteBilder();
-
+    void showBilderGalerie();
 };
 
 #endif // WINDOWMANAGER_H

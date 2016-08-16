@@ -12,6 +12,19 @@
         <file>fuenf.tif</file>
         <file>vier.tif</file>
         <file>zwei.tif</file>
+        <file>deaktivienVollbildmodus.tif</file>
+        <file>deutsch.jpg</file>
+        <file>englisch.jpg</file>
+        <file>Kinect_Icon.png</file>
+        <file>drehen.tif</file>
+        <file>links.tif</file>
+        <file>rechts.tif</file>
+        <file>schwarzDrei.tif</file>
+        <file>schwarzEins.tif</file>
+        <file>schwarzFuenf.tif</file>
+        <file>schwarzVier.tif</file>
+        <file>schwarzZwei.tif</file>
+        <file>zurueck.tif</file>
     </qresource>
     <qresource prefix="/language">
         <file>VON_Ueberstzung_Deutsch_zu_Englisch.qm</file>

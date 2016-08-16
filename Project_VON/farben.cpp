@@ -2,9 +2,10 @@
 
 Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hintergrund,
                QLabel *anzahlBilder,QLabel *vollbild, QPushButton *vollbildmodus, QLabel *option,
-               QPushButton *zwanzig, QPushButton *vierzig, QPushButton *sechsig, QLabel *sprache, QRadioButton *deutsch,
-               QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,  QLabel *tags, QLabel *bildBewertung,
-               QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern)
+               QPushButton *zwanzig, QPushButton *vierzig, QPushButton *sechsig, QLabel *sprache,
+               QPushButton *vollbildModusDeaktiviern,  QLabel *tags, QLabel *bildBewertung,
+               QLabel *bildPfad, QLineEdit *tagsFeld, QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern,
+               QPushButton *vollbildModus)
 {
     m_fenster = fenster;
     m_westpart = westpart;
@@ -18,8 +19,6 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
     m_vierzig = vierzig;
     m_sechsig = sechsig;
     m_sprache = sprache;
-    m_deutsch = deutsch;
-    m_englisch = englisch;
     m_vollbildModusDeaktiviern = vollbildModusDeaktiviern;
 
     m_tags = tags;
@@ -29,6 +28,7 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
     m_bildBewertungsFeld = bildBewertungsFeld;
     m_bildPfadFeld = bildPfadFeld;
     m_filtern = filtern;
+    m_vollbildModus = vollbildModus;
 }
 
 void Farben::schwarz(){
@@ -46,8 +46,6 @@ void Farben::schwarz(){
     m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(199,187,187);");
-    m_deutsch->setStyleSheet("color: rgb(199,187,187);");
-    m_englisch->setStyleSheet("color: rgb(199,187,187);");
     m_vollbildModusDeaktiviern->setStyleSheet("background-color: rbg(33,30,33); color: rgb(199,187,187); border: none; margin: 0px; padding: 0px; width: 100px; height: 50px;");
 
     m_tags->setStyleSheet("color: rgb(199,187,187);");
@@ -58,6 +56,7 @@ void Farben::schwarz(){
     m_bildBewertungsFeld->setStyleSheet("background-color: back; color: gray");
     m_bildPfadFeld->setStyleSheet("background-color: rbg(33,30,33); color: gray");
     m_filtern->setStyleSheet("background-color: rbg(33,30,33); color: gray");
+    m_vollbildModus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
 
     m_fenster->update();
 }
@@ -78,8 +77,7 @@ void Farben::beige(){
     m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(245,194,93);");
-    m_deutsch->setStyleSheet("color: rgb(245,194,93);");
-    m_englisch->setStyleSheet("color: rgb(245,194,93);");
+
     m_vollbildModusDeaktiviern->setStyleSheet("background-color:rgb(245,230,199); color: rgb(245,194,93); border: none; margin: 0px;padding: 0px; width: 100px; height: 50px;");
 
     m_tags->setStyleSheet("color: rgb(245,194,93);");
@@ -90,6 +88,7 @@ void Farben::beige(){
     m_bildBewertungsFeld->setStyleSheet("background-color:beige; color: rgb(245,194,93)");
     m_bildPfadFeld->setStyleSheet("background-color:rgb(245,230,199); color: rgb(245,194,93)");
     m_filtern->setStyleSheet("background-color: beige; color: rgb(245,194,93)");
+    m_vollbildModus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
 
     m_fenster->update();
 }
@@ -109,8 +108,7 @@ void Farben::weiss(){
     m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: black;");
-    m_deutsch->setStyleSheet("color: black;");
-    m_englisch->setStyleSheet("color: black;");
+
     m_vollbildModusDeaktiviern->setStyleSheet("background-color:rgb(189, 195, 199); color: black; border: none; margin: 0px;padding: 0px; width: 100px; height: 50px;");
 
     m_tags->setStyleSheet("color: black;");
@@ -121,6 +119,7 @@ void Farben::weiss(){
     m_bildBewertungsFeld->setStyleSheet("background-color: white; color: white");
     m_bildPfadFeld->setStyleSheet("background-color: grey; color: white");
     m_filtern->setStyleSheet("background-color: white; color: black");
+    m_vollbildModus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
 
     m_fenster->update();
 }
@@ -140,8 +139,7 @@ void Farben::pink(){
     m_sechsig->setStyleSheet("background-color: rgb(255,250,250); border: none; margin: 0px; padding: 0px; width: 20px; height: 20px;");
 
     m_sprache->setStyleSheet("color: rgb(171,19,171);");
-    m_deutsch->setStyleSheet("color: rgb(171,19,171);");
-    m_englisch->setStyleSheet("color: rgb(171,19,171);");
+
     m_vollbildModusDeaktiviern->setStyleSheet("background-color:rgb(240,192,240); color: rgb(171,19,171); border: none; margin: 0px;padding: 0px; width: 100px; height: 50px;");
 
     m_tags->setStyleSheet("color: rgb(171,19,171);");
@@ -151,6 +149,7 @@ void Farben::pink(){
     m_tagsFeld->setStyleSheet("background-color: pink; color: rgb(171,19,171); ");
     m_bildBewertungsFeld->setStyleSheet("background-color: pink; color: rgb(171,19,171);");
     m_bildPfadFeld->setStyleSheet("background-color: rgb(240,192,240); color: rgb(171,19,171);");
+    m_vollbildModus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 25px;"); //farbe noch ändern
 
     m_fenster->update();
 }

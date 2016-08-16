@@ -23,7 +23,7 @@ WindowManager::WindowManager(QTranslator *translator)
     QObject::connect(this->erstes, &erstesFenster::showLetzteBilder, this, &WindowManager::letzteBilder);
     QObject::connect(this->erstes, &erstesFenster::openSecondWindow, this, &WindowManager::showZweitesFenster);
     QObject::connect(this->zweites, &zweitesFenster::openThirdWindow, this, &WindowManager::showDrittesFenster);
-    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::letzteBilder);
+    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::showBilderGalerie);
 }
 
 WindowManager::~WindowManager(){
@@ -39,6 +39,7 @@ WindowManager::~WindowManager(){
 
 void WindowManager::showZweitesFenster()
 {
+    erstes->disconnect();
     this->layout->setCurrentWidget(zweites);
     this->zweites->erzeugeZweitesFenster();
     this->showMaximized();
@@ -52,6 +53,14 @@ void WindowManager::showDrittesFenster(string pfad)
 }
 
 void WindowManager::letzteBilder()
+{    
+    erstes->disconnect();
+    this->layout->setCurrentWidget(zweites);
+    this->zweites->letzter();
+    this->showMaximized();
+}
+
+void WindowManager::showBilderGalerie()
 {
     this->layout->setCurrentWidget(zweites);
     this->zweites->letzter();

@@ -44,7 +44,6 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
 
 std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int zahl){
     std::map<string, QImage*> qimages;
-    cout << zahl << endl;
 
     if(zahl == 20){
         for(unsigned int i= 0; i < images->size(); i++){

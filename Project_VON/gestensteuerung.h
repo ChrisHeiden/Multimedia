@@ -19,6 +19,7 @@ public:
     Gestensteuerung(QVBoxLayout *buttons, QWidget *parent = 0);
     ~Gestensteuerung();
 
+
 signals:
     void verkleinereBild();
     void vergroessereBild();
@@ -33,11 +34,14 @@ private:
     vector<GespeichertWerte*> *alleGespeichertenWerte;
     vector<GespeichertWerte*> *alleWerte;
     Notification *n;
+    QVBoxLayout *buttons;
+    QPushButton *aktiv;
 
 
 private slots:
     void auslesen();
     void connectionAktivieren();
+
 
 private:
     void gestenErkennung();
@@ -45,9 +49,8 @@ private:
     void wischGeste();
     void drehGeste();
     void vergroesserGeste();
-    QPushButton *aktiv;
     unsigned int mengeAnG;
-    QVBoxLayout *buttons;
+    void stil();
 };
 
 #endif // GESTENSTEUERUNG_H

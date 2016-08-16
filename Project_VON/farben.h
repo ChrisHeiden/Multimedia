@@ -35,10 +35,9 @@ public:
     Farben(QWidget *fenster, QWidget *westpart, QLabel *filter,
            QLabel *hintergrund, QLabel *anzahlBilder, QLabel *vollbild,
            QPushButton *vollbildmodus, QLabel *option, QPushButton *zwanzig,
-           QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach,
-           QRadioButton *deutsch, QRadioButton *englisch, QPushButton *vollbildModusDeaktiviern,
+           QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach, QPushButton *vollbildModusDeaktiviern,
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
-           QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern);
+           QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern, QPushButton *vollbildModus);
 
     /**
      * @brief schwarz verändert alle Elemente des dargestellten Fensters, sodass das Fenster schwarz
@@ -87,7 +86,7 @@ private:
     QComboBox *m_bildBewertungsFeld;
     QLineEdit *m_bildPfadFeld;
     QLineEdit *m_filtern;
-
+    QPushButton *m_vollbildModus;
 };
 
 #endif // FARBEN_H

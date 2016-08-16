@@ -1,5 +1,5 @@
 #include "notification.h"
-
+#include <iostream>
 Notification::Notification()
 {
     notiz = new QSystemTrayIcon(this);
@@ -13,14 +13,14 @@ Notification::~Notification(){
 
 void Notification::aktiviert(){
     const QString title(tr("Information"));
-    const QString nachricht(tr("Kinect ist aktiviert und bereit Daten zu übermitteln."));
+    const QString nachricht(tr("Kinect aktiviert."));
     notiz->showMessage(title, nachricht,QSystemTrayIcon::Information,10000);
     notiz->show();
 }
 
 void Notification::deaktiviert(){
     const QString title(tr("Information"));
-    const QString nachricht(tr("Kinect ist deaktiviert."));
+    const QString nachricht(tr("Kinect deaktiviert."));
     notiz->showMessage(title, nachricht,QSystemTrayIcon::Information,10000);
     notiz->show();
 }

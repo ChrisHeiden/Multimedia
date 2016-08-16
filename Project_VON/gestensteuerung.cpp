@@ -6,13 +6,13 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
     alleGespeichertenWerte = new vector<GespeichertWerte*>;
     alleWerte = new vector<GespeichertWerte*>;
     n = new Notification;
-    aktiv = new QPushButton("aktivieren");
+    aktiv = new QPushButton();
     buttons->addWidget(aktiv);
     connect(aktiv, &QPushButton::clicked, this, &Gestensteuerung::connectionAktivieren);
     // Init Process
     process = new QProcess(this);
     mengeAnG = 0;
-
+    stil();
 
     if(process)
     {
@@ -73,7 +73,7 @@ void Gestensteuerung::auslesen()
                     y = stod(hilfe.substr(index +1, size - index));
                     //cout << "X-Wert: " << x << endl;
                     //cout << "Y-Wert: " <<y << endl;
-                    cout << "Wert werden uebermittelt." << endl;
+                    //cout << "Wert werden uebermittelt." << endl;
                     speichert = new GespeichertWerte(x,y);
                     alleGespeichertenWerte->push_back(speichert);
                 }
@@ -90,7 +90,7 @@ void Gestensteuerung::auslesen()
         }
         else{
             alleWerte = alleGespeichertenWerte;
-            if(alleWerte->empty() == false && alleWerte->size() > 20){
+            if(alleWerte->empty() == false && alleWerte->size() > 80){
                 gestenErkennung();
                 alleWerte->clear();
                 alleGespeichertenWerte->clear();
@@ -112,21 +112,21 @@ void Gestensteuerung::gestenErkennung(){
 
     double y1 = alleWerte->at(0)->getYWert();
     double y2 = alleWerte->at(laenge -1)->getYWert();
-    cout << "Zweiter Y-Wert: " << y2 << endl;
+    //cout << "Zweiter Y-Wert: " << y2 << endl;
 
     double x1 = alleWerte->at(0)->getXWert();
     double x2 = alleWerte->at(laenge -1)->getXWert();
 
     double schwankungX1 = alleWerte->at(0)->getXWert() - schwankungX;
     double schwankungX2 = alleWerte->at(0)->getXWert() + schwankungX;
-    cout << "Schwankung X1-Wert: " << schwankungX1 <<endl;
-    cout << "Schwankung X2-Wert: " << schwankungX2 <<endl;
+    //cout << "Schwankung X1-Wert: " << schwankungX1 <<endl;
+    //cout << "Schwankung X2-Wert: " << schwankungX2 <<endl;
 
 
     double schwankungY1 = alleWerte->at(0)->getYWert() + schwankungY;
     double schwankungY2 = alleWerte->at(0)->getYWert() - schwankungY;
-    cout << "Schwankung Y1-Wert: " << schwankungY1 <<endl;
-    cout << "Schwankung Y2-Wert: " << schwankungY2 <<endl;
+  //  cout << "Schwankung Y1-Wert: " << schwankungY1 <<endl;
+  //  cout << "Schwankung Y2-Wert: " << schwankungY2 <<endl;
 
     /* Bild verkleinern */
     if(y2 > schwankungY1 && x2 < schwankungX1){
@@ -212,4 +212,13 @@ void Gestensteuerung::connectionAktivieren()
     connect(process, &QProcess::readyReadStandardOutput, this, &Gestensteuerung::auslesen);
     alleWerte->clear();
     alleGespeichertenWerte->clear();
+}
+
+void Gestensteuerung::stil()
+{
+    QPixmap pixmap(":/icon/Kinect_Icon.png");
+    QIcon buttonIcon(pixmap);
+    aktiv->setIcon(buttonIcon);
+    aktiv->setIconSize(QSize(75, 75));
+    aktiv->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 }

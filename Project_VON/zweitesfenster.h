@@ -86,29 +86,27 @@ private:
     QWidget *southpart = new QWidget;
 
     /* Für die Infobox -> Southpart */
-    QLabel *tags = new QLabel("Tags:");
-    QLabel *bildBewertung = new QLabel(tr("Sterne:"));
-    QLabel *bildPfad = new QLabel(tr("Pfad:"));
+    QLabel *tags;
+    QLabel *bildBewertung;
+    QLabel *bildPfad ;
     QLineEdit *tagsFeld = new QLineEdit;
     QComboBox *bildBewertungsFeld = new QComboBox;
     QLineEdit *bildPfadFeld = new QLineEdit;
 
-
-
     /* Für die Optionen -> Westpart */
-    QLabel *option = new QLabel(tr("Optionen"));
-    QLabel *hintergrund = new QLabel(tr("Hintergrund"));
-    QLabel *anzahlBilder = new QLabel(tr("Bildergröße"));
-    QPushButton *zwanzig = new QPushButton;
-    QPushButton *vierzig = new QPushButton;
-    QPushButton *sechsig = new QPushButton;
-    QLabel *vollbild = new QLabel(tr("Vollbildmodus"));
-    QPushButton *vollbildmodus = new QPushButton("X");
-    QPushButton *vollbildModusDeaktiviern = new QPushButton(tr("Vollbildmodus deaktiviern"));
-    QLabel *sprache = new QLabel(tr("Sprache"));
-    QRadioButton *deutsch = new QRadioButton(tr("Deutsch"));
-    QRadioButton *englisch = new QRadioButton(tr("Englisch"));
-    QLabel *filter = new QLabel(tr("Filter"));
+    QLabel *option;
+    QLabel *hintergrund;
+    QLabel *anzahlBilder;
+    QPushButton *zwanzig;
+    QPushButton *vierzig;
+    QPushButton *sechsig;
+    QLabel *vollbild;
+    QPushButton *vollbildmodus;
+    QPushButton *vollbildModusDeaktiviern;
+    QLabel *sprache;
+    QPushButton *deutsch;
+    QPushButton *englisch;
+    QLabel *filter;
     QPushButton *filterAufloesen;
     QLineEdit *filtern;
     QString filternNachTags;
@@ -153,7 +151,12 @@ private:
     QWidget *sprachenWidget;
     MyLabel *l;
     QMessageBox *information;
+    vector<string> *gefilterteBilder;
+    std::map<string, QImage*> *umgewandelteBilder;
+    QHBoxLayout *menu3;
+    Farben *f;
 
+    void setzeSignals();
     void bildtagsAendern();
     void bildBewertungAendern();
     void nachEinsFiltern();
@@ -179,6 +182,9 @@ private:
     void zwanzigBilder();
     void vierzigBilder();
     void sechsigBilder();
+    void labelStil();
+    void buttonsStil();
+    void fensterStil();
     QString gewuenschterPfad;
 
 

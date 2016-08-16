@@ -1,6 +1,3 @@
-#ifndef DRITTESFENSTER_H
-#define DRITTESFENSTER_H
-
 #include "datenbank.h"
 #include "gestensteuerung.h"
 #include <QPushButton>
@@ -10,6 +7,13 @@
 #include <QGraphicsPixmapItem>
 #include <iostream>
 #include <QMessageBox>
+#include <QScreen>
+#include <iostream>
+#include <QApplication>
+#include <QWheelEvent>
+
+#ifndef DRITTESFENSTER_H
+#define DRITTESFENSTER_H
 
 using namespace std;
 
@@ -58,7 +62,6 @@ signals:
 
 private: // Funktionen
     virtual void wheelEvent(QWheelEvent* event);
-
 
 private: //Membervariablen
 
