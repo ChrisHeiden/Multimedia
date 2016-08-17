@@ -41,6 +41,9 @@ private: //Membervariablen
     QTranslator *m_translator;
     Datenbank *bank;
 
+private: //Funktionen
+    void setzeSignals();
+
 
 private slots: //SLOT-Funktionen
     void showZweitesFenster();

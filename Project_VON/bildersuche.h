@@ -62,11 +62,13 @@ signals: //SIGNAL-Funktion
 
 
 private: //Membervariablen
-    QString m_pfad;
-    int m_anzahhlBilder;
     Datenbank *m_bank;
     std::vector<std::string> *images;
     std::map<string, QImage*> *qimages;
+
+    QString m_pfad;
+    int m_anzahhlBilder;
+
 };
 
 #endif // BILDERSUCHE_H

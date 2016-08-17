@@ -8,6 +8,11 @@ MyLabel::MyLabel(string pfad, Datenbank* bank, QWidget *parent) : QLabel(parent)
     m_pfad = pfad;
 }
 
+MyLabel::~MyLabel()
+{
+    delete (bank);
+}
+
 void MyLabel::mousePressEvent(QMouseEvent *e)
 {
     int j = MyLabel::buttonByNumber (e->button());

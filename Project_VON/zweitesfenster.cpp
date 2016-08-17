@@ -19,7 +19,6 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     bildBewertungsFeld = new QComboBox;
     bildPfadFeld = new QLineEdit;
 
-
     option = new QLabel("Optionen");
     hintergrund = new QLabel("Hintergrund");
     anzahlBilder = new QLabel("Bildergröße");
@@ -67,9 +66,9 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     bildPfad = new QLabel("Pfad:");
 
     f = new Farben(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
-                                   vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                                   tags, bildBewertung,
-                                   bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern, vollbildmodus);
+                   vollbildmodus, option, zwanzig, vierzig, sechsig,sprache, tags,
+                   bildBewertung, bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld,
+                   filtern, vollbildmodus);
     setzeSignals();
     labelStil();
     buttonsStil();
@@ -93,7 +92,7 @@ zweitesFenster::~zweitesFenster(){
     delete (tags);
     delete (bildBewertung);
     delete (bildPfad);
-    delete (tagsFeld );
+    delete (tagsFeld);
     delete (bildBewertungsFeld);
     delete (bildPfadFeld);
 
@@ -130,7 +129,6 @@ zweitesFenster::~zweitesFenster(){
     delete (bild);
     delete (bilderWidget);
 
-
     delete (vollWidget);
     delete (filteraktivieren);
     delete (filt);
@@ -144,12 +142,20 @@ zweitesFenster::~zweitesFenster(){
     delete (fuenf);
     delete (hilfe);
     delete (menu2);
+
+    delete (language);
+    delete (sprachen);
+    delete (sprachenWidget);
     delete (l);
     delete (information);
+    delete (gefilterteBilder);
+    delete (umgewandelteBilder);
+    delete (menu3);
     delete (f);
 }
 
-void zweitesFenster::erzeugeZweitesFenster(){
+void zweitesFenster::erzeugeZweitesFenster()
+{
     optionsleisteDarstellen();
     QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
     suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl, m_bank);
@@ -158,7 +164,8 @@ void zweitesFenster::erzeugeZweitesFenster(){
     QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
 }
 
-void zweitesFenster::optionsleisteDarstellen(){
+void zweitesFenster::optionsleisteDarstellen()
+{
 
     menu3->addWidget(option,0, Qt::AlignRight | Qt::AlignTop);
     menu3->addWidget(vollbildmodus,0, Qt::AlignRight | Qt::AlignTop);
@@ -228,7 +235,8 @@ void zweitesFenster::optionsleisteDarstellen(){
     southpart->setLayout(south);
 }
 
-QString zweitesFenster::ordnerVerzeichnis(){
+QString zweitesFenster::ordnerVerzeichnis()
+{
     int index; //Hilfsvarable zur Speicherung des letzen Slashes (/)
     QString filename = QFileDialog::getOpenFileName(            //Pfad zum Bild innerhalb des gewünschten Ordners wird gespeichert
         this,
@@ -250,20 +258,23 @@ QString zweitesFenster::ordnerVerzeichnis(){
     return pfad;
 }
 
-void zweitesFenster::letzter(){
+void zweitesFenster::letzter()
+{
     optionsleisteDarstellen();
     (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
 }
 
-void zweitesFenster::bildtagsAendern(){
+void zweitesFenster::bildtagsAendern()
+{
     cout << pfad << endl;
     int id = m_bank->getID(pfad);
     m_bank->bildtagsAendern(id,tagsFeld->text());
 }
 
-void zweitesFenster::bildBewertungAendern(){
+void zweitesFenster::bildBewertungAendern()
+{
     int wert = bildBewertungsFeld->currentIndex();
     cout << wert << endl;
     cout << pfad << endl;
@@ -271,7 +282,8 @@ void zweitesFenster::bildBewertungAendern(){
     m_bank->bildBewerten(id,wert);
 }
 
-void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
+void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages)
+{
 
     QVBoxLayout *m_mainLayout = new QVBoxLayout;
     QScrollArea *m_area = new QScrollArea;
@@ -326,26 +338,31 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages){
     this->showMaximized();
 }
 
-void zweitesFenster::schwarzFunktion(){
+void zweitesFenster::schwarzFunktion()
+{
     f->schwarz();
 }
 
-void zweitesFenster::beigeFunktion(){
+void zweitesFenster::beigeFunktion()
+{
     f->beige();
 }
 
-void zweitesFenster::weissFunktion(){
+void zweitesFenster::weissFunktion()
+{
     f->weiss();
 }
 
-void zweitesFenster::pinkFunktion(){
+void zweitesFenster::pinkFunktion()
+{
     f->pink();
 }
 
-void zweitesFenster::hilfeAngeklicket(){
+void zweitesFenster::hilfeAngeklicket()
+{
    // Hilfe hilf(fenster);
    // hilf.hilfeAnzeigen();
-    QMessageBox *information = new QMessageBox();
+    QMessageBox information;
 
     QString text = (tr("<h1>Hilfe</h1>"
 
@@ -383,23 +400,17 @@ void zweitesFenster::hilfeAngeklicket(){
                    "<br>Der Button für Hilfe erzeugt eine neues Fenster, welches alle Funktionen "
                    "der Applikation anzeigt."));
 
-    information->setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
+    information.setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
     QMessageBox::information(this,"Hilfe",text);
 }
 
-void zweitesFenster::englischUebersetzung(){
+void zweitesFenster::englischUebersetzung()
+{
     QApplication::instance()->removeTranslator(m_translator);
-
-     /*if (m_translator->load(":/language/VON_Deutsch.qm"))
-
-     {
-     qDebug() << "LOAD FINISHED";
-
-     QApplication::instance()->installTranslator(m_translator);
-     }*/
 }
 
-void zweitesFenster::deutschUebersetzung(){
+void zweitesFenster::deutschUebersetzung()
+{
     QApplication::instance()->removeTranslator(m_translator);
 
     if (m_translator->load(":/language/VON_Englisch_zu_Deutsch.qm"))
@@ -411,7 +422,8 @@ void zweitesFenster::deutschUebersetzung(){
     }
 }
 
-void zweitesFenster::vollbildModusAktiv(){
+void zweitesFenster::vollbildModusAktiv()
+{
 
     vollbildModusDeaktiviern->setHidden(false);
     southpart->setHidden(true);
@@ -428,7 +440,8 @@ void zweitesFenster::vollbildModusAktiv(){
     fenster->update();
 }
 
-void zweitesFenster::vollbildModusInaktiv(){
+void zweitesFenster::vollbildModusInaktiv()
+{
     south->minimumSize();
 
     southpart->setHidden(false);
@@ -481,7 +494,8 @@ void zweitesFenster::nachFuenfFiltern(){
     BilderDarstellen(umgewandelteBilder);
 }
 
-void zweitesFenster::nachTagFiltern(QString tag){
+void zweitesFenster::nachTagFiltern(QString tag)
+{
     fenster->layout()->deleteLater();
     (*gefilterteBilder) = m_bank->bildtagsFiltern(tag);
 
@@ -523,20 +537,24 @@ void zweitesFenster::sechsigBilder(){
     BilderDarstellen(umgewandelteBilder);
 }
 
-void zweitesFenster::setPfad(string pfad){
+void zweitesFenster::setPfad(string pfad)
+{
     this->pfad = pfad;
     bildPfadFeld->setText(QString::fromStdString(pfad));
 }
 
-void zweitesFenster::tagsInInfoleisteAnzeige(QString tags){
+void zweitesFenster::tagsInInfoleisteAnzeige(QString tags)
+{
     tagsFeld->setText(tags);
 }
 
-void zweitesFenster::bewertungInInfoleisteAnzeige(int bewertung){
+void zweitesFenster::bewertungInInfoleisteAnzeige(int bewertung)
+{
     bildBewertungsFeld->setCurrentIndex(bewertung);
 }
 
-void zweitesFenster::ungefiltert(){
+void zweitesFenster::ungefiltert()
+{
     (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltMemory();
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
@@ -552,6 +570,8 @@ void zweitesFenster::fensterStil()
     fenster->setStyleSheet("background-color:white;");
     westpart->setStyleSheet("background-color:rgb(189, 195, 199);");
     vollbildmodus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 30px;");
+
+    filtern->setStyleSheet("background-color: white;");
 }
 
 void zweitesFenster::labelStil()
@@ -665,10 +685,10 @@ void zweitesFenster::buttonsStil()
     hilfe->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
 
     /* Vollbildmodus deaktivieren */
-    QPixmap pixmap2(":/icon/deaktivienVollbildmodus.tif");
+    QPixmap pixmap2(":/icon/back_Transparent_schwarz.tif");
     QIcon buttonIcon2(pixmap2);
     vollbildModusDeaktiviern->setIcon(buttonIcon2);
-    vollbildModusDeaktiviern->setIconSize(QSize(100, 50));
+    vollbildModusDeaktiviern->setIconSize(QSize(50, 50));
     vollbildModusDeaktiviern->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
 
     /* Bilder Bewerten*/

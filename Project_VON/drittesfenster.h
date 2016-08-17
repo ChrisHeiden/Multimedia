@@ -140,7 +140,6 @@ private: //Membervariablen
     QPushButton *beenden;
     QGraphicsPixmapItem *item;
     Datenbank *m_bank;
-    string m_pfad;
     QPushButton *drehen;
     QPushButton *links;
     QPushButton *rechts;
@@ -149,9 +148,12 @@ private: //Membervariablen
     QScreen *screen;
     Gestensteuerung *gesten;
 
+    QSize size;
     QImage image;
     bool bereitsDurchsucht;
     unsigned int index;
+    string m_pfad;
+
 };
 
 #endif // DRITTESFENSTER_H

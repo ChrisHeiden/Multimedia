@@ -29,6 +29,32 @@ Farben::Farben(QWidget *fenster, QWidget *westpart, QLabel *filter, QLabel *hint
     m_vollbildModus = vollbildModus;
 }
 
+Farben::~Farben()
+{
+    delete (m_fenster);
+    delete (m_westpart);
+    delete (m_filter);
+    delete (m_hintergrund);
+    delete (m_anzahlBilder);
+    delete (m_vollbild);
+    delete (m_vollbildmodus);
+    delete (m_option);
+    delete (m_zwanzig);
+    delete (m_vierzig);
+    delete (m_sechsig);
+    delete (m_sprache);
+    delete (m_deutsch);
+    delete (m_englisch);
+    delete (m_tags);
+    delete (m_bildBewertung);
+    delete (m_bildPfad);
+    delete (m_tagsFeld);
+    delete (m_bildBewertungsFeld);
+    delete (m_bildPfadFeld);
+    delete (m_filtern);
+    delete (m_vollbildModus);
+}
+
 void Farben::schwarz(){
     m_fenster->setStyleSheet("background-color:black;");
     m_westpart->setStyleSheet("background-color: rbg(33,30,33);");

@@ -9,7 +9,7 @@
 /**
  * @brief The Sound class ist ein Thread, welches sich darum kümmert den Willkommmenston abzuspielen
  */
-class Sound :public QThread
+class Sound : public QThread
 {
 public:
     /**

@@ -30,10 +30,12 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
 Gestensteuerung::~Gestensteuerung()
 {
     delete (process);
-    delete (alleGespeichertenWerte);
     delete (speichert);
+    delete (alleGespeichertenWerte);
     delete (alleWerte);
     delete (n);
+    delete (buttons);
+    delete (aktiv);
 }
 
 void Gestensteuerung::auslesen()
@@ -43,33 +45,24 @@ void Gestensteuerung::auslesen()
     double x;
     double y;
 
-    // Print Output from KinectApp
     QString test (process->readAllStandardOutput());
     string hilfe = test.toStdString();
 
     for(unsigned int i = 0; i< hilfe.length(); i++){
         if(hilfe.at(0) == 'O'){
             mengeAnG = 0;
-           /* if(t->getAuslesen() == false){
-                t->setAuslesen(true);
-                cout << "Kinect ist aktiviert." <<endl;
-                n->aktiviert();
-                connect(process, &QProcess::readyReadStandardOutput, this, &MainWindow::readOut);
-            }*/
-            //else{
-                if(hilfe.at(i) == ';'){
-                    hilfe.erase(0, i + ersetzeElement.length());
-                    unsigned int index = hilfe.find(ersetzeElement);
-                    int size = hilfe.length();
-                    x = stod(hilfe.substr(0, index));
-                    y = stod(hilfe.substr(index +1, size - index));
-                    //cout << "X-Wert: " << x << endl;
-                    //cout << "Y-Wert: " <<y << endl;
-                    //cout << "Wert werden uebermittelt." << endl;
-                    speichert = new GespeichertWerte(x,y);
-                    alleGespeichertenWerte->push_back(speichert);
-                }
-            //}
+            if(hilfe.at(i) == ';'){
+                hilfe.erase(0, i + ersetzeElement.length());
+                unsigned int index = hilfe.find(ersetzeElement);
+                int size = hilfe.length();
+                x = stod(hilfe.substr(0, index));
+                y = stod(hilfe.substr(index +1, size - index));
+                //cout << "X-Wert: " << x << endl;
+                //cout << "Y-Wert: " <<y << endl;
+                //cout << "Wert werden uebermittelt." << endl;
+                speichert = new GespeichertWerte(x,y);
+                alleGespeichertenWerte->push_back(speichert);
+            }
         }
     }
     if(hilfe.at(0) == 'G'){

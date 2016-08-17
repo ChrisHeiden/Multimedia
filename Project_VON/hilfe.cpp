@@ -1,14 +1,13 @@
 #include "hilfe.h"
 
-
 /*
-Hilfe::Hilfe(QWidget *fenster, QWidget *parent){
-    m_fenster = fenster;
+Hilfe::Hilfe(QWidget *fenster, QWidget *parent) : QWidget(parent)
+{
+    m_fenster = fenster;   
 }
 
-void Hilfe::hilfeAnzeigen(){
-
-    QPushButton *b = new QPushButton(tr("hallo"));
+void Hilfe::hilfeAnzeigen()
+{
 
     QString text;
     text = (tr("<h1>      Hilfe    !<h1>"
@@ -50,8 +49,6 @@ void Hilfe::hilfeAnzeigen(){
 
     information->setIcon(QMessageBox::Information); //setzt das Icon, welches das Hauptfenster auch hat
     information->information(this,"Hilfe",text);
-
-
     b->show();
 }
 */

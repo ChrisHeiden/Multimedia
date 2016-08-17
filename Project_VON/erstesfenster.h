@@ -33,6 +33,11 @@ public:
      */
     virtual ~erstesFenster();
 
+    /**
+     * @brief erzeugen stellt das Begruessungsfenster dar
+     */
+    void erzeugen();
+
 
 signals: //SIGNAL-Funktionen
     void openSecondWindow();
@@ -42,17 +47,19 @@ signals: //SIGNAL-Funktionen
 private: //Funktionen
     void englischUebersetzung();
     void deutschUebersetzung();
+    void buttonStil();
+    void labelStil();
+    void setzeSignals();
+    void hintergrundSetzen();
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {
             startButton->setText(tr("Starting index"));
             letztenOrdnerButton->setText(tr("Show last images"));
             txt->setText(tr("<h1><strong>Please choose starting index</strong></h1>"));
-
         } else
             QWidget::changeEvent(event);
     }
-
 
 private: //Membervariablen
     QTranslator *m_translator;
@@ -65,6 +72,7 @@ private: //Membervariablen
     Datenbank *m_bank;
     QPushButton *deutsch;
     QPushButton *englisch;
+    QPen *pen;
 };
 
 #endif // ERSTESFENSTER_H

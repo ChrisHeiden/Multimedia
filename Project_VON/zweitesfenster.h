@@ -170,7 +170,7 @@ private: //Membervariablen
     string pfad;
     string m_pfad;
 
-private: //Funktionen
+private: //Funktionen*
     void setzeSignals();
     void bildtagsAendern();
     void bildBewertungAendern();

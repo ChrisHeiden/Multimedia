@@ -31,6 +31,8 @@ public:
      */
     MyLabel(QWidget* parent = 0);
 
+    virtual ~MyLabel();
+
 
 public slots:
     /**

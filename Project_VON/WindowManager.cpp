@@ -19,11 +19,8 @@ WindowManager::WindowManager(QTranslator *translator)
     layout->addWidget(erstes);
     layout->addWidget(zweites);
     layout->addWidget(drittes);
-
-    QObject::connect(this->erstes, &erstesFenster::showLetzteBilder, this, &WindowManager::letzteBilder);
-    QObject::connect(this->erstes, &erstesFenster::openSecondWindow, this, &WindowManager::showZweitesFenster);
-    QObject::connect(this->zweites, &zweitesFenster::openThirdWindow, this, &WindowManager::showDrittesFenster);
-    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::showBilderGalerie);
+    erstes->erzeugen();
+    setzeSignals();
 }
 
 WindowManager::~WindowManager(){
@@ -67,3 +64,10 @@ void WindowManager::showBilderGalerie()
     this->showMaximized();
 }
 
+void WindowManager::setzeSignals()
+{
+    QObject::connect(this->erstes, &erstesFenster::showLetzteBilder, this, &WindowManager::letzteBilder);
+    QObject::connect(this->erstes, &erstesFenster::openSecondWindow, this, &WindowManager::showZweitesFenster);
+    QObject::connect(this->zweites, &zweitesFenster::openThirdWindow, this, &WindowManager::showDrittesFenster);
+    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::showBilderGalerie);
+}

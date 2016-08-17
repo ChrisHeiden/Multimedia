@@ -45,6 +45,8 @@ public:
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
            QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern, QPushButton *vollbildModus);
 
+
+    virtual ~Farben();
     /**
      * @brief schwarz verändert alle Elemente des dargestellten Fensters, sodass das Fenster schwarz
      *        dargestellt wird
