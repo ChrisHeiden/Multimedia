@@ -197,15 +197,8 @@ private:
             hintergrund->setText(tr("Background"));
             anzahlBilder->setText(tr("Number of images"));
             vollbild->setText(tr("Full screen")); //Wo steht das???
-            //vollbildmodus->setText(tr("full screen mode"));
             option->setText(tr("Options"));
-            //zwanzig->setText(tr("20"));
-            //vierzig->setText(tr("40"));
-            //sechsig->setText(tr("60"));
             sprache->setText(tr("Language"));
-            //deutsch->setText(tr("German"));
-            //englisch->setText(tr("English"));
-            //vollbildModusDeaktiviern->setText(tr("deactivate full screen mode"));
             bildBewertung->setText(tr("Stars:"));
             bildPfad->setText(tr("Path:"));
 

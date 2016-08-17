@@ -6,18 +6,18 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     m_bank = bank;
     m_bilderAnzahl = 20;
     this->fenster = fenster;
-    option = new QLabel(tr("Optionen"));
-    hintergrund = new QLabel(tr("Hintergrund"));
-    anzahlBilder = new QLabel(tr("Bildergröße"));
+    option = new QLabel("Optionen");
+    hintergrund = new QLabel("Hintergrund");
+    anzahlBilder = new QLabel("Bildergröße");
     zwanzig = new QPushButton;
     vierzig = new QPushButton;
     sechsig = new QPushButton;
-    vollbild = new QLabel(tr("Vollbildmodus"));
+    vollbild = new QLabel("Vollbildmodus");
     vollbildmodus = new QPushButton("X");
-    sprache = new QLabel(tr("Sprache"));
+    sprache = new QLabel("Sprache");
     deutsch = new QPushButton;
     englisch = new QPushButton;
-    filter = new QLabel(tr("Filter"));
+    filter = new QLabel("Filter");
     schwarz = new QPushButton();
     weiss = new QPushButton();
     beige = new QPushButton();
@@ -49,8 +49,8 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     filterWidget = new QWidget();
     bilderWidget = new QWidget();
     tags = new QLabel("Tags:");
-    bildBewertung = new QLabel(tr("Sterne:"));
-    bildPfad = new QLabel(tr("Pfad:"));
+    bildBewertung = new QLabel("Sterne:");
+    bildPfad = new QLabel("Pfad:");
 
     f = new Farben(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
@@ -388,7 +388,7 @@ void zweitesFenster::englischUebersetzung(){
 void zweitesFenster::deutschUebersetzung(){
     QApplication::instance()->removeTranslator(m_translator);
 
-    if (m_translator->load(":/language/VON_Ueberstzung_Deutsch_zu_Englisch.qm"))
+    if (m_translator->load(":/language/VON_Englisch_zu_Deutsch.qm"))
 
     {
     qDebug() << "LOAD FINISHED";

@@ -1,9 +1,10 @@
 #include "erstesfenster.h"
 
-erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
+erstesFenster::erstesFenster(QWidget *fenster, QTranslator *translator, Datenbank *bank, QWidget *parent)
     : QMainWindow(parent)
 {
     m_bank = bank;
+    m_translator = translator;
 
     if( m_bank->datenbankEmpty() == true ){
         /*--------Sound abspielen----------*/
@@ -69,7 +70,16 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
         startButton->setStyleSheet("background-color: black; color: rgb(255,250,250) ; border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 10pt; font-weight: bold;");
         startButton->setGeometry(285, 550, 180, 35);  // absolute positionierung
 
+        QObject::connect(deutsch, &QPushButton::clicked,this, &erstesFenster::deutschUebersetzung);
+        deutsch->setText("Deutsch");
+        deutsch->setGeometry(700, 35, 75, 35);
 
+        QObject::connect(englisch, &QPushButton::clicked,this, &erstesFenster::englischUebersetzung);
+        englisch->setText("Englisch");
+        englisch->setGeometry(700, 90, 75 ,35);
+
+        scene->addWidget(deutsch);
+        scene->addWidget(englisch);
         scene->addWidget(startButton);           //Button Startverzeichnisbutton wird zur Scene hinzugefügt
 
         this->setCentralWidget(view);   //View soll dargestellt werden
@@ -142,11 +152,46 @@ erstesFenster::erstesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent)
         letztenOrdnerButton->setStyleSheet("background-color: black; color: rgb(255,250,250); border: none; margin: 0px;padding: 0px; width: 30px; height: 25px; font-size: 13pt; font-weight: bold;");
         letztenOrdnerButton->setGeometry(490, 550, 300, 35);  // absolute positionierung
 
+        QObject::connect(deutsch, &QPushButton::clicked,this, &erstesFenster::deutschUebersetzung);
+        deutsch->setText("Deutsch");
+        deutsch->setGeometry(700, 35, 75, 35);
+
+        QObject::connect(englisch, &QPushButton::clicked,this, &erstesFenster::englischUebersetzung);
+        englisch->setText("Englisch");
+        englisch->setGeometry(700, 90, 75 ,35);
+
+        scene->addWidget(deutsch);
+        scene->addWidget(englisch);
+
         scene->addWidget(startButton);           //Button "ja" wird zur Scene hinzugefügt
         scene->addWidget(letztenOrdnerButton);   //Button "letztenOrdner" wird zur Scene hinzugefügt
 
         this->setCentralWidget(view);   //View soll dargestellt werden
         setWindowIcon(QIcon(":/icon/Icon.png"));
+    }
+}
+
+void erstesFenster::englischUebersetzung(){                         //vielleicht besser die beiden Methoden im zweitenFenster public machen?
+    QApplication::instance()->removeTranslator(m_translator);
+
+     /*if (m_translator->load(":/language/VON_Deutsch.qm"))
+
+     {
+     qDebug() << "LOAD FINISHED";
+
+     QApplication::instance()->installTranslator(m_translator);
+     }*/
+}
+
+void erstesFenster::deutschUebersetzung(){
+    QApplication::instance()->removeTranslator(m_translator);
+
+    if (m_translator->load(":/language/VON_Englisch_zu_Deutsch.qm"))
+
+    {
+    qDebug() << "LOAD FINISHED";
+
+    QApplication::instance()->installTranslator(m_translator);
     }
 }
 
@@ -159,4 +204,7 @@ erstesFenster::~erstesFenster()
     delete (txt);
     delete (sound);
     delete (m_bank);
+    delete (deutsch);
+    delete (englisch);
+    delete (m_translator);
 }

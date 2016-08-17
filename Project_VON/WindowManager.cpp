@@ -11,7 +11,7 @@ WindowManager::WindowManager(QTranslator *translator)
     layout2->setContentsMargins(0,0,0,0);
 
     layout2->addWidget(fenster);
-    erstes = new erstesFenster(fenster, bank);
+    erstes = new erstesFenster(fenster, m_translator, bank);
     zweites = new zweitesFenster(fenster, m_translator, bank);
     drittes = new drittesFenster(fenster, bank);
 

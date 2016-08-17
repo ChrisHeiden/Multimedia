@@ -27,6 +27,6 @@
         <file>zurueck.tif</file>
     </qresource>
     <qresource prefix="/language">
-        <file>VON_Ueberstzung_Deutsch_zu_Englisch.qm</file>
+        <file>VON_Englisch_zu_Deutsch.qm</file>
     </qresource>
 </RCC>
