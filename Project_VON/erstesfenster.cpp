@@ -12,8 +12,9 @@ erstesFenster::erstesFenster(QWidget *fenster, QTranslator *translator, Datenban
     englisch = new QPushButton;
     view = new QGraphicsView(fenster);
     scene = new QGraphicsScene;
-    pen = new QPen();
+    pen = new QPen;
     sound = new Sound();
+    hilfe = new QPushButton;
 
     setzeSignals();
     buttonStil();
@@ -33,6 +34,7 @@ erstesFenster::~erstesFenster()
     delete (englisch);
     delete (m_translator);
     delete (pen);
+    delete (hilfe);
 }
 
 void erstesFenster::erzeugen()
@@ -42,10 +44,11 @@ void erstesFenster::erzeugen()
     scene->addWidget(txt);
     scene->addWidget(deutsch);
     scene->addWidget(englisch);
+    scene->addWidget(hilfe);
 
     if( m_bank->datenbankEmpty() == true ){
         scene->addWidget(startButton);
-        startButton->setGeometry(300, 550, 150, 25);  // absolute positionierung
+        startButton->setGeometry(300, 550, 200, 25);  // absolute positionierung
     }
     else{
         scene->addWidget(startButton);
@@ -82,6 +85,7 @@ void erstesFenster::setzeSignals()
     QObject::connect(letztenOrdnerButton, &QPushButton::clicked, this, &erstesFenster::showLetzteBilder);
     QObject::connect(deutsch, &QPushButton::clicked,this, &erstesFenster::deutschUebersetzung);
     QObject::connect(englisch, &QPushButton::clicked,this, &erstesFenster::englischUebersetzung);
+    QObject::connect(hilfe, &QPushButton::clicked,this, &erstesFenster::hilfeAngeklicket);
 }
 
 void erstesFenster::buttonStil()
@@ -103,6 +107,16 @@ void erstesFenster::buttonStil()
     englisch->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
     englisch->setGeometry(700, 90, 50 ,50);;
     englisch->setStyleSheet("background-color: black;");
+
+    /* Hilfe */
+    QPixmap pixmap3(":/icon/Fragezeichen.tif");
+    QIcon buttonIcon3(pixmap3);
+    hilfe->setIcon(buttonIcon3);
+    hilfe->setIconSize(QSize(25, 25));
+    hilfe->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
+    hilfe->setGeometry(715, 155, 25,25);
+    hilfe->setStyleSheet("background-color: black;");
+
 }
 
 void erstesFenster::labelStil()
@@ -154,5 +168,10 @@ void erstesFenster::hintergrundSetzen()
 
     view->setScene(scene);
     scene->setBackgroundBrush(QBrush(Qt::black, Qt::SolidPattern));
+}
+
+void erstesFenster::hilfeAngeklicket()
+{
+    hilf.hilfeAnzeigenErstesFenster();
 }
 

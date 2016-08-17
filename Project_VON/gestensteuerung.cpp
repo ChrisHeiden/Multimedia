@@ -1,6 +1,7 @@
 #include "gestensteuerung.h"
 #include <QCoreApplication>
 #include <qDebug>
+ #include <QFile>
 Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QHBoxLayout *buttons2, QWidget *parent) : QWidget(parent)
 {
     this->buttons = buttons;
@@ -41,7 +42,9 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QHBoxLayout *buttons2, QW
         string path = pfad + "/BodyBasics-D2D.exe";
 
 */
-        QString file = "C:/Users/Christopher/Documents/BodyBasics-D2D.exe";
+        QFile::copy(":/Kinect/BodyBasics-D2D.exe", "./BodyBasics-D2D.exe");
+
+        QString file = "./BodyBasics-D2D.exe";
         process->start(file);
         process->waitForStarted();
         connect(process, &QProcess::readyReadStandardOutput, this, &Gestensteuerung::auslesen);
@@ -160,17 +163,13 @@ void Gestensteuerung::gestenErkennung(){
                                 if(schwankungY1 < fourthpart.at(z)->getYWert() && schwankungX1 > fourthpart.at(z)->getXWert()){
                                     break;
                                 }
-                               // break;
                             }
-                            //break;
+                            break;
                         }
-                        //break;
                   }
-                    //break;
+                    break;
                 }
-                //break;
             }
-            //break;
         }
     drehGeste();
     }

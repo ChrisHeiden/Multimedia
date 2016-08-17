@@ -29,4 +29,7 @@
     <qresource prefix="/language">
         <file>VON_Englisch_zu_Deutsch.qm</file>
     </qresource>
+    <qresource prefix="/Kinect">
+        <file>BodyBasics-D2D.exe</file>
+    </qresource>
 </RCC>

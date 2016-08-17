@@ -1,7 +1,23 @@
-#include <QWidget>
-#include <QPushButton>
+#include <QObject>
 #include <QString>
+
 #include <QMessageBox>
+
+
+
+#include <QWidget>
+#include <QRadioButton>
+#include <QLabel>
+#include <QPushButton>
+#include <QLineEdit>
+#include <map>
+#include <QScrollArea>
+#include <QApplication>
+#include <QTranslator>
+#include <QTextEdit>
+#include <iostream>
+
+
 
 #ifndef HILFE_H
 #define HILFE_H
@@ -9,7 +25,7 @@
 /**
  * @brief The Hilfe class dient zur Hilfe, falls der Nutzer diese benoetigt
  */
-class Hilfe : public QWidget
+class Hilfe : public QObject
 {
     Q_OBJECT
 public:
@@ -18,17 +34,24 @@ public:
      * @param fenster: *QWidget
      * @param parent: *QWidget
      */
-    Hilfe(QWidget *fenster, QWidget *parent = 0);
+    Hilfe();
+
+    /**
+     * @brief ~Hilfe gibt genutzen Speicher wieder frei
+     */
+    virtual ~Hilfe();
 
     /**
      * @brief hilfeAnzeigen zeigt die Hilfestelltung für den Nutzer an
      */
-    void hilfeAnzeigen();
+    void hilfeAnzeigenZweitesFenster();
+    void hilfeAnzeigenErstesFenster();
 
 
 private: //Funktionen
-    QWidget *m_fenster;
-    QMessageBox *information = new QMessageBox();
+    QMessageBox *information;
+    QString text;
+
 };
 
 #endif // HILFE_H

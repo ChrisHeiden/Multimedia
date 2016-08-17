@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "datenbank.h"
 #include "bildersuche.h"
+#include "hilfe.h"
 
 #ifndef ERSTESFENSTER_H
 #define ERSTESFENSTER_H
@@ -39,18 +40,18 @@ public:
     void erzeugen();
 
 
+
 signals: //SIGNAL-Funktionen
     void openSecondWindow();
     void showLetzteBilder();
 
 
 private: //Funktionen
-    void englischUebersetzung();
-    void deutschUebersetzung();
     void buttonStil();
     void labelStil();
     void setzeSignals();
     void hintergrundSetzen();
+
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {
@@ -60,6 +61,13 @@ private: //Funktionen
         } else
             QWidget::changeEvent(event);
     }
+
+
+private slots:
+    void englischUebersetzung();
+    void deutschUebersetzung();
+    void hilfeAngeklicket();
+
 
 private: //Membervariablen
     QTranslator *m_translator;
@@ -72,7 +80,11 @@ private: //Membervariablen
     Datenbank *m_bank;
     QPushButton *deutsch;
     QPushButton *englisch;
+    QPushButton *hilfe;
     QPen *pen;
+
+    Hilfe hilf;
+
 };
 
 #endif // ERSTESFENSTER_H
