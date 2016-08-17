@@ -5,6 +5,11 @@ erstesFenster::erstesFenster(QWidget *fenster, QTranslator *translator, Datenban
 {
     m_bank = bank;
     m_translator = translator;
+    startButton = new QPushButton(tr("Startverzeichnis"));
+    letztenOrdnerButton = new QPushButton(tr("Letzte Bilder anzeigen"));
+    txt = new QLabel(tr("<h1><strong>Bitte Startverzeichnis auswählen</strong></h1>"));
+    deutsch = new QPushButton;
+    englisch = new QPushButton;
 
     if( m_bank->datenbankEmpty() == true ){
         /*--------Sound abspielen----------*/

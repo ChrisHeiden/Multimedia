@@ -82,10 +82,6 @@ QString MyLabel::enumNamesFromMouseButtons(const Qt::MouseButtons buttons)
     return returnText;
 }
 
-string MyLabel::getPfad(){
-    return m_pfad;
-}
-
 void MyLabel::bildBewertung(){
     int id = bank->getID(m_pfad);
     bewertung = bank->bewertungAnzeigen(id);

@@ -1,10 +1,10 @@
-#ifndef SOUND_H
-#define SOUND_H
-
 #include <QThread>
 #include <QMediaPlayer>
 #include <iostream>
 #include <QDir>
+
+#ifndef SOUND_H
+#define SOUND_H
 
 /**
  * @brief The Sound class ist ein Thread, welches sich darum kümmert den Willkommmenston abzuspielen
@@ -22,15 +22,15 @@ public:
      *        soundabspielen() gehen soll.
      */
     void run();
-private:
-    /**
-     * @brief soundabspielen, erzeugt eine temporären Ordner mit dem Sound, welcher sich
-     *        im Ressourcenordner befindet, da man ohne diese den Sound nicht abspielen kann.
-     *        Der Sound wird abgespielt.
-     */
-    void soundabspielen();
-signals:
+
+
+signals: //SIGNAL-Funktionen
     void soundbeenden();
+
+
+private: //Funktionen
+    void soundabspielen();
+
 };
 
 #endif // SOUND_H

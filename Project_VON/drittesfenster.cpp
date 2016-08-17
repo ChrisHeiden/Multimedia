@@ -34,6 +34,8 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     fuellung4 = new QHBoxLayout;
 
     gesten = new Gestensteuerung(buttons);
+
+    bereitsDurchsucht = false;
     interaktion();
 
 }
@@ -324,9 +326,7 @@ void drittesFenster::bildDrehen()
 
 void drittesFenster::vectorDurchsuchen()
 {
-
     //cout << m_pfad << endl;
-
     for(unsigned int i = 0; i < bilder->size(); i++){
         if(bilder->at(i) == m_pfad){
             index = i;
@@ -340,9 +340,9 @@ void drittesFenster::vectorDurchsuchen()
 
 void drittesFenster::naechstesBild()
 {
-     delete(layout);
-     delete(layout2);
-     delete(item);
+    // delete(layout);
+    // delete(layout2);
+    // delete(item);
 
     if(bereitsDurchsucht == false){
         try{
@@ -385,9 +385,9 @@ void drittesFenster::vorherigesBild()
             vectorDurchsuchen();
             if(index < bilder->size()){
                 ++index;
-                cout << "Davor: " << index << endl;
+                //cout << "Davor: " << index << endl;
                 erzeugeDrittesFenster(bilder->at(index));
-                cout << "Danach: " << index << endl;
+                //cout << "Danach: " << index << endl;
             }else{
                 index = 0;
                 erzeugeDrittesFenster(bilder->at(index));
@@ -398,13 +398,13 @@ void drittesFenster::vorherigesBild()
     }else if(bereitsDurchsucht == true){
         ++index;
         if(index < bilder->size()){
-            cout << "gut "  << endl;
-            cout << "Davor: " << index << endl;
+            //cout << "gut "  << endl;
+            //cout << "Davor: " << index << endl;
             erzeugeDrittesFenster(bilder->at(index));
-            cout << "Danach: " << index << endl;
+            //cout << "Danach: " << index << endl;
         }else{
             index = 0;
-            cout << "Warum?" << endl;
+            //cout << "Warum?" << endl;
             erzeugeDrittesFenster(bilder->at(index));
         }
     }

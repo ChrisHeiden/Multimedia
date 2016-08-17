@@ -1,16 +1,19 @@
-#ifndef ERSTESFENSTER_H
-#define ERSTESFENSTER_H
-
-#include "sound.h"
-#include "datenbank.h"
-#include "bildersuche.h"
 #include <QMainWindow>
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QLabel>
 #include <QTranslator>
 #include <QApplication>
+#include "sound.h"
+#include "datenbank.h"
+#include "bildersuche.h"
 
+#ifndef ERSTESFENSTER_H
+#define ERSTESFENSTER_H
+
+/**
+ * @brief The erstesFenster class
+ */
 class erstesFenster : public QMainWindow
 {
     Q_OBJECT
@@ -18,33 +21,27 @@ class erstesFenster : public QMainWindow
 public:
     /**
      * @brief erstesFenster ist der Konstruktor der Klasse und zeigt das erstes Fenster der Applikation
-     * @param fenster
-     * @param parent
+     * @param fenster: *QWidget
+     * @param translator: *translator
+     * @param bank: *Datenbank
+     * @param parent: *QWidget
      */
     erstesFenster(QWidget *fenster, QTranslator *translator, Datenbank *bank, QWidget *parent = 0);
 
     /**
-     * Dekonstruktor, welcher sich um die Löschung der Zeiger kümmern soll
+     * Dekonstruktor, welcher sich um die Freigebung des Speichers kuemmert
      */
     virtual ~erstesFenster();
 
-signals:
+
+signals: //SIGNAL-Funktionen
     void openSecondWindow();
     void showLetzteBilder();
 
-private:
 
-    /**
-     * @brief englischUebersetzung Funktion zur Uebersetzung des Interfaces in Englisch
-     */
-    void englischUebersetzung(); //vielleicht besser die beiden Methoden im zweitenFenster public machen?
-
-    /**
-     * @brief deutschUebersetzung Funktion zur Uebersetzung des Interfaces in Deutsch
-     */
+private: //Funktionen
+    void englischUebersetzung();
     void deutschUebersetzung();
-
-    /* für die Übersetzung */
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {
@@ -55,18 +52,19 @@ private:
         } else
             QWidget::changeEvent(event);
     }
-    QTranslator *m_translator = new QTranslator();
 
-    /* Zur Darstellung des Fensters */
+
+private: //Membervariablen
+    QTranslator *m_translator;
     QGraphicsView *view;
     QGraphicsScene *scene;
-    QPushButton *startButton = new QPushButton("Startverzeichnis");
-    QPushButton *letztenOrdnerButton = new QPushButton("Letzte Bilder anzeigen");
-    QLabel *txt = new QLabel("<h1><strong>Bitte Startverzeichnis auswählen</strong></h1>");
+    QPushButton *startButton;
+    QPushButton *letztenOrdnerButton;
+    QLabel *txt;
     Sound *sound;
     Datenbank *m_bank;
-    QPushButton *deutsch = new QPushButton();
-    QPushButton *englisch = new QPushButton();
+    QPushButton *deutsch;
+    QPushButton *englisch;
 };
 
 #endif // ERSTESFENSTER_H

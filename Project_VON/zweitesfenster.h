@@ -1,11 +1,3 @@
-#ifndef ZWEITESFENSTER_H
-#define ZWEITESFENSTER_H
-
-#include "Bildersuche.h"
-#include "farben.h"
-#include "hilfe.h"
-#include "datenbank.h"
-#include "mylabel.h"
 #include <QWidget>
 #include <QRadioButton>
 #include <QLabel>
@@ -17,6 +9,13 @@
 #include <QTranslator>
 #include <QTextEdit>
 #include <iostream>
+#include "Bildersuche.h"
+#include "farben.h"
+#include "hilfe.h"
+#include "datenbank.h"
+#include "mylabel.h"
+#ifndef ZWEITESFENSTER_H
+#define ZWEITESFENSTER_H
 
 /**
  * @brief The zweitesFenster class erbt von QWidget und stellt das weite Fenster dar.
@@ -29,11 +28,16 @@ public:
 
     /**
      * @brief zweitesFenster
-     * @param fenster
-     * @param parent
+     * @param fenster: *QWidget
+     * @param translator: *QTranslator
+     * @param bank: *Datenbank
+     * @param parent: *QWidget
      */
     explicit zweitesFenster(QWidget *fenster, QTranslator *translator,Datenbank *bank, QWidget *parent = 0);
 
+    /**
+     * @brief ~zweitesFenster dient zur Freigebung des Speichers
+     */
     virtual ~zweitesFenster();
 
     /**
@@ -56,7 +60,7 @@ public:
     /**
      * @brief BilderDarstellen stellt die gefundenen Bilder, welche in QImages umgewandet wurden in
      *        im Fenster dar
-     * @param qimages ist ein vector, welcher alle QImages entält
+     * @param qimages: map<string, QImage *>* ist ein vector, welcher alle QImages entält
      */
     void BilderDarstellen(map<string, QImage *> *qimages);
 
@@ -66,32 +70,39 @@ public:
     void optionsleisteDarstellen();
 
 
-    /* Ab hier ist was verändert */
-    string m_pfad;
+signals: //SIGNAL-Funktionen
+    void bildBewertet(int zahl);
+    void bildTagsGesetzt(string tags);
+    void openThirdWindow(string m_pfad);
 
 
-private:
+public slots: //SLOT-Funktionen
+    void setPfad(std::string pfad);
+    void tagsInInfoleisteAnzeige(QString tags);
+    void bewertungInInfoleisteAnzeige(int bewertung);
 
+
+private: //Membervariablen
     /* für die Darstelltung im Fenster */
     QWidget *fenster;
     Datenbank *m_bank;
-    QVBoxLayout *ganzesWindow = new QVBoxLayout;
-    QGridLayout *oberesWindow = new QGridLayout;   //wird fenster übergeben
-    QVBoxLayout *west = new QVBoxLayout;     //wird window übergeben und enthält Labels, Buttons und andere Layouts
-    QVBoxLayout *center = new QVBoxLayout;   //wird später Bilder des Nutzers darstellen
-    QVBoxLayout *menu = new QVBoxLayout;     //menu wird westpart übergeben
-    QWidget *westpart = new QWidget;         //westpart entält das Menu mit allen Optionen
-    QVBoxLayout *east = new QVBoxLayout;     //wird später Bilder des Nutzers darstellen
-    QHBoxLayout *south = new QHBoxLayout;
-    QWidget *southpart = new QWidget;
+    QVBoxLayout *ganzesWindow;
+    QGridLayout *oberesWindow ;
+    QVBoxLayout *west;
+    QVBoxLayout *center;
+    QVBoxLayout *menu;
+    QWidget *westpart;
+    QVBoxLayout *east;
+    QHBoxLayout *south;
+    QWidget *southpart;
 
     /* Für die Infobox -> Southpart */
     QLabel *tags;
     QLabel *bildBewertung;
     QLabel *bildPfad ;
-    QLineEdit *tagsFeld = new QLineEdit;
-    QComboBox *bildBewertungsFeld = new QComboBox;
-    QLineEdit *bildPfadFeld = new QLineEdit;
+    QLineEdit *tagsFeld;
+    QComboBox *bildBewertungsFeld;
+    QLineEdit *bildPfadFeld;
 
     /* Für die Optionen -> Westpart */
     QLabel *option;
@@ -109,9 +120,6 @@ private:
     QLabel *filter;
     QPushButton *filterAufloesen;
     QLineEdit *filtern;
-    QString filternNachTags;
-    int m_bilderAnzahl;
-    string pfad;
 
     BilderSuche *suche;
     QTranslator *m_translator;
@@ -156,6 +164,13 @@ private:
     QHBoxLayout *menu3;
     Farben *f;
 
+    QString gewuenschterPfad;
+    QString filternNachTags;
+    int m_bilderAnzahl;
+    string pfad;
+    string m_pfad;
+
+private: //Funktionen
     void setzeSignals();
     void bildtagsAendern();
     void bildBewertungAendern();
@@ -166,38 +181,22 @@ private:
     void nachFuenfFiltern();
     void nachTagFiltern(QString tag);
     void interaktion();
-
     void schwarzFunktion();
     void beigeFunktion();
     void weissFunktion();
     void pinkFunktion();
     void hilfeAngeklicket();
-
-    /**
-     * @brief englischUebersetzung Funktion zur Uebersetzung des Interfaces in Englisch
-     */
     void englischUebersetzung();
-
-    /**
-     * @brief deutschUebersetzung Funktion zur Uebersetzung des Interfaces in Deutsch
-     */
     void deutschUebersetzung();
     void vollbildModusAktiv();
     void vollbildModusInaktiv();
-    void ungefiltert(); //Hier muss das stehen, was man benötig, um alle Bilder dazustellen, welche vor dem Filtern angezeigt wurden
-
-
+    void ungefiltert();
     void zwanzigBilder();
     void vierzigBilder();
     void sechsigBilder();
     void labelStil();
     void buttonsStil();
     void fensterStil();
-    QString gewuenschterPfad;
-
-
-
-    /* für die Übersetzung */
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {
@@ -213,18 +212,6 @@ private:
         } else
             QWidget::changeEvent(event);
     }
-
-
-signals:
-    void bildBewertet(int zahl);
-    void bildTagsGesetzt(string tags);
-    void openThirdWindow(string m_pfad);
-
-public slots:
-    void setPfad(std::string pfad);
-    void tagsInInfoleisteAnzeige(QString tags);
-    void bewertungInInfoleisteAnzeige(int bewertung);
-
 };
 
 #endif // ZWEITESFENSTER_H

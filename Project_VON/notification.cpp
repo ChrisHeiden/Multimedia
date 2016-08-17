@@ -1,5 +1,4 @@
 #include "notification.h"
-#include <iostream>
 Notification::Notification()
 {
     notiz = new QSystemTrayIcon(this);

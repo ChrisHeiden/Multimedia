@@ -1,26 +1,38 @@
 #include <QWidget>
 #include <QPushButton>
-#include "notification.h"
-#include "gespeichertewerte.h"
 #include <QProcess>
 #include <vector>
 #include <QVBoxLayout>
 #include <QObject>
-
+#include <iostream>
+#include "notification.h"
+#include "gespeichertewerte.h"
 #ifndef GESTENSTEUERUNG_H
 #define GESTENSTEUERUNG_H
 
 using namespace std;
 
+/**
+ * @brief The Gestensteuerung class dient zur Steuerung des Diashowmoduses mit der Kinect
+ */
 class Gestensteuerung : public QWidget
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Gestensteuerung initialsiert alle Membervaribablen
+     * @param buttons: *QVBoxLayout um dem leiste einen weitere Button zu uebergeben
+     * @param parent: *QWidget, da die Klasse von QWidget erbt
+     */
     Gestensteuerung(QVBoxLayout *buttons, QWidget *parent = 0);
-    ~Gestensteuerung();
+
+    /**
+     * @brief ~Gestensteuerung gibt genutzen Speicher wieder frei
+     */
+    virtual ~Gestensteuerung();
 
 
-signals:
+signals: //SIGNAL-Funktionen
     void verkleinereBild();
     void vergroessereBild();
     void dreheBild();
@@ -28,7 +40,12 @@ signals:
     void nachstesBild();
 
 
-private:
+private slots: //SLOT-Funktionen
+    void auslesen();
+    void connectionAktivieren();
+
+
+private: // Membervariablen
     QProcess *process;
     GespeichertWerte *speichert;
     vector<GespeichertWerte*> *alleGespeichertenWerte;
@@ -36,20 +53,15 @@ private:
     Notification *n;
     QVBoxLayout *buttons;
     QPushButton *aktiv;
+    unsigned int mengeAnG;
 
 
-private slots:
-    void auslesen();
-    void connectionAktivieren();
-
-
-private:
+private: //Funktionen
     void gestenErkennung();
     void verkleinerGeste();
     void wischGeste();
     void drehGeste();
     void vergroesserGeste();
-    unsigned int mengeAnG;
     void stil();
 };
 

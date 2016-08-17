@@ -1,6 +1,3 @@
-#ifndef DATENBANK_H
-#define DATENBANK_H
-
 #include <QtSql>
 #include <QDebug>
 #include <QFileInfo>
@@ -9,8 +6,15 @@
 #include <iostream>
 #include <string>
 
+#ifndef DATENBANK_H
+#define DATENBANK_H
+
 using namespace std;
 
+/**
+ * @brief The Datenbank class erzeut eine Datenbank mit der die Applikation kommuniziert,
+ *        um bestimmte Funktionen anzubieten
+ */
 class Datenbank
 {
 public:
@@ -171,7 +175,7 @@ public:
      */
     void alleBilderAusgeben();
 
-private:
+private: //Membervariablen
     QSqlDatabase mydb;
 
 };

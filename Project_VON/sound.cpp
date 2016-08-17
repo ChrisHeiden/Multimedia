@@ -1,5 +1,4 @@
 #include "sound.h"
-#include <iostream>
 
 Sound::Sound()
 {

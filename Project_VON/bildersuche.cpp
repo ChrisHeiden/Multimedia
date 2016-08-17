@@ -1,6 +1,6 @@
 #include "bildersuche.h"
 
-BilderSuche::BilderSuche(QString pfad, int anzahhlBilder, Datenbank *bank)
+BilderSuche::BilderSuche(QString &pfad, int &anzahhlBilder, Datenbank *bank)
 {
     m_pfad = pfad;
     m_anzahhlBilder = anzahhlBilder;
@@ -42,7 +42,7 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
     return bilder;
 }
 
-std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int zahl){
+std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int &zahl){
     std::map<string, QImage*> qimages;
 
     if(zahl == 20){

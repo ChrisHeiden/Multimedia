@@ -1,5 +1,5 @@
 #include "gestensteuerung.h"
-#include <iostream>
+
 Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidget(parent)
 {
     this->buttons = buttons;
@@ -9,7 +9,6 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
     aktiv = new QPushButton();
     buttons->addWidget(aktiv);
     connect(aktiv, &QPushButton::clicked, this, &Gestensteuerung::connectionAktivieren);
-    // Init Process
     process = new QProcess(this);
     mengeAnG = 0;
     stil();
@@ -17,20 +16,13 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
     if(process)
     {
 
-        // Some Settings
         process->setProcessChannelMode(QProcess::MergedChannels);
         process->setEnvironment(QProcess::systemEnvironment());
 
-        // Path to KinectApp
+        /*Hier muss ich mir noch was überlegen*/
         QString file = "C:/Users/Christopher/Documents/BodyBasics-D2D.exe";
-
-        // Starting KinectApp
         process->start(file);
-
-        // Giving it time to start
         process->waitForStarted();
-
-        // If an stdoutput happens inside the Kinect-App, readOut-Function is triggered
         connect(process, &QProcess::readyReadStandardOutput, this, &Gestensteuerung::auslesen);
     }
 }
@@ -152,14 +144,21 @@ void Gestensteuerung::gestenErkennung(){
                         if(schwankungY1 < thirdpart.at(y)->getYWert() && schwankungX1 < thirdpart.at(y)->getXWert() && schwankungX2 > thirdpart.at(y)->getXWert()){
                             for(unsigned short z = 0; z < fourthpart.size(); ++z){
                                 if(schwankungY1 < fourthpart.at(z)->getYWert() && schwankungX1 > fourthpart.at(z)->getXWert()){
-                                drehGeste();
+                                    break;
                                 }
+                               // break;
                             }
+                            //break;
                         }
+                        //break;
                   }
+                    //break;
                 }
+                //break;
             }
+            //break;
         }
+    drehGeste();
     }
     else{
         cout << "Keine Geste erkannt." <<endl;

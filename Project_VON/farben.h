@@ -1,12 +1,13 @@
-#ifndef FARBEN_H
-#define FARBEN_H
-
 #include <QWidget>
 #include <QLabel>
 #include <QRadioButton>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
+
+#ifndef FARBEN_H
+#define FARBEN_H
+
 
 /**
  * @brief The Farben class verändert die Farbe des dargestllten Fenstern in verschiedenen Farben
@@ -16,26 +17,31 @@ class Farben
 public:
     /**
      * @brief Farben ist der Konstruktor der Klasse Farben, welcher alle nötigen Objecs initalsiert
-     * @param fenster
-     * @param westpart
-     * @param filter
-     * @param hintergrund
-     * @param anzahlBilder
-     * @param vollbild
-     * @param vollbildmodus
-     * @param option
-     * @param zwanzig
-     * @param vierzig
-     * @param sechsig
-     * @param sprach
-     * @param deutsch
-     * @param englisch
-     * @param vollbildModusDeaktiviern
+     * @param fenster: *QWidget
+     * @param westpart: *QWidget
+     * @param filter: *QLabel
+     * @param hintergrund: *QLabel
+     * @param anzahlBilder: *Qlabel
+     * @param vollbild: *Label
+     * @param vollbildmodus: *QPushButton
+     * @param option: *QLabel
+     * @param zwanzig: *QPushButton
+     * @param vierzig: *QPushButton
+     * @param sechsig: *QPushButton
+     * @param sprach: *QLabel
+     * @param tags: *QLabel
+     * @param bildBewertung: *QLabel
+     * @param bildPfad: *QLabel
+     * @param tagsFeld: *QLineEdit
+     * @param bildBewertungsFeld: *QComboBox
+     * @param bildPfadFeld: *QLineEdit
+     * @param filtern: *QLineEdit
+     * @param vollbildModus: *QPushButton
      */
     Farben(QWidget *fenster, QWidget *westpart, QLabel *filter,
            QLabel *hintergrund, QLabel *anzahlBilder, QLabel *vollbild,
            QPushButton *vollbildmodus, QLabel *option, QPushButton *zwanzig,
-           QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach, QPushButton *vollbildModusDeaktiviern,
+           QPushButton *vierzig, QPushButton *sechsig, QLabel *sprach,
            QLabel *tags, QLabel *bildBewertung, QLabel *bildPfad, QLineEdit *tagsFeld,
            QComboBox *bildBewertungsFeld, QLineEdit  *bildPfadFeld, QLineEdit *filtern, QPushButton *vollbildModus);
 
@@ -63,7 +69,7 @@ public:
      */
     void pink();
 
-private:
+private: //Membervariablen
     QWidget *m_fenster;
     QWidget *m_westpart;
     QLabel *m_filter;
@@ -78,7 +84,6 @@ private:
     QLabel *m_sprache;
     QRadioButton *m_deutsch;
     QRadioButton *m_englisch;
-    QPushButton *m_vollbildModusDeaktiviern;
     QLabel *m_tags;
     QLabel *m_bildBewertung;
     QLabel *m_bildPfad;

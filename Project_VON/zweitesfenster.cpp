@@ -6,6 +6,20 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     m_bank = bank;
     m_bilderAnzahl = 20;
     this->fenster = fenster;
+    ganzesWindow = new QVBoxLayout;
+    oberesWindow = new QGridLayout;
+    west = new QVBoxLayout;
+    center = new QVBoxLayout;
+    menu = new QVBoxLayout;
+    westpart = new QWidget;
+    east = new QVBoxLayout;
+    south = new QHBoxLayout;
+    southpart = new QWidget;
+    tagsFeld = new QLineEdit;
+    bildBewertungsFeld = new QComboBox;
+    bildPfadFeld = new QLineEdit;
+
+
     option = new QLabel("Optionen");
     hintergrund = new QLabel("Hintergrund");
     anzahlBilder = new QLabel("Bildergröße");
@@ -54,7 +68,7 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
 
     f = new Farben(fenster, westpart, filter, hintergrund, anzahlBilder, vollbild,
                                    vollbildmodus,  option,  zwanzig, vierzig,  sechsig,  sprache,
-                                   vollbildModusDeaktiviern, tags, bildBewertung,
+                                   tags, bildBewertung,
                                    bildPfad, tagsFeld, bildBewertungsFeld, bildPfadFeld, filtern, vollbildmodus);
     setzeSignals();
     labelStil();
@@ -658,7 +672,7 @@ void zweitesFenster::buttonsStil()
     vollbildModusDeaktiviern->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
 
     /* Bilder Bewerten*/
-    bildBewertungsFeld->addItem(tr("Bilderbewerten"));
+    bildBewertungsFeld->addItem("");
     bildBewertungsFeld->addItem("1");
     bildBewertungsFeld->addItem("2");
     bildBewertungsFeld->addItem("3");

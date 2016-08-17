@@ -1,14 +1,13 @@
-#ifndef WINDOWMANAGER_H
-#define WINDOWMANAGER_H
-
 #include <QWidget>
 #include <QStackedLayout>
-
 #include "erstesfenster.h"
 #include "zweitesfenster.h"
 #include "drittesfenster.h"
 #include "datenbank.h"
 #include "mylabel.h"
+
+#ifndef WINDOWMANAGER_H
+#define WINDOWMANAGER_H
 
 /**
  * @brief The WindowManager class erbt von QWidget und hat die Aufgabe vom ersten
@@ -21,6 +20,7 @@ public:
 
     /**
      * @brief WindowManager ist der Konstruktor der Klasse, welcher die Layouts initialisiert
+     * @param translator: *QTranslator
      */
     WindowManager(QTranslator *translator);
 
@@ -31,19 +31,18 @@ public:
     virtual ~WindowManager();
 
 
-private:
-    QWidget *fenster;        //zur Dastellung aller Objekte innerhalb des Fensters
+private: //Membervariablen
+    QWidget *fenster;
     QStackedLayout *layout;
     QVBoxLayout *layout2;
-
     erstesFenster *erstes;
     zweitesFenster *zweites;
     drittesFenster *drittes;
     QTranslator *m_translator;
-
     Datenbank *bank;
 
-private slots:
+
+private slots: //SLOT-Funktionen
     void showZweitesFenster();
     void showDrittesFenster(string pfad);
     void letzteBilder();
