@@ -4,7 +4,6 @@
 #include "zweitesfenster.h"
 #include "drittesfenster.h"
 #include "datenbank.h"
-#include "mylabel.h"
 
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
@@ -50,6 +49,7 @@ private slots: //SLOT-Funktionen
     void showZweitesFenster();
     void showDrittesFenster(string pfad);
     void letzteBilder();
+    void letzte();
 };
 
 #endif // WINDOWMANAGER_H

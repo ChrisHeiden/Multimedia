@@ -6,7 +6,6 @@
 #include <QApplication>
 #include "sound.h"
 #include "datenbank.h"
-#include "bildersuche.h"
 #include "hilfe.h"
 
 #ifndef ERSTESFENSTER_H
@@ -39,8 +38,6 @@ public:
      */
     void erzeugen();
 
-
-
 signals: //SIGNAL-Funktionen
     void openSecondWindow();
     void showLetzteBilder();
@@ -63,11 +60,10 @@ private: //Funktionen
     }
 
 
-private slots:
+private slots: //SLOT-Funktionen
     void englischUebersetzung();
     void deutschUebersetzung();
     void hilfeAngeklicket();
-
 
 private: //Membervariablen
     QTranslator *m_translator;

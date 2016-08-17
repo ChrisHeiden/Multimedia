@@ -15,6 +15,7 @@
 #include "datenbank.h"
 #include "mylabel.h"
 
+
 #ifndef ZWEITESFENSTER_H
 #define ZWEITESFENSTER_H
 
@@ -69,6 +70,10 @@ public:
      * @brief zweitesFenster::optionsleisteDarstellen stellt die Optionsleiste dar
      */
     void optionsleisteDarstellen();
+
+    void bilderD();
+
+
 
 
 signals: //SIGNAL-Funktionen
@@ -165,11 +170,19 @@ private: //Membervariablen
     QHBoxLayout *menu3;
     Farben *f;
 
+    QVBoxLayout *m_mainLayout = new QVBoxLayout;
+    QScrollArea *m_area = new QScrollArea;
+    QWidget *contents = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(contents);
+    QHBoxLayout *center1 = new QHBoxLayout;
+
+
     QString gewuenschterPfad;
     QString filternNachTags;
     int m_bilderAnzahl;
     string pfad;
     string m_pfad;
+    QString filename;
 
 private: //Funktionen*
     void setzeSignals();
@@ -198,6 +211,7 @@ private: //Funktionen*
     void labelStil();
     void buttonsStil();
     void fensterStil();
+    void bewerteteBilder(int &bewertung);
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {

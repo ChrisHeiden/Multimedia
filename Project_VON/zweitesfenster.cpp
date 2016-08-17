@@ -163,6 +163,7 @@ void zweitesFenster::erzeugeZweitesFenster()
     suche->start();
     QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
     QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
+
 }
 
 void zweitesFenster::optionsleisteDarstellen()
@@ -284,20 +285,16 @@ void zweitesFenster::bildBewertungAendern()
 
 void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages)
 {
+    m_mainLayout = new QVBoxLayout;
+    m_area = new QScrollArea;
+    contents = new QWidget;
+    layout = new QVBoxLayout(contents);
+    center1 = new QHBoxLayout;
 
-    QVBoxLayout *m_mainLayout = new QVBoxLayout;
-    QScrollArea *m_area = new QScrollArea;
-    m_area->verticalScrollBarPolicy();
-
-    m_mainLayout->addWidget(m_area);
-    QWidget *contents = new QWidget;
-    QVBoxLayout *layout = new QVBoxLayout(contents);
-    QHBoxLayout *center1 = new QHBoxLayout;
-    layout->addLayout(center1);
+    layout->setSizeConstraint(QLayout::SetMinimumSize);
+    m_area->setWidget(contents);
     int index = 0;
-
     map<string,QImage*>::iterator bilderDurchgehen;
-
 
     for(bilderDurchgehen = qimages->begin(); bilderDurchgehen != qimages->end(); bilderDurchgehen++){
         l = new MyLabel(bilderDurchgehen->first, m_bank);
@@ -310,6 +307,7 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages)
         l->setPixmap(QPixmap::fromImage(*(bilderDurchgehen->second)));
         index = index + 1;
         center1->addWidget(l);
+
         if(m_bilderAnzahl == 20 && index % 5 == 0){
             center1 = new QHBoxLayout;
             layout->addLayout(center1);
@@ -324,10 +322,9 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages)
         }
     }
 
-    layout->setSizeConstraint(QLayout::SetMinimumSize);
-    m_area->setWidget(contents);
-
-    /*Layouts dem Widget hinzufügen*/
+    m_area->verticalScrollBarPolicy();
+    m_mainLayout->addWidget(m_area);
+    layout->addLayout(center1);
 
     oberesWindow->addWidget(westpart,0,0,0,1);
     oberesWindow->addWidget(m_area,0,1,1,4);
@@ -335,7 +332,6 @@ void zweitesFenster::BilderDarstellen(map<string, QImage*> *qimages)
     ganzesWindow->addLayout(oberesWindow);
     ganzesWindow->addWidget(southpart);
     this->setLayout(ganzesWindow);
-    this->showMaximized();
 }
 
 void zweitesFenster::schwarzFunktion()
@@ -384,82 +380,54 @@ void zweitesFenster::deutschUebersetzung()
 
 void zweitesFenster::vollbildModusAktiv()
 {
-
+    fenster->layout()->deleteLater();
+    m_bilderAnzahl = 10;
+    bilderD();
     vollbildModusDeaktiviern->setHidden(false);
-    southpart->setHidden(true);
-    tags->setHidden(false);
-    bildBewertung->setHidden(false);
-    bildPfad->setHidden(false);
-    tagsFeld->setHidden(false);
-    bildBewertungsFeld->setHidden(false);
-    bildPfadFeld->setHidden(false);
     south->addWidget(vollbildModusDeaktiviern);
-    southpart->setHidden(false);
-    westpart->setHidden(true); //Menu wird versteckt
-    QObject::connect(vollbildModusDeaktiviern, &QPushButton::clicked,this, &zweitesFenster::vollbildModusInaktiv);
+    westpart->setHidden(true);
     fenster->update();
 }
 
 void zweitesFenster::vollbildModusInaktiv()
-{
-    south->minimumSize();
-
-    southpart->setHidden(false);
-    tags->setHidden(false);
-    bildBewertung->setHidden(false);
-    bildPfad->setHidden(false);
-    tagsFeld->setHidden(false);
-    bildBewertungsFeld->setHidden(false);
-    bildPfadFeld->setHidden(false);
-    westpart->setHidden(false); //Menu wird wieder angezeigt
-    vollbildModusDeaktiviern->setHidden(true);  //Button, der Vollbildmodus deaktivieren kann wird unsichtbar
-    vollbildmodus->setChecked(false);
+{   
+    westpart->setHidden(false);
+    vollbildModusDeaktiviern->setHidden(true);
     fenster->update();
 }
 
-void zweitesFenster::nachEinsFiltern(){
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bewertungFiltern(1);
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+void zweitesFenster::nachEinsFiltern()
+{
+    int bewertung = 1;
+    bewerteteBilder(bewertung);
 }
 
-void zweitesFenster::nachZweiFiltern(){
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bewertungFiltern(2);
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+void zweitesFenster::nachZweiFiltern()
+{
+    int bewertung = 2;
+    bewerteteBilder(bewertung);
 }
 
-void zweitesFenster::nachDreiFiltern(){
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bewertungFiltern(3);
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
-
+void zweitesFenster::nachDreiFiltern()
+{
+    int bewertung = 3;
+    bewerteteBilder(bewertung);
 }
 
-void zweitesFenster::nachVierFiltern(){
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bewertungFiltern(4);
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
-
+void zweitesFenster::nachVierFiltern()
+{
+    int bewertung = 4;
+    bewerteteBilder(bewertung);
 }
 
-void zweitesFenster::nachFuenfFiltern(){
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bewertungFiltern(5);
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+void zweitesFenster::nachFuenfFiltern()
+{
+    int bewertung = 5;
+    bewerteteBilder(bewertung);
 }
 
 void zweitesFenster::nachTagFiltern(QString tag)
 {
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->bildtagsFiltern(tag);
-
-
     if(gefilterteBilder->empty() == true){
         information = new QMessageBox();
         QString text = (tr("<h1>Achtung!</h1>"
@@ -469,6 +437,8 @@ void zweitesFenster::nachTagFiltern(QString tag)
         QMessageBox::information(this,"Hilfe",text);
     }
     else{
+        fenster->layout()->deleteLater();
+        (*gefilterteBilder) = m_bank->bildtagsFiltern(tag);
         (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
         BilderDarstellen(umgewandelteBilder);
     }
@@ -476,26 +446,18 @@ void zweitesFenster::nachTagFiltern(QString tag)
 
 void zweitesFenster::zwanzigBilder(){
     m_bilderAnzahl = 20;
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+    bilderD();
 }
 
 void zweitesFenster::vierzigBilder(){
-    fenster->layout()->deleteLater();
     m_bilderAnzahl = 40;
-    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+    bilderD();
 }
 
 void zweitesFenster::sechsigBilder(){
     fenster->layout()->deleteLater();
     m_bilderAnzahl = 60;
-    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
+    bilderD();
 }
 
 void zweitesFenster::setPfad(string pfad)
@@ -521,6 +483,22 @@ void zweitesFenster::ungefiltert()
     BilderDarstellen(umgewandelteBilder);
 }
 
+void zweitesFenster::bilderD()
+{
+    fenster->layout()->deleteLater();
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
+    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(umgewandelteBilder);
+}
+
+void zweitesFenster::bewerteteBilder(int &bewertung)
+{
+    fenster->layout()->deleteLater();
+    (*gefilterteBilder) = m_bank->bewertungFiltern(bewertung);
+    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(umgewandelteBilder);
+}
+
 void zweitesFenster::fensterStil()
 {
     bildPfadFeld->setStyleSheet("background-color: rgb(209,209,209); width: 100px; ");
@@ -533,6 +511,7 @@ void zweitesFenster::fensterStil()
     vollbildmodus->setStyleSheet("border: none; margin: 0px; padding: 0px; background-color: tomato; width: 30px; height: 30px;");
 
     filtern->setStyleSheet("background-color: white;");
+
 }
 
 void zweitesFenster::labelStil()
@@ -638,13 +617,6 @@ void zweitesFenster::buttonsStil()
     filterAufloesen->setIconSize(QSize(50,50));
     /********************************************************************/
 
-    /*Hilfebutton*/
-    QPixmap pixmap1(":/icon/Fragezeichen.tif");
-    QIcon buttonIcon1(pixmap1);
-    hilfe->setIcon(buttonIcon1);
-    hilfe->setIconSize(QSize(50, 50));
-    hilfe->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
-
     /* Vollbildmodus deaktivieren */
     QPixmap pixmap2(":/icon/back_Transparent_schwarz.tif");
     QIcon buttonIcon2(pixmap2);
@@ -659,6 +631,13 @@ void zweitesFenster::buttonsStil()
     bildBewertungsFeld->addItem("3");
     bildBewertungsFeld->addItem("4");
     bildBewertungsFeld->addItem("5");
+
+    /*Hilfebutton*/
+    QPixmap pixmap1(":/icon/Fragezeichen.tif");
+    QIcon buttonIcon1(pixmap1);
+    hilfe->setIcon(buttonIcon1);
+    hilfe->setIconSize(QSize(50, 50));
+    hilfe->setStyleSheet("border: none; margin-bottom: 0px;padding: 0px;");
 }
 
 void zweitesFenster::setzeSignals()
@@ -683,5 +662,6 @@ void zweitesFenster::setzeSignals()
     QObject::connect(sechsig, &QPushButton::clicked,this, &zweitesFenster::sechsigBilder);
     QObject::connect(deutsch, &QRadioButton::clicked,this, &zweitesFenster::deutschUebersetzung);
     QObject::connect(englisch, &QRadioButton::clicked,this, &zweitesFenster::englischUebersetzung);
+    QObject::connect(vollbildModusDeaktiviern, &QPushButton::clicked,this, &zweitesFenster::vollbildModusInaktiv);
 
 }

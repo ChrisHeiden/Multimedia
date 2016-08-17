@@ -123,13 +123,9 @@ private: //Membervariablen
 
     QWidget *m_fenster;
     QHBoxLayout *layout;
-    QVBoxLayout *layout2;
     QVBoxLayout *buttons;
-    QHBoxLayout *buttons2;
     QVBoxLayout *fuellung1;
     QVBoxLayout *fuellung2;
-    QHBoxLayout *fuellung3;
-    QHBoxLayout *fuellung4;
     QGraphicsScene *scene;
     QGraphicsView *view;
     QPushButton *eins;

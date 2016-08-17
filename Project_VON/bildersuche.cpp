@@ -45,7 +45,24 @@ std::vector<std::string> BilderSuche::alleGefundenenBilder(){
 std::map<string, QImage*> BilderSuche::umwandeln(std::vector<std::string> *images, int &zahl){
     std::map<string, QImage*> qimages;
 
-    if(zahl == 20){
+    if(zahl == 10){
+        for(unsigned int i= 0; i < images->size(); i++){
+            QString qstring(images->at(i).c_str());
+            QImage *image = new QImage(qstring);
+
+            if(image->height() > image->width()){
+                (*image) = image->scaledToHeight(305, Qt::SmoothTransformation);
+                qimages[images->at(i)] = image;
+
+            }
+            else{
+                (*image) = image->scaledToWidth(305, Qt::SmoothTransformation);
+                qimages[images->at(i)] = image;
+            }
+         }
+    }
+
+    else if(zahl == 20){
         for(unsigned int i= 0; i < images->size(); i++){
             QString qstring(images->at(i).c_str());
             QImage *image = new QImage(qstring);

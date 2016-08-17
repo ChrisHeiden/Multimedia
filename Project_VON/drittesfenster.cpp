@@ -23,17 +23,11 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
 
     layout = new QHBoxLayout;
-    layout2 = new QVBoxLayout;
-
     buttons = new QVBoxLayout;
-    buttons2 = new QHBoxLayout;
-
     fuellung1 = new QVBoxLayout;
     fuellung2 = new QVBoxLayout;
-    fuellung3 = new QHBoxLayout;
-    fuellung4 = new QHBoxLayout;
 
-    gesten = new Gestensteuerung(buttons, buttons2);
+    gesten = new Gestensteuerung(buttons);
     bereitsDurchsucht = false;
     interaktion();
     buttonsStyle();
@@ -43,13 +37,9 @@ drittesFenster::~drittesFenster()
 {
     delete (m_fenster);
     delete (layout);
-    delete (layout2);
     delete (buttons);
-    delete (buttons2);
     delete (fuellung1);
     delete (fuellung2);
-    delete (fuellung3);
-    delete (fuellung4);
     delete (scene);
     delete (view);
     delete (eins);
@@ -75,96 +65,53 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
 
-
     screen = QApplication::screens().at(0);
     QSize size = screen->size();
 
     if(size.width() == 1280 && size.height() == 720){
         if(image.height() >= image.width()){
             image = image.scaledToHeight(620, Qt::FastTransformation);
-            vertikal();
-            layout->addLayout(buttons);
-            layout->addWidget(view);
-
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout);
         }
         if(image.height() < image.width()){
             image = image.scaledToWidth(530, Qt::FastTransformation);
-            horizontal();
-            layout2->addWidget(view);
-            layout2->addLayout(buttons2);
-            this->setLayout(layout2);
         }
     }
     else if(size.width() == 1920 && size.height() == 1080){
         if(image.height() >= image.width()){
             image = image.scaledToHeight(1100, Qt::FastTransformation);
-            vertikal();
-            layout->addLayout(buttons);
-            layout->addWidget(view);
-
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout2);
         }
         if(image.height() < image.width()){
             image = image.scaledToWidth(1000, Qt::FastTransformation);
-            horizontal();
-            layout2->addWidget(view);
-            layout2->addLayout(buttons2);
-
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout2);
         }
     }
-
     else if(size.width() == 1680 && size.height() == 1050){
         if(image.height() >= image.width()){
-            image = image.scaledToHeight(950, Qt::FastTransformation);
-            vertikal();
-            layout->addLayout(buttons);
-            layout->addWidget(view);
+            image = image.scaledToHeight(950, Qt::FastTransformation);  
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout);
         }
         if(image.height() < image.width()){
             image = image.scaledToHeight(870, Qt::FastTransformation);
-            horizontal();
-            layout2->addWidget(view);
-            layout2->addLayout(buttons2);
-
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout2);
         }
     }
     else{
         if(image.height() >= image.width()){
             image = image.scaledToHeight(1300, Qt::FastTransformation);
-            vertikal();
-            layout->addLayout(buttons);
-            layout->addWidget(view);
-
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-            scene->addItem(item);
-            this->setLayout(layout);
         }
         if(image.height() < image.width()){
-            image = image.scaledToHeight(1200, Qt::FastTransformation);
-            horizontal();
-            layout2->addWidget(view);
-            layout2->addLayout(buttons2);
-
+            image = image.scaledToHeight(1200, Qt::FastTransformation); 
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-
-            scene->addItem(item);
-            this->setLayout(layout2);
         }
     }
+    layout->addLayout(buttons);
+    layout->addWidget(view);
+    vertikal();
+    scene->addItem(item);
+    this->setLayout(layout);
 }
 
 void drittesFenster::buttonsStyle(){
@@ -266,24 +213,6 @@ void drittesFenster::vertikal()
     buttons->addWidget(drehen);
     buttons->addWidget(links);
     buttons->addWidget(rechts);
-}
-
-void drittesFenster::horizontal()
-{
-    fuellung3->addSpacing(500);
-    fuellung4->addSpacing(500);
-
-    buttons2->addLayout(fuellung3);
-    buttons2->addWidget(eins);
-    buttons2->addWidget(zwei);
-    buttons2->addWidget(drei);
-    buttons2->addWidget(vier);
-    buttons2->addWidget(fuenf);
-    buttons2->addLayout(fuellung4);
-    buttons2->addWidget(beenden);
-    buttons2->addWidget(drehen);
-    buttons2->addWidget(links);
-    buttons2->addWidget(rechts);
 }
 
 void drittesFenster::bewertenEins()
