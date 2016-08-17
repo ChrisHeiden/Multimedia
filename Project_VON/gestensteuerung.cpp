@@ -1,6 +1,7 @@
 #include "gestensteuerung.h"
-
-Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidget(parent)
+#include <QCoreApplication>
+#include <qDebug>
+Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QHBoxLayout *buttons2, QWidget *parent) : QWidget(parent)
 {
     this->buttons = buttons;
     alleGespeichertenWerte = new vector<GespeichertWerte*>;
@@ -8,6 +9,7 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
     n = new Notification;
     aktiv = new QPushButton();
     buttons->addWidget(aktiv);
+    buttons2->addWidget(aktiv);
     connect(aktiv, &QPushButton::clicked, this, &Gestensteuerung::connectionAktivieren);
     process = new QProcess(this);
     mengeAnG = 0;
@@ -20,6 +22,25 @@ Gestensteuerung::Gestensteuerung(QVBoxLayout *buttons, QWidget *parent) : QWidge
         process->setEnvironment(QProcess::systemEnvironment());
 
         /*Hier muss ich mir noch was überlegen*/
+
+/*
+        string pfad = QCoreApplication::applicationFilePath().toStdString();
+
+        unsigned int index;
+        for(unsigned int i = 0; i < pfad.size(); i++){
+            if(pfad.at(i) == '/'){
+                --slashes;
+                index = i;
+            }
+            else{
+                continue;
+            }
+        }
+
+        pfad.resize(index);     //kürzt den Pfad bis zu diesem Slash
+        string path = pfad + "/BodyBasics-D2D.exe";
+
+*/
         QString file = "C:/Users/Christopher/Documents/BodyBasics-D2D.exe";
         process->start(file);
         process->waitForStarted();

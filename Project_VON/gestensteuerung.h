@@ -24,7 +24,7 @@ public:
      * @param buttons: *QVBoxLayout um dem leiste einen weitere Button zu uebergeben
      * @param parent: *QWidget, da die Klasse von QWidget erbt
      */
-    Gestensteuerung(QVBoxLayout *buttons, QWidget *parent = 0);
+    Gestensteuerung(QVBoxLayout *buttons, QHBoxLayout *buttons2, QWidget *parent = 0);
 
     /**
      * @brief ~Gestensteuerung gibt genutzen Speicher wieder frei

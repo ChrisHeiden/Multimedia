@@ -57,17 +57,10 @@ void WindowManager::letzteBilder()
     this->showMaximized();
 }
 
-void WindowManager::showBilderGalerie()
-{
-    this->layout->setCurrentWidget(zweites);
-    this->zweites->letzter();
-    this->showMaximized();
-}
-
 void WindowManager::setzeSignals()
 {
     QObject::connect(this->erstes, &erstesFenster::showLetzteBilder, this, &WindowManager::letzteBilder);
     QObject::connect(this->erstes, &erstesFenster::openSecondWindow, this, &WindowManager::showZweitesFenster);
     QObject::connect(this->zweites, &zweitesFenster::openThirdWindow, this, &WindowManager::showDrittesFenster);
-    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::showBilderGalerie);
+    QObject::connect(this->drittes, &drittesFenster::showBildergalerie, this, &WindowManager::letzteBilder);
 }

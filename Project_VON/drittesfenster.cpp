@@ -33,7 +33,7 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     fuellung3 = new QHBoxLayout;
     fuellung4 = new QHBoxLayout;
 
-    gesten = new Gestensteuerung(buttons);
+    gesten = new Gestensteuerung(buttons, buttons2);
     bereitsDurchsucht = false;
     interaktion();
     buttonsStyle();

@@ -243,8 +243,7 @@ QString zweitesFenster::ordnerVerzeichnis()
         tr("Bilderordner"),      // Titel des Fensters
         "C://Users", //Startverzeichnis, welches angegeben wird
         tr("JPG Dateien(*.jpg)")); // Möglichkeiten zur Filterung
-        string path = filename.toStdString();
-
+    string path = filename.toStdString();
     for(unsigned int i = 0; i <path.size(); i++){       //geht String durch und sucht nach letztem Slash
         if(path.at(i) == '/'){
             index = i;      //speichert den Index des letzten gefundenen Slashes

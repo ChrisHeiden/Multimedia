@@ -41,6 +41,7 @@ private: //Membervariablen
     QTranslator *m_translator;
     Datenbank *bank;
 
+
 private: //Funktionen
     void setzeSignals();
 
@@ -49,7 +50,6 @@ private slots: //SLOT-Funktionen
     void showZweitesFenster();
     void showDrittesFenster(string pfad);
     void letzteBilder();
-    void showBilderGalerie();
 };
 
 #endif // WINDOWMANAGER_H
