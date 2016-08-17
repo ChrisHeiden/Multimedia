@@ -1,8 +1,13 @@
 #include "WindowManager.h"
 #include <QApplication>
+#include <QtTest/QtTest>
+#include "datenbanktest.h"
 
 int main(int argc, char *argv[])
 {
+    datenbanktest datenbanktest;
+    QTest::qExec(&datenbanktest);
+
     QApplication a(argc, argv);
 
     QTranslator *translator = new QTranslator();

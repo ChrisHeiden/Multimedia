@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql\
+QT       += core gui sql testlib\
             multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -26,7 +26,8 @@ SOURCES += main.cpp\
            mylabel.cpp \
     gespeichertewerte.cpp \
     notification.cpp \
-    gestensteuerung.cpp
+    gestensteuerung.cpp \
+    datenbanktest.cpp
 
 HEADERS  += erstesfenster.h \
             sound.h \
@@ -40,7 +41,8 @@ HEADERS  += erstesfenster.h \
             mylabel.h \
     gespeichertewerte.h \
     notification.h \
-    gestensteuerung.h
+    gestensteuerung.h \
+    datenbanktest.h
 
 CONFIG += c++11
 

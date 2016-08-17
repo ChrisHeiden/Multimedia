@@ -20,6 +20,12 @@ public:
      */
     Datenbank();
 
+    /**
+     * @brief datenbankLoeschen loescht die gesamte Datenbank
+     * @return true, wenn Datenbank geloescht wurde, false, wenn nicht
+     */
+    bool datenbankLoeschen();
+
     bool bildpfadExists(QString Pfad);
 
     /**
@@ -149,7 +155,6 @@ public:
 
 private:
     QSqlDatabase mydb;
-    static unsigned int IDZaehler;
 
 signals:
 

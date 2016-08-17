@@ -1,7 +1,5 @@
 #include "datenbank.h"
 
-unsigned int Datenbank::IDZaehler = 1;
-
 Datenbank::Datenbank(){
 
     mydb = QSqlDatabase::addDatabase("QSQLITE");
@@ -16,19 +14,25 @@ Datenbank::Datenbank(){
        qDebug() << "Database: connection ok";
     }
 
-    /*QSqlQuery qry;
-    qry.prepare( "Drop table Bilder" );
-        if( !qry.exec() )
-            qDebug() << qry.lastError();
-        else
-            qDebug() << "Table dropped!";*/
-
     QSqlQuery qry;
     qry.prepare( "CREATE TABLE IF NOT EXISTS Bilder (BildID integer primary key AUTOINCREMENT, Bildpfad text, Bildwertung integer check(Bildwertung between 1 and 5), Bildtags text, Bild_dargestellt integer, Bildausrichtung integer)" ); //Bild_dargestellt 0 = false, 1 = true
       if( !qry.exec() )
         qDebug() << "Datenbank anlegen Error:" << qry.lastError();
       else
         qDebug() << "Table created!";
+}
+
+bool Datenbank::datenbankLoeschen(){
+    QSqlQuery qry;
+    qry.prepare( "Drop table Bilder" );
+        if( !qry.exec() ){
+            qDebug() << qry.lastError();
+            return false;
+        }
+        else{
+            qDebug() << "Table dropped!";
+            return true;
+        }
 }
 
 bool Datenbank::datenbankEmpty(){
@@ -70,8 +74,7 @@ bool Datenbank::neuesBild(QString Bildpfad){
         if(query.exec())
         {
             erfolgreich = true;
-            qDebug() << "Bild hinzugefuegt!"; //" ID: " <<  IDZaehler
-            //IDZaehler++;
+            qDebug() << "Bild hinzugefuegt!";
         }
         else
         {
