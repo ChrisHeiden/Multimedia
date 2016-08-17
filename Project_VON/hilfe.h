@@ -1,23 +1,6 @@
 #include <QObject>
 #include <QString>
-
 #include <QMessageBox>
-
-
-
-#include <QWidget>
-#include <QRadioButton>
-#include <QLabel>
-#include <QPushButton>
-#include <QLineEdit>
-#include <map>
-#include <QScrollArea>
-#include <QApplication>
-#include <QTranslator>
-#include <QTextEdit>
-#include <iostream>
-
-
 
 #ifndef HILFE_H
 #define HILFE_H
@@ -42,16 +25,20 @@ public:
     virtual ~Hilfe();
 
     /**
-     * @brief hilfeAnzeigen zeigt die Hilfestelltung für den Nutzer an
+     * @brief hilfeAnzeigenZweitesFenster zeigt die Hilfestelltung für das zweite Fenster an
      */
     void hilfeAnzeigenZweitesFenster();
+
+    /**
+     * @brief hilfeAnzeigenZweitesFenster zeigt die Hilfestelltung für das erste Fenster an
+     */
     void hilfeAnzeigenErstesFenster();
 
 
 private: //Funktionen
     QMessageBox *information;
-    QString text;
-
+    QString text1;
+    QString text2;
 };
 
 #endif // HILFE_H
