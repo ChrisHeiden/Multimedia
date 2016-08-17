@@ -172,7 +172,15 @@ private:
     void weissFunktion();
     void pinkFunktion();
     void hilfeAngeklicket();
+
+    /**
+     * @brief englischUebersetzung Funktion zur Uebersetzung des Interfaces in Englisch
+     */
     void englischUebersetzung();
+
+    /**
+     * @brief deutschUebersetzung Funktion zur Uebersetzung des Interfaces in Deutsch
+     */
     void deutschUebersetzung();
     void vollbildModusAktiv();
     void vollbildModusInaktiv();

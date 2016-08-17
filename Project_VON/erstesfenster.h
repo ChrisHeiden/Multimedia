@@ -34,7 +34,14 @@ signals:
 
 private:
 
+    /**
+     * @brief englischUebersetzung Funktion zur Uebersetzung des Interfaces in Englisch
+     */
     void englischUebersetzung(); //vielleicht besser die beiden Methoden im zweitenFenster public machen?
+
+    /**
+     * @brief deutschUebersetzung Funktion zur Uebersetzung des Interfaces in Deutsch
+     */
     void deutschUebersetzung();
 
     /* für die Übersetzung */

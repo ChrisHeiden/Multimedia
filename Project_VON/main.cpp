@@ -5,8 +5,8 @@
 
 int main(int argc, char *argv[])
 {
-    datenbanktest datenbanktest;
-    QTest::qExec(&datenbanktest);
+    //datenbanktest datenbanktest;
+    //QTest::qExec(&datenbanktest);
 
     QApplication a(argc, argv);
 

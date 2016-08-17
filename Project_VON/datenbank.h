@@ -26,35 +26,66 @@ public:
      */
     bool datenbankLoeschen();
 
-    bool bildpfadExists(QString Pfad);
+    /**
+     * @brief datenbankEmpty ueberprueft, ob die Datenbank leer ist
+     * @return bool empty, ob die Datenbank leer ist (true) oder nicht (false)
+     */
+    bool datenbankEmpty();
 
     /**
-     * @brief neuesBild speichert ein neues Bild in der Datenbank
-     * @param Bildpfad Pfad, unter dem das Bild auf dem Computer des Nutzers zu finden ist
-     * @return bool erfolgreich, ob das Bild hinzugefuegt wurde (true) oder nicht (false)
+     * @brief bildpfadExists ueberprueft, ob ein bestimmter Bildpfad bereits in der Datenbank existiert oder nicht
+     * @param Pfad Bildpfad, der ueberprueft werden soll
+     * @return true, wenn Bildpfad bereits existiert, false, wenn nicht
      */
-    bool neuesBild(QString Bildpfad);
+    bool bildpfadExists(QString pfad);
 
     /**
      * @brief bildExists ueberprueft, ob das Bild in der Datenbank existiert oder nicht
      * @param ID ID des Bildes, das gesucht wird
      * @return bool erfolgreich, ob das Bild existiert (true) oder nicht (false)
      */
-    bool bildExists(int ID);
+    bool bildExists(int id);
 
     /**
-     * @brief bildLoeschen loescht ein Bild aus der Datenbank
-     * @param ID ID des Bildes, das geloescht werden soll
-     * @return bool erfolgreich, ob das Bild geloescht wurde (true) oder nicht (false)
+     * @brief neuesBild speichert ein neues Bild in der Datenbank
+     * @param Bildpfad Pfad, unter dem das Bild auf dem Computer des Nutzers zu finden ist
+     * @return bool erfolgreich, ob das Bild hinzugefuegt wurde (true) oder nicht (false)
      */
-    bool bildLoeschen(int ID);
+    bool neuesBild(QString bildpfad);
+
+    /**
+     * @brief alleBilder_dargestelltFalse setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf false (0)
+     */
+    void setAlleBilder_dargestelltFalse();
+
+    /**
+     * @brief setBilder_dargestelltMemory setzt das Bild_dargestellt-Attribut aller angezeigten Bilder auf memory (1)
+     */
+    void setBilder_dargestelltMemory();
+
+    /**
+     * @brief setAlleBilder_dargestelltTrue setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf true (2)
+     */
+    void setAlleBilder_dargestelltTrue();
+
+    /**
+     * @brief getAlleBilder_dargestelltTrue liefert alle Bilder zurueck, die angezeigt werden
+     * @return vector mit allen Bilder, bei denen Bild_dargestellt true (2) ist
+     */
+    vector<string> getAlleBilder_dargestelltTrue();
+
+    /**
+     * @brief getAlleBilder_dargestelltMemory liefert alle Bilder zurueck, die den memory-Status (1) als Bild_dargestellt-Attribut haben
+     * @return vector mit allen Bildern, bei denen Bild_dargestellt auf memory (1) gesetzt ist
+     */
+    vector<string> getAlleBilder_dargestelltMemory();
 
     /**
      * @brief aktuellenBildPfadAnzeigen gibt den Bildpfad einer bestimmten ID zurueck
      * @param ID ID des Bildes, dessen Pfad angezeigt werden soll
      * @return Bildpfad des Bildes mit der ausgewählten ID
      */
-    QString aktuellenBildPfadAnzeigen(int ID);
+    QString aktuellenBildPfadAnzeigen(int id);
 
     /**
      * @brief bildBewerten bewertet ein Bild in der Datenbank
@@ -62,7 +93,7 @@ public:
      * @param Bewertung (von 1 bis 5) welche Bewertung das Bild erhalten soll
      * @return bool erfolgreich, ob das Bild bewertet werden konnte (true) oder nicht (false)
      */
-    bool bildBewerten(int ID, int Bewertung);
+    bool bildBewerten(int id, int bewertung);
 
     /**
      * @brief bildtagsAendern fuegt Tags zu einem Bild hinzu
@@ -73,34 +104,18 @@ public:
     bool bildtagsAendern(int ID, QString Tag);
 
     /**
-     * @brief datenbankEmpty ueberprueft, ob die Datenbank leer ist
-     * @return bool empty, ob die Datenbank leer ist (true) oder nicht (false)
-     */
-    bool datenbankEmpty();
-
-    /**
-     * @brief alleBilderAusgeben gibt alle Bildpfade aus der Datenbank in qDebug aus
-     */
-    void alleBilderAusgeben();
-
-    /**
      * @brief bewertungAnzeigen zeigt die Bewertung eines Bildes an
      * @param ID ID des Bildes, dessen Bewertung angezeigt werden soll
      * @return int wertung die Bewertung des Bildes
      */
-    int bewertungAnzeigen(int ID);
+    int bewertungAnzeigen(int id);
 
     /**
      * @brief bildtagsAnzeigen zeigt die Tags von einem Bild an
      * @param ID ID des Bildes, dessen Tags angezeigt werden sollen
      * @return Qstring Tags die Tags des Bildes
      */
-    QString bildtagsAnzeigen(int ID);
-
-    /**
-     * @brief alleIDsAusgeben gibt in qDebug alle IDs aus, die in der Datenbank gespeichert sind
-     */
-    void alleIDsAusgeben();
+    QString bildtagsAnzeigen(int id);
 
     /**
      * @brief getID gibt die ID zu einem Bildpfad zurueck
@@ -124,23 +139,6 @@ public:
     vector<string> bewertungFiltern(int filterwertung);
 
     /**
-     * @brief alleBilder_dargestelltFalse setzt das Bild_dargestellt-Attribut aller Bilder der Datenbank auf false
-     */
-    void setAlleBilder_dargestelltFalse();
-
-    /**
-     * @brief getAlleBilder_dargestelltTrue liefert alle Bilder zurueck, die angezeigt werden
-     * @return vector mit allen Bilder, bei denen Bild_dargestellt true ist
-     */
-    vector<string> getAlleBilder_dargestelltTrue();
-
-    void setAlleBilder_dargestelltTrue();
-
-    vector<string> getAlleBilder_dargestelltMemory();
-
-    void setBilder_dargestelltMemory();
-
-    /**
      * @brief neueBildausrichtung setzt die Bildausrichtung eines Bildes neu, das gedreht wurde
      * @param id ID des Bildes, das gedreht wurde
      */
@@ -153,12 +151,29 @@ public:
      */
     int getBildausrichtung(int id);
 
+    /**
+     * @brief bildLoeschen loescht ein Bild aus der Datenbank
+     * @param ID ID des Bildes, das geloescht werden soll
+     * @return bool erfolgreich, ob das Bild geloescht wurde (true) oder nicht (false)
+     * zum testen der Datenbank - kein Aufruf im Programm
+     */
+    bool bildLoeschen(int id);
+
+    /**
+     * @brief alleIDsAusgeben gibt in qDebug alle IDs aus, die in der Datenbank gespeichert sind
+     * nur zum Testen der Datenbank - kein Aufruf im Programm
+     */
+    void alleIDsAusgeben();
+
+    /**
+     * @brief alleBilderAusgeben gibt alle Bildpfade aus der Datenbank in qDebug aus
+     * nur zum Testen der Datenbank - kein Aufruf im Programm
+     */
+    void alleBilderAusgeben();
+
 private:
     QSqlDatabase mydb;
 
-signals:
-
-public slots:
 };
 
 #endif // DATENBANK_H
