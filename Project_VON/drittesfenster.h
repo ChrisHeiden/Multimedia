@@ -144,7 +144,7 @@ private: //Membervariablen
 
     QSize size;
     bool bereitsDurchsucht;
-    unsigned int index;
+    int index;
     string m_pfad;
 
 };

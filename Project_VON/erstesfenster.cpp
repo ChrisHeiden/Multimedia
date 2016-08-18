@@ -48,7 +48,7 @@ void erstesFenster::erzeugen()
 
     if( m_bank->datenbankEmpty() == true ){
         scene->addWidget(startButton);
-        startButton->setGeometry(300, 550, 250, 25);  // absolute positionierung
+        startButton->setGeometry(300, 550, 150, 25);// absolute positionierung
     }
     else{
         scene->addWidget(startButton);

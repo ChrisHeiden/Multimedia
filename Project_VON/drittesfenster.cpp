@@ -193,22 +193,22 @@ void drittesFenster::vorherigesBild()
      if(bereitsDurchsucht == false){
         try{
             vectorDurchsuchen();
-            if(index < bilder->size()){
-                ++index;
+            --index;
+            if(index >= 0){
                 erzeugeDrittesFenster(bilder->at(index));
             }else{
-                index = 0;
+                index = bilder->size() - 1;
                 erzeugeDrittesFenster(bilder->at(index));
             }
         }catch(...){
             fehlerMelden();
         }
     }else if(bereitsDurchsucht == true){
-        ++index;
-        if(index < bilder->size()){
+        --index;
+        if(index >= 0){
             erzeugeDrittesFenster(bilder->at(index));
         }else{
-            index = 0;
+            index = bilder->size() - 1;
             erzeugeDrittesFenster(bilder->at(index));
         }
     }

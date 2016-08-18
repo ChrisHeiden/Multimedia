@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+    //Anweisungen fuer Unit-Tests:
     //datenbanktest datenbanktest;
     //QTest::qExec(&datenbanktest);
 
