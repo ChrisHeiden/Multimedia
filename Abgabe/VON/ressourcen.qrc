@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/sound">
+        <file>Zankyou no Terror OST - geschnitten.mp3</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>Icon.png</file>
+        <file>back_Transparent.tif</file>
+        <file>Fragezeichen.tif</file>
+        <file>trichter.tif</file>
+        <file>drei.tif</file>
+        <file>eins.tif</file>
+        <file>fuenf.tif</file>
+        <file>vier.tif</file>
+        <file>zwei.tif</file>
+        <file>englisch.jpg</file>
+        <file>Kinect_Icon.png</file>
+        <file>drehen.tif</file>
+        <file>links.tif</file>
+        <file>rechts.tif</file>
+        <file>schwarzDrei.tif</file>
+        <file>schwarzEins.tif</file>
+        <file>schwarzFuenf.tif</file>
+        <file>schwarzVier.tif</file>
+        <file>schwarzZwei.tif</file>
+        <file>zurueck.tif</file>
+        <file>deutsch.jpg</file>
+        <file>back_Transparent_schwarz.tif</file>
+    </qresource>
+    <qresource prefix="/language">
+        <file>VON_Englisch_zu_Deutsch.qm</file>
+    </qresource>
+    <qresource prefix="/Kinect">
+        <file>BodyBasics-D2D.exe</file>
+    </qresource>
+</RCC>
