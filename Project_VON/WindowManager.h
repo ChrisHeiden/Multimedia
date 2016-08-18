@@ -48,7 +48,6 @@ private: //Funktionen
 private slots: //SLOT-Funktionen
     void showZweitesFenster();
     void showDrittesFenster(string pfad);
-    void letzteBilder();
     void letzte();
 };
 

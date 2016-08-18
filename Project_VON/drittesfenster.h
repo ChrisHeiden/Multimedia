@@ -124,8 +124,6 @@ private: //Membervariablen
     QWidget *m_fenster;
     QHBoxLayout *layout;
     QVBoxLayout *buttons;
-    QVBoxLayout *fuellung1;
-    QVBoxLayout *fuellung2;
     QGraphicsScene *scene;
     QGraphicsView *view;
     QPushButton *eins;
@@ -145,7 +143,6 @@ private: //Membervariablen
     Gestensteuerung *gesten;
 
     QSize size;
-    QImage image;
     bool bereitsDurchsucht;
     unsigned int index;
     string m_pfad;

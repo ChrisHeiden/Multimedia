@@ -3,18 +3,18 @@
 drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *parent) : QWidget(parent){
     m_fenster = fenster;
     m_bank = bank;
+    layout = new QHBoxLayout;
+
     scene = new QGraphicsScene;
     view = new QGraphicsView(scene);
     view->setAlignment(Qt::AlignTop | Qt::AlignCenter);
     drehen  = new QPushButton;
-
     links = new QPushButton;
     rechts = new QPushButton;
 
     eins = new QPushButton();
     zwei = new QPushButton();
     drei = new QPushButton();
-
     vier = new QPushButton();
     fuenf = new QPushButton();
     beenden = new QPushButton();
@@ -22,15 +22,14 @@ drittesFenster::drittesFenster(QWidget *fenster, Datenbank *bank, QWidget *paren
     bilder =  new vector<string>;
     (*bilder) = m_bank->getAlleBilder_dargestelltTrue();
 
-    layout = new QHBoxLayout;
     buttons = new QVBoxLayout;
-    fuellung1 = new QVBoxLayout;
-    fuellung2 = new QVBoxLayout;
-
     gesten = new Gestensteuerung(buttons);
     bereitsDurchsucht = false;
     interaktion();
     buttonsStyle();
+    vertikal();
+    layout->addLayout(buttons);
+
 }
 
 drittesFenster::~drittesFenster()
@@ -38,8 +37,6 @@ drittesFenster::~drittesFenster()
     delete (m_fenster);
     delete (layout);
     delete (buttons);
-    delete (fuellung1);
-    delete (fuellung2);
     delete (scene);
     delete (view);
     delete (eins);
@@ -59,16 +56,16 @@ drittesFenster::~drittesFenster()
     delete (gesten);
 }
 
-void drittesFenster::erzeugeDrittesFenster(string pfad){
+void drittesFenster::erzeugeDrittesFenster(string pfad)
+{
     m_pfad = pfad;
-
     QString qstr = QString::fromStdString(pfad);
     QImage image(qstr);
 
-    screen = QApplication::screens().at(0);
-    QSize size = screen->size();
+    //screen = QApplication::screens().at(0);
+    //QSize size = screen->size();
 
-    if(size.width() == 1280 && size.height() == 720){
+    /*if(size.width() == 1280 && size.height() == 720){
         if(image.height() >= image.width()){
             image = image.scaledToHeight(620, Qt::FastTransformation);
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
@@ -97,21 +94,190 @@ void drittesFenster::erzeugeDrittesFenster(string pfad){
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         }
     }
-    else{
-        if(image.height() >= image.width()){
+    else{*/
+       // if(image.height() >= image.width()){
             image = image.scaledToHeight(1300, Qt::FastTransformation);
             item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        //}
+        //if(image.height() < image.width()){
+        //    image = image.scaledToHeight(1200, Qt::FastTransformation);
+        //    item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        //}
+    //}
+    scene->addItem(item);
+    layout->addWidget(view);
+    this->setLayout(layout);
+}
+
+void drittesFenster::bewertenEins()
+{
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,1);
+}
+
+void drittesFenster::bewertenZwei()
+{
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,2);
+}
+
+void drittesFenster::bewertenDrei()
+{
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,3);
+}
+
+void drittesFenster::bewertenVier()
+{
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,4);
+}
+
+void drittesFenster::bewertenFuenf()
+{
+    int id = m_bank->getID(m_pfad);
+    m_bank->bildBewerten(id,5);
+}
+
+void drittesFenster::bildDrehen()
+{
+    view->rotate(90);
+    int id = m_bank->getID(m_pfad);
+    //cout << id << endl;
+    m_bank->setNeueBildausrichtung(id);
+    m_bank->getBildausrichtung(id);
+}
+
+void drittesFenster::vectorDurchsuchen()
+{
+    for(unsigned int i = 0; i < bilder->size(); i++){
+        if(bilder->at(i) == m_pfad){
+            index = i;
+            bereitsDurchsucht = true;
         }
-        if(image.height() < image.width()){
-            image = image.scaledToHeight(1200, Qt::FastTransformation); 
-            item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        else{
+            continue;
         }
     }
-    layout->addLayout(buttons);
-    layout->addWidget(view);
-    vertikal();
-    scene->addItem(item);
-    this->setLayout(layout);
+}
+
+void drittesFenster::naechstesBild()
+{
+    //delete (layout);
+    if(bereitsDurchsucht == false){
+        try{
+            vectorDurchsuchen();
+            if(index < bilder->size()){
+                ++index;
+                erzeugeDrittesFenster(bilder->at(index));
+            }else{
+                index = 0;
+                erzeugeDrittesFenster(bilder->at(index));
+            }
+        }catch(...){
+            fehlerMelden();
+        }
+    }else if(bereitsDurchsucht == true){
+        ++index;
+        if(index < bilder->size()){
+            erzeugeDrittesFenster(bilder->at(index));
+        }else{
+            index = 0;
+            erzeugeDrittesFenster(bilder->at(index));
+        }
+    }
+}
+
+void drittesFenster::vorherigesBild()
+{
+     if(bereitsDurchsucht == false){
+        try{
+            vectorDurchsuchen();
+            if(index < bilder->size()){
+                ++index;
+                erzeugeDrittesFenster(bilder->at(index));
+            }else{
+                index = 0;
+                erzeugeDrittesFenster(bilder->at(index));
+            }
+        }catch(...){
+            fehlerMelden();
+        }
+    }else if(bereitsDurchsucht == true){
+        ++index;
+        if(index < bilder->size()){
+            erzeugeDrittesFenster(bilder->at(index));
+        }else{
+            index = 0;
+            erzeugeDrittesFenster(bilder->at(index));
+        }
+    }
+}
+
+void drittesFenster::fehlerMelden()
+{
+    information = new QMessageBox();
+    QString text = (tr("<h1>Bild wurde nicht gefunden!</h1>"));
+    information->setIcon(QMessageBox::Information);
+    QMessageBox::information(this,"Achtung",text);
+}
+
+void drittesFenster::wheelEvent(QWheelEvent *event)
+{
+        view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+        double scaleFactor = 1.15;
+        if(event->delta() > 0) {
+            // Zoom rein
+            view-> scale(scaleFactor, scaleFactor);
+
+        } else {
+            // Zooming raus
+             view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+        }
+}
+
+void drittesFenster::verkleinereBild()
+{
+   double scaleFactor = 25.0;
+   view->scale(scaleFactor, scaleFactor);
+}
+
+void drittesFenster::vergroessereBild()
+{
+    double scaleFactor = 25.0;
+    view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+}
+
+void drittesFenster::interaktion(){
+    QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
+    QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
+    QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
+    QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
+    QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
+    QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
+    QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
+    QObject::connect(links, &QPushButton::clicked,this, &drittesFenster::vorherigesBild);
+    QObject::connect(rechts, &QPushButton::clicked,this, &drittesFenster::naechstesBild);
+    QObject::connect(gesten, &Gestensteuerung::verkleinereBild, this, &verkleinereBild);
+    QObject::connect(gesten, &Gestensteuerung::vergroessereBild, this, &vergroessereBild);
+    QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
+    QObject::connect(gesten, &Gestensteuerung::vorhereigesBild, this, &vorherigesBild);
+    QObject::connect(gesten, &Gestensteuerung::nachstesBild, this, &naechstesBild);
+}
+
+void drittesFenster::vertikal()
+{
+    buttons->insertStretch(100);
+    buttons->addWidget(eins);
+    buttons->addWidget(zwei);
+    buttons->addWidget(drei);
+    buttons->addWidget(vier);
+    buttons->addWidget(fuenf);
+    buttons->insertStretch(100);
+    buttons->addWidget(beenden);
+    buttons->addWidget(drehen);
+    buttons->addWidget(links);
+    buttons->addWidget(rechts);
 }
 
 void drittesFenster::buttonsStyle(){
@@ -179,186 +345,4 @@ void drittesFenster::buttonsStyle(){
     rechts->setIconSize(QSize(50, 50));
     rechts->setStyleSheet("border: none; margin: 0px; padding: 0px;");
 }
-
-void drittesFenster::interaktion(){
-    QObject::connect(eins, &QPushButton::clicked,this, &drittesFenster::bewertenEins);
-    QObject::connect(zwei, &QPushButton::clicked,this, &drittesFenster::bewertenZwei);
-    QObject::connect(drei, &QPushButton::clicked,this, &drittesFenster::bewertenDrei);
-    QObject::connect(vier, &QPushButton::clicked,this, &drittesFenster::bewertenVier);
-    QObject::connect(fuenf, &QPushButton::clicked,this, &drittesFenster::bewertenFuenf);
-    QObject::connect(beenden, &QPushButton::clicked,this, &drittesFenster::showBildergalerie);
-    QObject::connect(drehen, &QPushButton::clicked,this, &drittesFenster::bildDrehen);
-    QObject::connect(links, &QPushButton::clicked,this, &drittesFenster::vorherigesBild);
-    QObject::connect(rechts, &QPushButton::clicked,this, &drittesFenster::naechstesBild);
-    QObject::connect(gesten, &Gestensteuerung::verkleinereBild, this, &verkleinereBild);
-    QObject::connect(gesten, &Gestensteuerung::vergroessereBild, this, &vergroessereBild);
-    QObject::connect(gesten, &Gestensteuerung::dreheBild, this, &bildDrehen);
-    QObject::connect(gesten, &Gestensteuerung::vorhereigesBild, this, &vorherigesBild);
-    QObject::connect(gesten, &Gestensteuerung::nachstesBild, this, &naechstesBild);
-}
-
-void drittesFenster::vertikal()
-{
-    fuellung1->addSpacing(250);
-    fuellung2->addSpacing(250);
-
-    buttons->addLayout(fuellung1);
-    buttons->addWidget(eins);
-    buttons->addWidget(zwei);
-    buttons->addWidget(drei);
-    buttons->addWidget(vier);
-    buttons->addWidget(fuenf);
-    buttons->addLayout(fuellung2);
-    buttons->addWidget(beenden);
-    buttons->addWidget(drehen);
-    buttons->addWidget(links);
-    buttons->addWidget(rechts);
-}
-
-void drittesFenster::bewertenEins()
-{
-    int id = m_bank->getID(m_pfad);
-    m_bank->bildBewerten(id,1);
-}
-
-void drittesFenster::bewertenZwei()
-{
-    int id = m_bank->getID(m_pfad);
-    m_bank->bildBewerten(id,2);
-}
-
-void drittesFenster::bewertenDrei()
-{
-    int id = m_bank->getID(m_pfad);
-    m_bank->bildBewerten(id,3);
-}
-
-void drittesFenster::bewertenVier()
-{
-    int id = m_bank->getID(m_pfad);
-    m_bank->bildBewerten(id,4);
-}
-
-void drittesFenster::bewertenFuenf()
-{
-    int id = m_bank->getID(m_pfad);
-    m_bank->bildBewerten(id,5);
-}
-
-void drittesFenster::bildDrehen()
-{
-    view->rotate(90);
-    int id = m_bank->getID(m_pfad);
-    cout << id << endl;
-    m_bank->setNeueBildausrichtung(id);
-    m_bank->getBildausrichtung(id);
-}
-
-void drittesFenster::vectorDurchsuchen()
-{
-    for(unsigned int i = 0; i < bilder->size(); i++){
-        if(bilder->at(i) == m_pfad){
-            index = i;
-            bereitsDurchsucht = true;
-        }
-        else{
-            continue;
-        }
-    }
-}
-
-void drittesFenster::naechstesBild()
-{
-    // delete(layout);
-    // delete(layout2);
-    // delete(item);
-
-    if(bereitsDurchsucht == false){
-        try{
-            vectorDurchsuchen();
-            if(index < bilder->size()){
-                ++index;
-                erzeugeDrittesFenster(bilder->at(index));
-            }else{
-                index = 0;
-                erzeugeDrittesFenster(bilder->at(index));
-            }
-        }catch(...){
-            fehlerMelden();
-        }
-    }else if(bereitsDurchsucht == true){
-        ++index;
-        if(index < bilder->size()){
-            erzeugeDrittesFenster(bilder->at(index));
-        }else{
-            index = 0;
-            erzeugeDrittesFenster(bilder->at(index));
-        }
-    }
-}
-
-void drittesFenster::vorherigesBild()
-{
-   // delete(layout);
-   // delete(layout2);
-   // delete(item);
-
-    if(bereitsDurchsucht == false){
-        try{
-            vectorDurchsuchen();
-            if(index < bilder->size()){
-                ++index;
-                erzeugeDrittesFenster(bilder->at(index));
-            }else{
-                index = 0;
-                erzeugeDrittesFenster(bilder->at(index));
-            }
-        }catch(...){
-            fehlerMelden();
-        }
-    }else if(bereitsDurchsucht == true){
-        ++index;
-        if(index < bilder->size()){
-            erzeugeDrittesFenster(bilder->at(index));
-        }else{
-            index = 0;
-            erzeugeDrittesFenster(bilder->at(index));
-        }
-    }
-}
-
-void drittesFenster::fehlerMelden()
-{
-    information = new QMessageBox();
-    QString text = (tr("<h1>Bild wurde nicht gefunden!</h1>"));
-    information->setIcon(QMessageBox::Information);
-    QMessageBox::information(this,"Achtung",text);
-}
-
-void drittesFenster::wheelEvent(QWheelEvent *event)
-{
-        view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-        double scaleFactor = 1.15;
-        if(event->delta() > 0) {
-            // Zoom rein
-            view-> scale(scaleFactor, scaleFactor);
-
-        } else {
-            // Zooming raus
-             view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-        }
-}
-
-void drittesFenster::verkleinereBild()
-{
-   double scaleFactor = 25.0;
-   view->scale(scaleFactor, scaleFactor);
-}
-
-void drittesFenster::vergroessereBild()
-{
-    double scaleFactor = 25.0;
-    view->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-}
-
 

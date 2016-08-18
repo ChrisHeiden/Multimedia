@@ -69,6 +69,10 @@ private: //Membervariablen
     QString m_pfad;
     int m_anzahhlBilder;
 
+
+private:
+    void ordnerVerzeichnis();
+
 };
 
 #endif // BILDERSUCHE_H

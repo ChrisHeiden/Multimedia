@@ -14,7 +14,7 @@
 #include "hilfe.h"
 #include "datenbank.h"
 #include "mylabel.h"
-
+#include <QPointer>
 
 #ifndef ZWEITESFENSTER_H
 #define ZWEITESFENSTER_H
@@ -45,7 +45,7 @@ public:
     /**
      * @brief erzeugeZweitesFenster stellt das zweite Fenster dar
      */
-    void erzeugeZweitesFenster();
+    void erzeugeNeueGalerie();
 
     /**
      * @brief ordnerVerzeichnis zeigt dem Nutzer seine Verzeichnisse, wodurch er sich das Verzeichnis
@@ -57,7 +57,7 @@ public:
     /**
      * @brief letzter zeigt dem Nutzer die Bilder im Fenster, welche bei letzten Mal angeschaut wurden
      */
-    void letzter();
+    void erzeugeLetzteGalerie();
 
     /**
      * @brief BilderDarstellen stellt die gefundenen Bilder, welche in QImages umgewandet wurden in
@@ -70,10 +70,6 @@ public:
      * @brief zweitesFenster::optionsleisteDarstellen stellt die Optionsleiste dar
      */
     void optionsleisteDarstellen();
-
-    void bilderD();
-
-
 
 
 signals: //SIGNAL-Funktionen
@@ -144,7 +140,6 @@ private: //Membervariablen
     QGridLayout *bild;
     QWidget *bilderWidget;
 
-
     QWidget *vollWidget;
     QPushButton *filteraktivieren;
     QGridLayout *filt;
@@ -159,7 +154,6 @@ private: //Membervariablen
     QPushButton *hilfe;
     QVBoxLayout *menu2;
 
-
     QHBoxLayout *language;
     QVBoxLayout *sprachen;
     QWidget *sprachenWidget;
@@ -170,12 +164,11 @@ private: //Membervariablen
     QHBoxLayout *menu3;
     Farben *f;
 
-    QVBoxLayout *m_mainLayout = new QVBoxLayout;
-    QScrollArea *m_area = new QScrollArea;
-    QWidget *contents = new QWidget;
-    QVBoxLayout *layout = new QVBoxLayout(contents);
-    QHBoxLayout *center1 = new QHBoxLayout;
-
+    QPointer<QVBoxLayout> m_mainLayout;
+    QPointer<QScrollArea> m_area;
+    QPointer<QWidget> contents;
+    QPointer<QVBoxLayout> layout;
+    QPointer<QHBoxLayout> center1;
 
     QString gewuenschterPfad;
     QString filternNachTags;
@@ -184,7 +177,7 @@ private: //Membervariablen
     string m_pfad;
     QString filename;
 
-private: //Funktionen*
+private: //Funktionen
     void setzeSignals();
     void bildtagsAendern();
     void bildBewertungAendern();
@@ -212,6 +205,8 @@ private: //Funktionen*
     void buttonsStil();
     void fensterStil();
     void bewerteteBilder(int &bewertung);
+    void informationsleisteDarstellen();
+
     inline void changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::LanguageChange) {

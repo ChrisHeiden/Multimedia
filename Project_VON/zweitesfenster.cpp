@@ -74,6 +74,8 @@ zweitesFenster::zweitesFenster(QWidget *fenster, QTranslator *translator, Datenb
     labelStil();
     buttonsStil();
     fensterStil();
+    optionsleisteDarstellen();
+    informationsleisteDarstellen();
 }
 
 zweitesFenster::~zweitesFenster(){
@@ -155,15 +157,17 @@ zweitesFenster::~zweitesFenster(){
     delete (f);
 }
 
-void zweitesFenster::erzeugeZweitesFenster()
-{
-    optionsleisteDarstellen();
-    QString gewuenschterPfad = ordnerVerzeichnis(); // gewünschter Ordnerpfad wird gespeichert
-    suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl, m_bank);
-    suche->start();
-    QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
-    QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
-
+void zweitesFenster::informationsleisteDarstellen(){
+    south->addWidget(bildBewertung);
+    bildBewertungsFeld->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
+    bildBewertungsFeld->setMinimumContentsLength(25);
+    south->addWidget(bildBewertungsFeld);
+    south->addWidget(tags);
+    south->addWidget(tagsFeld);
+    tagsFeld->clear();
+    south->addWidget(bildPfad);
+    south->addWidget(bildPfadFeld);
+    southpart->setLayout(south);
 }
 
 void zweitesFenster::optionsleisteDarstellen()
@@ -221,20 +225,22 @@ void zweitesFenster::optionsleisteDarstellen()
     westpart->setLayout(menu);
     west->addWidget(westpart);
     oberesWindow->addWidget(westpart);
+}
 
-    /* Southpart muss hier programmiert werden */
-    south->addWidget(bildBewertung);
+void zweitesFenster::erzeugeNeueGalerie()
+{
+    QString gewuenschterPfad = ordnerVerzeichnis();
+    suche = new BilderSuche(gewuenschterPfad, m_bilderAnzahl, m_bank);
+    suche->start();
+    QObject::connect(suche,&BilderSuche::sucheBeenden,this, &zweitesFenster::BilderDarstellen);
+    QObject::connect(suche,&BilderSuche::finished, suche, &BilderSuche::deleteLater);
+}
 
-    bildBewertungsFeld->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
-    bildBewertungsFeld->setMinimumContentsLength(25);
-    south->addWidget(bildBewertungsFeld);
-    south->addWidget(tags);
-    south->addWidget(tagsFeld);
-    tagsFeld->clear();
-    south->addWidget(bildPfad);
-    south->addWidget(bildPfadFeld);
-
-    southpart->setLayout(south);
+void zweitesFenster::erzeugeLetzteGalerie()
+{
+    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
+    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
+    BilderDarstellen(umgewandelteBilder);
 }
 
 QString zweitesFenster::ordnerVerzeichnis()
@@ -259,17 +265,9 @@ QString zweitesFenster::ordnerVerzeichnis()
     return pfad;
 }
 
-void zweitesFenster::letzter()
-{
-    optionsleisteDarstellen();
-    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
-}
-
 void zweitesFenster::bildtagsAendern()
 {
-    cout << pfad << endl;
+    //cout << pfad << endl;
     int id = m_bank->getID(pfad);
     m_bank->bildtagsAendern(id,tagsFeld->text());
 }
@@ -277,8 +275,8 @@ void zweitesFenster::bildtagsAendern()
 void zweitesFenster::bildBewertungAendern()
 {
     int wert = bildBewertungsFeld->currentIndex();
-    cout << wert << endl;
-    cout << pfad << endl;
+    //cout << wert << endl;
+    //cout << pfad << endl;
     int id = m_bank->getID(pfad);
     m_bank->bildBewerten(id,wert);
 }
@@ -380,9 +378,8 @@ void zweitesFenster::deutschUebersetzung()
 
 void zweitesFenster::vollbildModusAktiv()
 {
-    fenster->layout()->deleteLater();
     m_bilderAnzahl = 10;
-    bilderD();
+    erzeugeLetzteGalerie();
     vollbildModusDeaktiviern->setHidden(false);
     south->addWidget(vollbildModusDeaktiviern);
     westpart->setHidden(true);
@@ -391,6 +388,8 @@ void zweitesFenster::vollbildModusAktiv()
 
 void zweitesFenster::vollbildModusInaktiv()
 {   
+    m_bilderAnzahl = 20;
+    erzeugeLetzteGalerie();
     westpart->setHidden(false);
     vollbildModusDeaktiviern->setHidden(true);
     fenster->update();
@@ -445,19 +444,21 @@ void zweitesFenster::nachTagFiltern(QString tag)
 }
 
 void zweitesFenster::zwanzigBilder(){
+    fenster->layout()->deleteLater();
     m_bilderAnzahl = 20;
-    bilderD();
+    erzeugeLetzteGalerie();
 }
 
 void zweitesFenster::vierzigBilder(){
+    fenster->layout()->deleteLater();
     m_bilderAnzahl = 40;
-    bilderD();
+    erzeugeLetzteGalerie();
 }
 
 void zweitesFenster::sechsigBilder(){
     fenster->layout()->deleteLater();
     m_bilderAnzahl = 60;
-    bilderD();
+    erzeugeLetzteGalerie();
 }
 
 void zweitesFenster::setPfad(string pfad)
@@ -479,14 +480,6 @@ void zweitesFenster::bewertungInInfoleisteAnzeige(int bewertung)
 void zweitesFenster::ungefiltert()
 {
     (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltMemory();
-    (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
-    BilderDarstellen(umgewandelteBilder);
-}
-
-void zweitesFenster::bilderD()
-{
-    fenster->layout()->deleteLater();
-    (*gefilterteBilder) = m_bank->getAlleBilder_dargestelltTrue();
     (*umgewandelteBilder) = suche->umwandeln(gefilterteBilder, m_bilderAnzahl);
     BilderDarstellen(umgewandelteBilder);
 }
