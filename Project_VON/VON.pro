@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     gespeichertewerte.cpp \
     notification.cpp \
     gestensteuerung.cpp \
-    datenbanktest.cpp
+    datenbanktest.cpp \
+    sprachen.cpp
 
 HEADERS  += erstesfenster.h \
             sound.h \
@@ -42,7 +43,8 @@ HEADERS  += erstesfenster.h \
     gespeichertewerte.h \
     notification.h \
     gestensteuerung.h \
-    datenbanktest.h
+    datenbanktest.h \
+    sprachen.h
 
 CONFIG += c++11
 

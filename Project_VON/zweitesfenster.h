@@ -15,6 +15,7 @@
 #include "datenbank.h"
 #include "mylabel.h"
 #include <QPointer>
+#include "sprachen.h"
 
 #ifndef ZWEITESFENSTER_H
 #define ZWEITESFENSTER_H
@@ -76,6 +77,8 @@ signals: //SIGNAL-Funktionen
     void bildBewertet(int zahl);
     void bildTagsGesetzt(string tags);
     void openThirdWindow(string m_pfad);
+    void englischUebersetzung();
+    void deutschUebersetzung();
 
 
 public slots: //SLOT-Funktionen
@@ -193,8 +196,6 @@ private: //Funktionen
     void weissFunktion();
     void pinkFunktion();
     void hilfeAngeklicket();
-    void englischUebersetzung();
-    void deutschUebersetzung();
     void vollbildModusAktiv();
     void vollbildModusInaktiv();
     void ungefiltert();

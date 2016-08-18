@@ -60,7 +60,7 @@ void erstesFenster::erzeugen()
     this->setCentralWidget(view);   //View soll dargestellt werden
 }
 
-void erstesFenster::englischUebersetzung()
+/*void erstesFenster::englischUebersetzung()
 {
     QApplication::instance()->removeTranslator(m_translator);
 }
@@ -76,7 +76,7 @@ void erstesFenster::deutschUebersetzung()
 
     QApplication::instance()->installTranslator(m_translator);
     }
-}
+}*/
 
 void erstesFenster::hintergrundSetzen()
 {

@@ -358,7 +358,7 @@ void zweitesFenster::hilfeAngeklicket()
     hilf.hilfeAnzeigenZweitesFenster();
 }
 
-void zweitesFenster::englischUebersetzung()
+/*void zweitesFenster::englischUebersetzung()
 {
     QApplication::instance()->removeTranslator(m_translator);
 }
@@ -374,7 +374,7 @@ void zweitesFenster::deutschUebersetzung()
 
     QApplication::instance()->installTranslator(m_translator);
     }
-}
+}*/
 
 void zweitesFenster::vollbildModusAktiv()
 {

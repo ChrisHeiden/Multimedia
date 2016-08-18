@@ -4,6 +4,7 @@
 #include "zweitesfenster.h"
 #include "drittesfenster.h"
 #include "datenbank.h"
+#include "sprachen.h"
 
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
@@ -39,10 +40,14 @@ private: //Membervariablen
     drittesFenster *drittes;
     QTranslator *m_translator;
     Datenbank *bank;
+    Sprachen *sprache;
 
 
 private: //Funktionen
     void setzeSignals();
+    void deutschUebersetzung();
+    void englischUebersetzung();
+
 
 
 private slots: //SLOT-Funktionen

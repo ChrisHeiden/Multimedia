@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "datenbank.h"
 #include "hilfe.h"
+#include "sprachen.h"
 
 #ifndef ERSTESFENSTER_H
 #define ERSTESFENSTER_H
@@ -41,6 +42,8 @@ public:
 signals: //SIGNAL-Funktionen
     void openSecondWindow();
     void showLetzteBilder();
+    void englischUebersetzung();
+    void deutschUebersetzung();
 
 
 private: //Funktionen
@@ -61,8 +64,6 @@ private: //Funktionen
 
 
 private slots: //SLOT-Funktionen
-    void englischUebersetzung();
-    void deutschUebersetzung();
     void hilfeAngeklicket();
 
 private: //Membervariablen
